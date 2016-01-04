@@ -5,11 +5,11 @@
 louve_addons
 ============
 
-Point of sale
+Odoo modules used at la Coop La louve.
 
 [//]: # (addons)
-Unported addons
----------------
+Modules List
+------------
 addon | version | summary
 --- | --- | ---
 
