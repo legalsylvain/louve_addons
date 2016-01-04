@@ -1,3 +1,1 @@
 web
-
-coop_addons https://github.com/shewolfERP/coop_addons 9.0
