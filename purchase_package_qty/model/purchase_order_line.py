@@ -99,5 +99,5 @@ class PurchaseOrderLine(models.Model):
                                 supplier.package_qty,
                                 supplier.product_uom.name)}
                         self.product_qty = ceil(self.product_qty /
-                                    self.package_qty) * self.package_qty
+                                        self.package_qty) * self.package_qty
         return res
