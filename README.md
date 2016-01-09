@@ -5,7 +5,7 @@
 louve_addons
 ============
 
-Odoo modules used at la Coop La louve.
+Odoo modules used at la Coopérative La louve.
 
 [//]: # (addons)
 Modules List
