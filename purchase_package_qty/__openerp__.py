@@ -64,6 +64,6 @@ Copyright, Author and Licence :
     ],
     'data': [
         'view/view.xml',
-#        'data/function.xml',
+        'data/function.xml',
     ],
 }

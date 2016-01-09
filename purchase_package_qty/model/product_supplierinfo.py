@@ -35,7 +35,6 @@ class ProductSupplierinfo(models.Model):
     def fields_view_get(
             self, view_id=None, view_type='form',
             toolbar=False, submenu=False):
-#        context = context and context or {}
         res = super(ProductSupplierinfo, self).fields_view_get(
             view_id=view_id, view_type=view_type,
             toolbar=toolbar, submenu=False)
@@ -69,7 +68,7 @@ class ProductSupplierinfo(models.Model):
                 raise ValueError(_('The package quantity cannot be 0.'))
 
     # Init section
-    #TODO
+#    TODO
     def _init_package_qty(self, cr, uid, ids=None, context=None):
         psi_ids = self.search(cr, SUPERUSER_ID, [], context=context)
         for psi in self.browse(cr, SUPERUSER_ID, psi_ids, context=context):
