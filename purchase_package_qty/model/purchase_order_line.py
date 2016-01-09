@@ -89,8 +89,8 @@ class PurchaseOrderLine(models.Model):
                     self.package_qty = supplier.package_qty
                     self.indicative = supplier.indicative_package
                     if (not(self.indicative) and
-                            int(self.product_qty / self.package_qty) != 
-                                        self.product_qty / self.package_qty):
+                            int(self.product_qty / self.package_qty) !=
+                            self.product_qty / self.package_qty):
                         res['warning'] = {
                             'title': _('Warning!'),
                             'message': _(
@@ -98,6 +98,6 @@ class PurchaseOrderLine(models.Model):
                                 """this product by %s %s""") % (
                                 supplier.package_qty,
                                 supplier.product_uom.name)}
-                        self.product_qty = ceil(self.product_qty / 
-                                        self.package_qty) * self.package_qty
+                        self.product_qty = ceil(self.product_qty /
+                            self.package_qty) * self.package_qty
         return res
