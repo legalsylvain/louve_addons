@@ -172,30 +172,32 @@ class computed_purchase_order(models.Model):
             self._sort_lines()
         return cpo_id
 
-    @api.one
+    @api.multi
     def update_sorting(self, vals):
-        try:
-            line_ids = vals.get('line_ids', False)
-            if not line_ids:
+        for cpo in self:
+            try:
+                line_ids = vals.get('line_ids', False)
+                if not line_ids:
+                    return False
+                # this context check will allow you to change the field list
+                # without overriding the whole function
+                need_sorting_fields = self.env.context.get(
+                    'need_sorting_fields', False)
+                if not need_sorting_fields:
+                    need_sorting_fields = [
+                        'average_consumption',
+                        'computed_qty',
+                        'stock_duration',
+                        'manual_input_output_qty',
+                    ]
+                for value in line_ids:
+                    if len(value) > 2 and value[2] and isinstance(
+                            value[2], dict) and (set(
+                            need_sorting_fields) & set(value[2].keys())):
+                        return True
                 return False
-            # this context check will allow you to change the field list
-            # without overriding the whole function
-            need_sorting_fields = self.env.context.get(
-                'need_sorting_fields', False)
-            if not need_sorting_fields:
-                need_sorting_fields = [
-                    'average_consumption',
-                    'computed_qty',
-                    'stock_duration',
-                    'manual_input_output_qty',
-                ]
-            for value in line_ids:
-                if len(value) > 2 and value[2] and isinstance(value[2], dict)\
-                        and (set(need_sorting_fields) & set(value[2].keys())):
-                    return True
-            return False
-        except:
-            return False
+            except:
+                return False
 
     # Private Section
     @api.multi
@@ -240,61 +242,64 @@ class computed_purchase_order(models.Model):
                 all_lines.append((0, 0, line_values),)
         return all_lines
 
-    @api.one
+    @api.multi
     def _compute_purchase_quantities_days(self):
-        days = self.purchase_target
-        for line in self.line_ids:
-            if line.average_consumption:
-                quantity = max(
-                    days * line.average_consumption * line.uom_po_id.factor /
-                    line.uom_id.factor - line.computed_qty, 0)
-                if line.package_quantity and quantity % line.package_quantity:
-                    quantity = ceil(quantity / line.package_quantity) *\
-                        line.package_quantity
-            elif line.computed_qty == 0:
-                quantity = line.package_quantity or 0
-            else:
-                quantity = 0
-            line.purchase_qty = quantity
-        return True
-
-    @api.one
-    def _compute_purchase_quantities_other(self, field):
-        cpol_obj = self.env['computed.purchase.order.line']
-        if not self.line_ids:
-            return False
-        target = self.purchase_target
-        ok = False
-        days = -1
-        field_list = cpol_obj.browse(
-            [x.id for x in self.line_ids]).read([field])
-        field_list_dict = {}
-        for i in field_list:
-            field_list_dict[i['id']] = i[field]
-
-        while not ok:
-            days += 1
-            qty_tmp = {}
-            for line in self.line_ids:
+        for cpo in self:
+            days = cpo.purchase_target
+            for line in cpo.line_ids:
                 if line.average_consumption:
                     quantity = max(
                         days * line.average_consumption *
                         line.uom_po_id.factor / line.uom_id.factor -
                         line.computed_qty, 0)
-                    if line.package_quantity and\
-                            quantity % line.package_quantity:
-                        quantity = ceil(quantity / line.package_quantity)\
-                            * line.package_quantity
+                    if line.package_quantity \
+                            and quantity % line.package_quantity:
+                        quantity = ceil(quantity / line.package_quantity) *\
+                            line.package_quantity
                 elif line.computed_qty == 0:
                     quantity = line.package_quantity or 0
                 else:
                     quantity = 0
-                qty_tmp[line.id] = quantity
+                line.purchase_qty = quantity
 
-            ok = self._check_purchase_qty(target, field_list_dict, qty_tmp)
+    @api.multi
+    def _compute_purchase_quantities_other(self, field):
+        for cpo in self:
+            cpol_obj = self.env['computed.purchase.order.line']
+            if not cpo.line_ids:
+                return False
+            target = cpo.purchase_target
+            ok = False
+            days = -1
+            field_list = cpol_obj.browse(
+                [x.id for x in cpo.line_ids]).read([field])
+            field_list_dict = {}
+            for i in field_list:
+                field_list_dict[i['id']] = i[field]
 
-        for line in self.line_ids:
-            line.purchase_qty = qty_tmp[line.id]
+            while not ok:
+                days += 1
+                qty_tmp = {}
+                for line in cpo.line_ids:
+                    if line.average_consumption:
+                        quantity = max(
+                            days * line.average_consumption *
+                            line.uom_po_id.factor / line.uom_id.factor -
+                            line.computed_qty, 0)
+                        if line.package_quantity and\
+                                quantity % line.package_quantity:
+                            quantity = ceil(quantity / line.package_quantity)\
+                                * line.package_quantity
+                    elif line.computed_qty == 0:
+                        quantity = line.package_quantity or 0
+                    else:
+                        quantity = 0
+                    qty_tmp[line.id] = quantity
+
+                ok = cpo._check_purchase_qty(target, field_list_dict, qty_tmp)
+
+            for line in cpo.line_ids:
+                line.purchase_qty = qty_tmp[line.id]
 
     @api.model
     def _check_purchase_qty(self, target=0, field_list=None, qty_tmp=None):
@@ -333,46 +338,51 @@ class computed_purchase_order(models.Model):
             # update line_ids
             self.line_ids = cpol_list
 
-    @api.one
+    @api.multi
     def compute_purchase_quantities(self):
-        if self.target_type == 'time':
-            return self._compute_purchase_quantities_days()
-        else:
-            return self._compute_purchase_quantities_other(
-                field=self.target_type)
+        for cpo in self:
+            if cpo.target_type == 'time':
+                return cpo._compute_purchase_quantities_days()
+            else:
+                return cpo._compute_purchase_quantities_other(
+                    field=cpo.target_type)
 
-    @api.one
+    @api.multi
     def make_order(self):
-        po_lines = self._make_po_lines()
-        if not po_lines:
-            raise ValidationError(_('All purchase quantities are set to 0!'))
+        for cpo in self:
+            po_lines = cpo._make_po_lines()
+            if not po_lines:
+                raise ValidationError(
+                    _('All purchase quantities are set to 0!'))
 
-        po_obj = self.env['purchase.order']
-        po_values = {
-            'origin': self.name,
-            'partner_id': self.partner_id.id,
-            'location_id': self.env['res.users'].browse(
-                self.env.uid).company_id.partner_id.property_stock_customer.id,
-            'order_line': po_lines,
-            'date_planned': (
-                self.incoming_date or fields.Date.context_today(self)),
-        }
-        po_id = po_obj.create(po_values)
-        self.state = 'done'
-        self.purchase_order_id = po_id
+            po_obj = self.env['purchase.order']
+            po_values = {
+                'origin': cpo.name,
+                'partner_id': cpo.partner_id.id,
+                'location_id': self.env['res.users'].browse(
+                    self.env.uid).company_id.partner_id
+                .property_stock_customer.id,
+                'order_line': po_lines,
+                'date_planned': (
+                    cpo.incoming_date or fields.Date.context_today(self)),
+            }
+            po_id = po_obj.create(po_values)
+            cpo.state = 'done'
+            cpo.purchase_order_id = po_id
 
-        mod_obj = self.env['ir.model.data']
-        res = mod_obj.get_object_reference('purchase', 'purchase_order_form')
-        res_id = res and res[1] or False
-        return {
-            'name': _('Purchase Order'),
-            'view_type': 'form',
-            'view_mode': 'form',
-            'views': [(res_id, 'form')],
-            'view_id': [res_id],
-            'res_model': 'purchase.order',
-            'type': 'ir.actions.act_window',
-            'nodestroy': True,
-            'target': 'new',
-            'res_id': po_id or False,
-        }
+            mod_obj = self.env['ir.model.data']
+            res = mod_obj.get_object_reference(
+                'purchase', 'purchase_order_form')
+            res_id = res and res[1] or False
+            return {
+                'name': _('Purchase Order'),
+                'view_type': 'form',
+                'view_mode': 'form',
+                'views': [(res_id, 'form')],
+                'view_id': [res_id],
+                'res_model': 'purchase.order',
+                'type': 'ir.actions.act_window',
+                'nodestroy': True,
+                'target': 'current',
+                'res_id': po_id.id or False,
+            }

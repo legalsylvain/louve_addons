@@ -116,11 +116,12 @@ class computed_purchase_order_line(models.Model):
 
     # Fields Function section
     @api.depends('product_id')
-    @api.one
+    @api.multi
     def _get_qty(self):
-        self.qty_available = self.product_id.qty_available
-        self.incoming_qty = self.product_id.incoming_qty
-        self.outgoing_qty = self.product_id.outgoing_qty
+        for cpol in self:
+            cpol.qty_available = cpol.product_id.qty_available
+            cpol.incoming_qty = cpol.product_id.incoming_qty
+            cpol.outgoing_qty = cpol.product_id.outgoing_qty
 
     @api.multi
     def _get_computed_qty(self):
