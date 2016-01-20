@@ -209,7 +209,7 @@ class computed_purchase_order_line(models.Model):
     def onchange_product_info(self):
         self.state = 'updated'
 
-    @api.depends(
+    @api.onchange(
         'computed_purchase_order_id', 'product_id',
         'computed_purchase_order_id.partner_id')
     def onchange_product_id(self):
@@ -254,9 +254,7 @@ class computed_purchase_order_line(models.Model):
                 vals.update({
                     'product_code_inv': psi.product_code,
                     'product_name_inv': psi.product_name,
-                    'product_price_inv': (
-                        psi.pricelist_ids and
-                        psi.pricelist_ids[0].price or 0),
+                    'product_price_inv': psi.price,
                     'package_quantity_inv': psi.package_qty,
                     'uom_po_id': psi.product_uom.id,
                     'state': 'up_to_date',

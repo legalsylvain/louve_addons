@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import models, api
+from openerp import models
 
 
 class product_supplierinfo(models.Model):
