@@ -108,9 +108,9 @@ class computed_purchase_order(models.Model):
         compute='_get_computed_amount_duration',
         string='Minimum duration after order',
         multi='computed_amount_duration')
-#    products_updated = fields.Boolean(
-#        compute='_get_products_updated',
-#        string='Indicate if there were any products updated in the list')
+    products_updated = fields.Boolean(
+        compute='_get_products_updated',
+        string='Indicate if there were any products updated in the list')
 
     # Fields Function section
     @api.onchange('line_ids')
@@ -133,17 +133,15 @@ class computed_purchase_order(models.Model):
             self.computed_amount = amount
             self.computed_duration = min_duration
 
-#    def _get_products_updated(
-#            self, cr, uid, ids, field_names, arg, context=None):
-#        res = {}
-#        for cpo in self.browse(cr, uid, ids, context=context):
-#            updated = False
-#            for line in cpo.line_ids:
-#                if line.state == 'updated':
-#                    updated = True
-#                    break
-#            res[cpo.id] = updated
-#        return res
+    @api.multi
+    def _get_products_updated(self):
+        for cpo in self:
+            updated = False
+            for line in cpo.line_ids:
+                if line.state == 'updated':
+                    updated = True
+                    break
+            self.products_updated = updated
 
     # View Section
     @api.onchange('partner_id')
@@ -331,6 +329,7 @@ class computed_purchase_order(models.Model):
                         'state': 'up_to_date',
                         'product_code': psi.product_code,
                         'product_name': psi.product_name,
+                        'product_price': psi.price,
                         'package_quantity': psi.package_qty or psi.min_qty,
                         'average_consumption': pp.average_consumption,
                         'uom_po_id': psi.product_uom.id,

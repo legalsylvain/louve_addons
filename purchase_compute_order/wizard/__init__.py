@@ -21,5 +21,4 @@
 #
 ##############################################################################
 
-from . import model
-from . import wizard
+from . import update_products_wizard

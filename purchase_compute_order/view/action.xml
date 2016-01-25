@@ -20,15 +20,15 @@
             </field>
         </record>
 
-<!--        <record id="action_view_update_products" model="ir.actions.act_window">-->
-<!--            <field name="name">Update Products</field>-->
-<!--            <field name="type">ir.actions.act_window</field>-->
-<!--            <field name="res_model">update.products.wizard</field>-->
-<!--            <field name="view_type">form</field>-->
-<!--            <field name="view_mode">form</field>-->
-<!--            <field name="view_id" ref="view_update_products_form"/>-->
-<!--            <field name="target">new</field>-->
-<!--        </record>-->
+        <record id="action_view_update_products" model="ir.actions.act_window">
+            <field name="name">Update Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">update.products.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_update_products_form"/>
+            <field name="target">new</field>
+        </record>
 
     </data>
 </openerp>

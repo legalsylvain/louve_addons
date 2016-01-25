@@ -93,7 +93,7 @@ Copyright, Author and Licence :
         'data/ir_sequence.xml',
         'security/ir_rule_data.yml',
         'security/ir_model_access_data.yml',
-#        'view/update_product_wizard_view.xml',
+        'wizard/update_product_wizard_view.xml',
         'view/action.xml',
         'view/view.xml',
         'view/menu.xml',

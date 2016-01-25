@@ -249,7 +249,7 @@ class computed_purchase_order_line(models.Model):
             # retrieve values and set state up_to_date
             psi_id = psi_obj.search([
                 ('name', '=', self.computed_purchase_order_id.partner_id.id),
-                ('product_id', '=', pp.product_tmpl_id.id)])
+                ('product_tmpl_id', '=', pp.product_tmpl_id.id)])
             if psi_id:
                 psi = psi_obj.browse(psi_id)[0]
                 vals.update({

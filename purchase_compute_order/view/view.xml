@@ -14,6 +14,7 @@
                     <sheet>
                         <header>
                             <button name="make_order" states="draft" string="Make Purchase Order" type="object" class="oe_highlight"/>
+                            <button name="%(action_view_update_products)d" string="Update Products" type="action" class="oe_highlight" attrs="{'invisible':[('products_updated','=',False)]}"/>
                             <field name="state" widget="statusbar" statusbar_visible="draft,done,canceled" statusbar_colors='{"canceled":"red","done":"blue"}' readonly="1"/>
                         </header>
                         <group colspan="8" col="4">
@@ -27,7 +28,7 @@
                             </group>
                             <field name="incoming_date"/>
                             <field name="purchase_order_id" states="done"/>
-<!--                            <field name="products_updated" invisible="1"/>-->
+                            <field name="products_updated" invisible="1"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <group states="draft" col="8">
