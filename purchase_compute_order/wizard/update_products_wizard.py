@@ -31,8 +31,8 @@ class UpdateProductsWizard(models.TransientModel):
 
     # Columns Section
     line_ids = fields.One2many(
-            'update.products.line.wizard', 'wizard_id',
-            'Updated Products list')
+        'update.products.line.wizard',
+        'wizard_id', 'Updated Products list')
 
     # Overload section
     @api.model

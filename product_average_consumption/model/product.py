@@ -93,7 +93,8 @@ class ProductProduct(models.Model):
                 datetime.datetime.today() -
                 datetime.datetime.strptime(first_date, '%Y-%m-%d')
             ).days
-            product.average_consumption = (nb_days and
-                                        (outgoing_qty / nb_days) or False)
+            product.average_consumption = (
+                nb_days and
+                (outgoing_qty / nb_days) or False)
             product.total_consumption = outgoing_qty or False
             product.nb_days = nb_days or False
