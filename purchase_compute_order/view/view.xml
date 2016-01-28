@@ -55,7 +55,7 @@
                             <field name="computed_duration"/>
                         </group>
                         <notebook colspan="4">
-                            <page string="Order lines">
+                            <page name="orderlines" string="Order lines">
                                 <field name="line_ids" options="{'reload_on_button': true}">
                                     <tree 
                         string="Computed purchase order lines" 
@@ -81,7 +81,7 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Stock details">
+                            <page name="stockdetails" string="Stock details">
                                 <field name="stock_line_ids">
                                     <tree editable="True">
                                         <field name="product_id"/>
