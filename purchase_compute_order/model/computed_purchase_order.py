@@ -130,8 +130,8 @@ class computed_purchase_order(models.Model):
                         / line.average_consumption
                     min_duration = min(duration, min_duration)
                 amount += line.purchase_qty * line.product_price_inv
-            self.computed_amount = amount
-            self.computed_duration = min_duration
+            cpo.computed_amount = amount
+            cpo.computed_duration = min_duration
 
     @api.multi
     def _get_products_updated(self):
@@ -141,7 +141,7 @@ class computed_purchase_order(models.Model):
                 if line.state == 'updated':
                     updated = True
                     break
-            self.products_updated = updated
+            cpo.products_updated = updated
 
     # View Section
     @api.onchange('partner_id')
@@ -312,7 +312,6 @@ class computed_purchase_order(models.Model):
     @api.multi
     def compute_active_product_stock(self):
         psi_obj = self.env['product.supplierinfo']
-        pp_obj = self.env['product.product']
         for cpo in self:
             cpol_list = []
             # TMP delete all rows,
@@ -321,19 +320,21 @@ class computed_purchase_order(models.Model):
 
             # Get product_product and compute stock
             for psi in psi_obj.search([('name', '=', cpo.partner_id.id)]):
-                for pp in pp_obj.search([
-                        ('product_tmpl_id', '=', psi.product_tmpl_id.id),
-                        ('state', 'not in', ('end', 'obsolete'))]):
-                    cpol_list.append((0, 0, {
-                        'product_id': pp.id,
-                        'state': 'up_to_date',
-                        'product_code': psi.product_code,
-                        'product_name': psi.product_name,
-                        'product_price': psi.price,
-                        'package_quantity': psi.package_qty or psi.min_qty,
-                        'average_consumption': pp.average_consumption,
-                        'uom_po_id': psi.product_uom.id,
-                    }))
+                for pp in psi.product_tmpl_id.filtered(
+                        lambda pt: pt.state not in ('end', 'obsolete')
+                        ).product_variant_ids:
+                    valid_psi = pp._valid_psi()
+                    if valid_psi and psi in valid_psi[0]:
+                        cpol_list.append((0, 0, {
+                            'product_id': pp.id,
+                            'state': 'up_to_date',
+                            'product_code': psi.product_code,
+                            'product_name': psi.product_name,
+                            'product_price': psi.price,
+                            'package_quantity': psi.package_qty or psi.min_qty,
+                            'average_consumption': pp.average_consumption,
+                            'uom_po_id': psi.product_uom.id,
+                        }))
             # update line_ids
             self.line_ids = cpol_list
 
