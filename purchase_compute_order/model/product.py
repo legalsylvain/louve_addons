@@ -31,7 +31,7 @@ class ProductProduct(models.Model):
     @api.model
     @api.one
     def _valid_psi(self):
-        #Later, we may want to implement other valid_psi options
+# Later, we may want to implement other valid_psi options
         return self._first_valid_psi
 
     @api.model
@@ -41,8 +41,8 @@ class ProductProduct(models.Model):
         if not self.product_tmpl_id.seller_ids:
             return False
         valid_si = self.product_tmpl_id.seller_ids.filtered(
-            lambda si, t=today: ((not si.date_start or si.date_start <= t)
-                                 and (not si.date_end or si.date_end >= t)))
+            lambda si, t=today: ((not si.date_start or si.date_start <= t) and
+                                 (not si.date_end or si.date_end >= t)))
         seq = min([si.sequence for si in valid_si])
         return valid_si.filtered(lambda si, seq=seq: si.sequence == seq)
 
