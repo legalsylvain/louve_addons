@@ -30,8 +30,8 @@ class ProductProduct(models.Model):
     # Private section
     @api.model
     @api.one
+    # Later, we may want to implement other valid_psi options
     def _valid_psi(self):
-# Later, we may want to implement other valid_psi options
         return self._first_valid_psi
 
     @api.model
