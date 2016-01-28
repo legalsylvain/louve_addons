@@ -26,7 +26,7 @@ import openerp.addons.decimal_precision as dp
 from openerp.exceptions import ValidationError
 
 
-class computed_purchase_order_line(models.Model):
+class ComputedPurchaseOrderLine(models.Model):
     _description = 'Computed Purchase Order Line'
     _name = 'computed.purchase.order.line'
     _order = 'sequence'
@@ -103,6 +103,10 @@ class computed_purchase_order_line(models.Model):
     outgoing_qty = fields.Float(
         compute='_get_qty', string='Outgoing Quantity',
         help="Virtual outgoing entries", multi='get_qty',)
+    virtual_qty = fields.Float(
+        compute='_get_qty', string='Virtual Quantity',
+        help="Quantity on hand + Virtual incoming and outgoing entries",
+        multi='get_qty',)
     computed_qty = fields.Float(
         compute='_get_computed_qty', string='Stock',
         help="The sum of all quantities selected.",
@@ -122,6 +126,8 @@ class computed_purchase_order_line(models.Model):
             cpol.qty_available = cpol.product_id.qty_available
             cpol.incoming_qty = cpol.product_id.incoming_qty
             cpol.outgoing_qty = cpol.product_id.outgoing_qty
+            cpol.virtual_qty = cpol.qty_available + cpol.incoming_qty - \
+                cpol.outgoing_qty
 
     @api.multi
     def _get_computed_qty(self):
@@ -133,15 +139,9 @@ class computed_purchase_order_line(models.Model):
                 break
 
         for cpol in self:
-            q = 0
-            fields_list = ['qty_available']
+            q = cpol.qty_available
             if use_pending_qties:
-                fields_list += ['incoming_qty', 'outgoing_qty']
-
-            if fields_list:
-                qties = cpol.read(fields_list)
-                for x in qties:
-                    q += sum([x[f] for f in fields_list])
+                q += cpol.incoming_qty - cpol.outgoing_qty
             cpol.computed_qty = q
 
     @api.multi
@@ -232,7 +232,7 @@ class computed_purchase_order_line(models.Model):
                     raise ValidationError(
                         _('This product is already in the list!'))
                 if cpo.compute_pending_quantity:
-                    computed_qty += pp.incoming_qty + pp.outgoing_qty
+                    computed_qty += pp.incoming_qty - pp.outgoing_qty
             vals.update({
                 'qty_available': pp.qty_available,
                 'incoming_qty': pp.incoming_qty,
