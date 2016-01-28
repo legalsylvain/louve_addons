@@ -124,7 +124,8 @@ class ProductTemplate(models.Model):
         for template in self:
             nb_days = max(
                 product.nb_days for product in template.product_variant_ids)
-            total_consumption = sum(product.total_consumption\
+            total_consumption = sum(
+                product.total_consumption
                 for product in template.product_variant_ids)
             template.nb_days = nb_days
             template.total_consumption = total_consumption

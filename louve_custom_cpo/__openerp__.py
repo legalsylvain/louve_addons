@@ -31,7 +31,7 @@ La Louve
 =======================================================
 
 Functionnality :
-    Modification de la vue 
+    Modification de la vue
 
 Copyright, Author and Licence :
 -------------------------------
