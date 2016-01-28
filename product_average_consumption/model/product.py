@@ -98,3 +98,36 @@ class ProductProduct(models.Model):
                 (outgoing_qty / nb_days) or False)
             product.total_consumption = outgoing_qty or False
             product.nb_days = nb_days or False
+
+
+class ProductTemplate(models.Model):
+    _inherit = "product.template"
+
+    # Columns Section
+    average_consumption = fields.Float(
+        compute='_compute_average_consumption',
+        string='Average Consumption per day', multi='average_consumption')
+    total_consumption = fields.Float(
+        compute='_compute_average_consumption',
+        string='Total Consumption', multi='average_consumption')
+    nb_days = fields.Integer(
+        compute='_compute_average_consumption',
+        string='Number of days for the calculation',
+        multi='average_consumption',
+        help="""The calculation will be done for the last 365 days or"""
+        """ since the first purchase or sale of the product if it's"""
+        """ more recent""")
+
+    # Fields Function Section
+    @api.multi
+    def _compute_average_consumption(self):
+        for template in self:
+            nb_days = max(
+                product.nb_days for product in template.product_variant_ids)
+            total_consumption = sum(product.total_consumption\
+                for product in template.product_variant_ids)
+            template.nb_days = nb_days
+            template.total_consumption = total_consumption
+            template.average_consumption = (
+                nb_days and
+                (total_consumption / nb_days) or False)
