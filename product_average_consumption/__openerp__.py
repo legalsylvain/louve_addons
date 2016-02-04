@@ -44,6 +44,7 @@ Copyright, Author and Licence :
         'stock',
     ],
     'data': [
-        'view/view.xml',
+        'views/product_product_view.xml',
+        'views/product_template_view.xml',
     ],
 }

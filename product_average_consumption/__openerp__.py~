@@ -20,5 +20,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+{
+    'name': 'Product - Average Consumption',
+    'version': '9.0.1',
+    'category': 'Product',
+    'description': """
+Shows figures in the product form about the average consumption of products
+===========================================================================
 
-from . import models
+Copyright, Author and Licence :
+-------------------------------
+    * Copyright : 2013-Today, Groupement Régional Alimentaire de Proximité;
+    * Author :
+        * Julien WESTE;
+        * Sylvain LE GAL (https://twitter.com/legalsylvain);
+    * Licence : AGPL-3 (http://www.gnu.org/licenses/)
+    """,
+    'author': 'GRAP',
+    'website': 'http://www.grap.coop',
+    'license': 'AGPL-3',
+    'depends': [
+        'product',
+        'stock',
+    ],
+    'data': [
+        'view/product_product_view.xml',
+        'view/product_template_view.xml',
+    ],
+}
