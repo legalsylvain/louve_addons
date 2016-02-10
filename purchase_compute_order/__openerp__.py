@@ -94,9 +94,9 @@ Copyright, Author and Licence :
         'security/ir_rule_data.yml',
         'security/ir_model_access_data.yml',
         'wizard/update_product_wizard_view.xml',
-        'view/action.xml',
-        'view/view.xml',
-        'view/menu.xml',
-        'view/res_config_view.xml',
+        'views/action.xml',
+        'views/view.xml',
+        'views/menu.xml',
+        'views/res_config_view.xml',
     ],
 }
