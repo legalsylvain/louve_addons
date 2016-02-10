@@ -28,6 +28,7 @@ from openerp.exceptions import ValidationError
 
 
 class computed_purchase_order(models.Model):
+class ComputedPurchaseOrder(models.Model):
     _description = 'Computed Purchase Order'
     _name = 'computed.purchase.order'
     _order = 'id desc'
