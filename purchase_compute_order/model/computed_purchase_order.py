@@ -169,12 +169,12 @@ class ComputedPurchaseOrder(models.Model):
         if vals.get('name', self._DEFAULT_NAME) == self._DEFAULT_NAME:
             vals['name'] = self.env['ir.sequence'].get(
                 'computed.purchase.order') or '/'
-        order = super(computed_purchase_order, self).create(vals)
+        order = super(ComputedPurchaseOrder, self).create(vals)
         return order
 
     @api.multi
     def write(self, vals):
-        cpo_id = super(computed_purchase_order, self).write(vals)
+        cpo_id = super(ComputedPurchaseOrder, self).write(vals)
         if self.update_sorting(vals):
             self._sort_lines()
         return cpo_id

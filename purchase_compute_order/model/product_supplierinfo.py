@@ -24,7 +24,7 @@
 from openerp import models
 
 
-class product_supplierinfo(models.Model):
+class ProductSupplierinfo(models.Model):
     _inherit = 'product.supplierinfo'
 
     # Constraints section

@@ -53,7 +53,6 @@ class ProductProduct(models.Model):
     @api.model
     @api.one
     def _first_valid_psi(self):
-        today = fields.Date.today()
         if not self.product_tmpl_id.seller_ids:
             return False
         valid_si = self._all_valid_psi
