@@ -27,7 +27,6 @@ import openerp.addons.decimal_precision as dp
 from openerp.exceptions import ValidationError
 
 
-class computed_purchase_order(models.Model):
 class ComputedPurchaseOrder(models.Model):
     _description = 'Computed Purchase Order'
     _name = 'computed.purchase.order'
@@ -46,6 +45,11 @@ class ComputedPurchaseOrder(models.Model):
         ('product_price_inv', '€'),
         ('time', 'days'),
         ('weight', 'kg'),
+    ]
+
+    _VALID_PSI = [
+        ('first', 'Consider only the first supplier on the product'),
+        ('all', 'Consider all the suppliers registered on the product'),
     ]
 
     # Columns section
@@ -100,6 +104,10 @@ class ComputedPurchaseOrder(models.Model):
         """ average consumption)\n"""
         """ * Target type 'kg': computed purchase order will weight at"""
         """ least the weight specified""")
+    valid_psi = fields.Selection(
+        _VALID_PSI, 'Supplier choice', required=True,
+        default='first',
+        help="""Method of selection of suppliers""")
     computed_amount = fields.Float(
         compute='_get_computed_amount_duration',
         digits_compute=dp.get_precision('Product Price'),
@@ -324,7 +332,7 @@ class ComputedPurchaseOrder(models.Model):
                 for pp in psi.product_tmpl_id.filtered(
                         lambda pt: pt.state not in ('end', 'obsolete')
                         ).product_variant_ids:
-                    valid_psi = pp._valid_psi()
+                    valid_psi = pp._valid_psi(cpo.valid_psi)
                     if valid_psi and psi in valid_psi[0]:
                         cpol_list.append((0, 0, {
                             'product_id': pp.id,
