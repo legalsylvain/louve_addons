@@ -37,8 +37,8 @@ class ProductHistory(models.Model):
     location_id = fields.Many2one(
         'stock.location', string='Location', required=True,
         ondelete='cascade')
-    from_date = fields.Datetime("From Date")
-    to_date = fields.Datetime("To Date")
+    from_date = fields.Date("From Date")
+    to_date = fields.Date("To Date")
     purchase_qty = fields.Float("Purchases")
     production_qty = fields.Float("Production")
     sale_qty = fields.Float("Sales")

@@ -46,6 +46,7 @@ Copyright, Author and Licence :
     'data': [
         'views/product_product_view.xml',
         # 'views/product_template_view.xml',
+        'views/product_history_view.xml',
         'data/cron.xml',
         'security/ir_model_access_data.yml',
         'security/ir_rule_data.yml',

@@ -22,7 +22,8 @@
 ##############################################################################
 
 from openerp import models, fields, api
-import datetime
+from datetime import datetime as dt
+from datetime import timedelta as td
 
 
 class ProductProduct(models.Model):
@@ -31,7 +32,7 @@ class ProductProduct(models.Model):
 # Column section
     product_history_ids = fields.One2many(
         comodel_name='product.history', inverse_name='product_id',
-        string='History', readonly=True)
+        string='History')
 
 # Private section
     @api.multi
@@ -46,30 +47,32 @@ class ProductProduct(models.Model):
                 'inventory_qty': 0,
                 'procurement_qty': 0,
                 'production_qty': 0,
-                'transit_qty': 0, }
+                'transit_qty': 0,
+                'total_qty': 0, }
             move_pool = self.env['stock.move']
 
-            for field, usage in (
-                    ('purchase_qty', 'supplier'),
-                    ('view_qty', 'view'),
-                    ('sale_qty', 'customer'),
-                    ('inventory_qty', 'inventory'),
-                    ('procurement_qty', 'procurement'),
-                    ('production_qty', 'production'),
-                    ('transit_qty', 'transit'),
+            for field, usage, sign in (
+                    ('purchase_qty', 'supplier', 1),
+                    ('sale_qty', 'customer', -1),
+                    ('inventory_qty', 'inventory', 1),
+                    ('procurement_qty', 'procurement', 1),
+                    ('production_qty', 'production', 1),
+                    ('transit_qty', 'transit', 1),
                     ):
                 moves = move_pool.read_group(domain_product + [
                     ('location_id.usage', '=', usage),
                     ('location_dest_id.usage', '=', 'internal'),
                 ], ['product_qty'], [])
                 for move in moves:
-                    res[field] = move['product_qty'] or 0
+                    res[field] = sign * (move['product_qty'] or 0)
+                    res['total_qty'] += sign * (move['product_qty'] or 0)
                 moves = move_pool.read_group(domain_product + [
                     ('location_dest_id.usage', '=', usage),
                     ('location_id.usage', '=', 'internal'),
                 ], ['product_qty'], [])
                 for move in moves:
-                    res[field] -= move['product_qty'] or 0
+                    res[field] -= sign * (move['product_qty'] or 0)
+                    res['total_qty'] -= sign * (move['product_qty'] or 0)
             return res
 
 # Action section
@@ -87,6 +90,9 @@ class ProductProduct(models.Model):
 
     @api.multi
     def _compute_history(self):
+        now = dt.now()
+        current_date = dt.strftime(now, "%Y-%m-%d")
+
         for product in self:
             if product.product_history_ids:
                 self.env.cr.execute(
@@ -97,26 +103,45 @@ class ProductProduct(models.Model):
                 last_date = last_record and last_record[0] or None
                 last_qty = last_record and last_record[1] or None
             else:
-                last_date = "01/01/1900"
+                self.env.cr.execute(
+                    """SELECT date FROM stock_move
+                    WHERE product_id=%s ORDER BY "date" LIMIT 1"""
+                    % (product.id))
+                last_date = self.env.cr.fetchone()[0]
+                last_date = dt.strftime(dt.strptime(
+                    last_date, "%Y-%m-%d %X"), "%Y-%m-%d")
                 last_qty = 0
+            while last_date < current_date:
+                new_from_date = dt.strftime(dt.strptime(
+                        last_date, "%Y-%m-%d") + td(
+                        seconds=1), "%Y-%m-%d %X")
+                new_last_date = dt.strftime(dt.strptime(
+                        last_date, "%Y-%m-%d") + td(days=1), "%Y-%m-%d")
+                res = product.with_context({
+                    'from_date': new_from_date,
+                    'to_date': new_last_date})._compute_qtys()
+                res2 = product.with_context({
+                    'to_date': new_last_date,
+                    })._product_available()[product.id]
+                res3 = product.with_context({
+                    'to_date': new_last_date})._compute_qtys()
+                vals = {
+                    'product_id': product.id,
+                    'product_tmpl_id': product.product_tmpl_id.id,
+                    'location_id': self.env['stock.location'].search([])[0].id,
+                    'from_date': new_from_date,
+                    'to_date': new_last_date,
+                    'purchase_qty': res['purchase_qty'],
+                    'sale_qty': res['sale_qty'],
+                    'loss_qty': res['inventory_qty'],
+                    'start_qty': last_qty,
+                    'end_qty': res3['total_qty'],
+                    'virtual_qty': res3['total_qty'] +
+                    res2['incoming_qty'] - res2['outgoing_qty'],
+                    'incoming_qty': res2['incoming_qty'],
+                    'outgoing_qty': res2['outgoing_qty'],
+                    }
+                self.env['product.history'].create(vals)
+                last_date = new_last_date
+                last_qty = res3['total_qty']
 
-            res = product.with_context({
-                'from_date': last_date,
-                'to_date': "%s" % (datetime.datetime.now())})._compute_qtys()
-            res2 = product._product_available()[product.id]
-            vals = {
-                'product_id': product.id,
-                'product_tmpl_id': product.product_tmpl_id.id,
-                'location_id': self.env['stock.location'].search([])[0].id,
-                'from_date': last_date,
-                'to_date': "%s" % (datetime.datetime.now()),
-                'purchase_qty': res['purchase_qty'],
-                'sale_qty': res['sale_qty'],
-                'loss_qty': res['inventory_qty'],
-                'start_qty': last_qty,
-                'end_qty': res2['qty_available'],
-                'virtual_qty': res2['virtual_available'],
-                'incoming_qty': res2['incoming_qty'],
-                'outgoing_qty': res2['outgoing_qty'],
-                }
-            self.env['product.history'].create(vals)
