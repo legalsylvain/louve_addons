@@ -29,10 +29,10 @@ from dateutil.relativedelta import relativedelta as rd
 
 
 HISTORY_RANGE = [
-        # ('days', 'Days'),
-        ('weeks', 'Week'),
-        # ('months', 'Month'),
-        ]
+    # ('days', 'Days'),
+    ('weeks', 'Week'),
+    # ('months', 'Month'),
+    ]
 
 old_date = date(2015, 1, 1)
 

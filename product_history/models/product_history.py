@@ -24,10 +24,10 @@
 from openerp import models, fields, api
 
 HISTORY_RANGE = [
-        ('days', 'Days'),
-        ('weeks', 'Week'),
-        ('months', 'Month'),
-        ]
+    ('days', 'Days'),
+    ('weeks', 'Week'),
+    ('months', 'Month'),
+    ]
 
 
 class ProductHistory(models.Model):

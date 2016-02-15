@@ -37,9 +37,10 @@ class ComputedPurchaseOrderLine(models.Model):
     def view_history(self):
         model, action_id = self.pool[
             'ir.model.data'].get_object_reference(
-                self._cr, self._uid, 'product_history_for_cpo',
-                "action_view_history")
-        action = self.pool[model].read(self._cr, self._uid, action_id, context=self._context)
+            self._cr, self._uid, 'product_history_for_cpo',
+            "action_view_history")
+        action = self.pool[model].read(
+            self._cr, self._uid, action_id, context=self._context)
         ids = []
         for cpol in self:
                 ids.append(cpol.product_id.id)
