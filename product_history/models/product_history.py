@@ -55,7 +55,18 @@ class ProductHistory(models.Model):
     incoming_qty = fields.Float("Incoming quantity", default=0)
     outgoing_qty = fields.Float("Outgoing quantity", default=0)
     virtual_qty = fields.Float("Virtual quantity", default=0)
+    ignored = fields.Boolean("Ignore line", default=False)
     history_range = fields.Selection(
         HISTORY_RANGE, "History range",
         required=True)
 
+# Private section
+    @api.multi
+    def ignore_line(self):
+        for line in self:
+            line.ignored = True
+
+    @api.multi
+    def unignore_line(self):
+        for line in self:
+            line.ignored = False

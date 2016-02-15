@@ -25,6 +25,7 @@
                             <field name="incoming_qty"/>
                             <field name="outgoing_qty"/>
                             <field name="virtual_qty"/>
+                            <field name="ignored" invisible="True"/>
                         </tree>
                     </field>
                 </page>
