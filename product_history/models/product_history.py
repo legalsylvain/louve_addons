@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields
+from openerp import models, fields, api
 
 HISTORY_RANGE = [
         ('days', 'Days'),
@@ -32,6 +32,7 @@ HISTORY_RANGE = [
 
 class ProductHistory(models.Model):
     _name = "product.history"
+    _order = 'from_date desc'
 
 # Columns section
     product_id = fields.Many2one(
@@ -43,14 +44,14 @@ class ProductHistory(models.Model):
     location_id = fields.Many2one(
         'stock.location', string='Location', required=True,
         ondelete='cascade')
-    from_date = fields.Date("From Date")
-    to_date = fields.Date("To Date")
-    purchase_qty = fields.Float("Purchases")
-    production_qty = fields.Float("Production")
-    sale_qty = fields.Float("Sales")
-    loss_qty = fields.Float("Losses")
-    start_qty = fields.Float("Opening quantity")
-    end_qty = fields.Float("Closing quantity")
-    incoming_qty = fields.Float("Incoming quantity")
-    outgoing_qty = fields.Float("Outgoing quantity")
-    virtual_qty = fields.Float("Virtual quantity")
+    from_date = fields.Date("From Date", required=True)
+    to_date = fields.Date("To Date", required=True)
+    purchase_qty = fields.Float("Purchases", default=0)
+    production_qty = fields.Float("Production", default=0)
+    sale_qty = fields.Float("Sales", default=0)
+    loss_qty = fields.Float("Losses", default=0)
+    start_qty = fields.Float("Opening quantity", default=0)
+    end_qty = fields.Float("Closing quantity", default=0)
+    incoming_qty = fields.Float("Incoming quantity", default=0)
+    outgoing_qty = fields.Float("Outgoing quantity", default=0)
+    virtual_qty = fields.Float("Virtual quantity", default=0)

@@ -22,8 +22,10 @@
 ##############################################################################
 
 from openerp import models, fields, api
+from datetime import date
 from datetime import datetime as dt
 from datetime import timedelta as td
+from dateutil.relativedelta import relativedelta as rd
 
 
 HISTORY_RANGE = [
@@ -31,6 +33,8 @@ HISTORY_RANGE = [
         ('weeks', 'Week'),
         # ('months', 'Month'),
         ]
+
+old_date = date(2015, 1, 1)
 
 
 class ProductProduct(models.Model):
@@ -117,59 +121,59 @@ class ProductProduct(models.Model):
         # self._compute_history('days')
 
     @api.multi
-    def _compute_history(self):
-        now = dt.now()
-        current_date = dt.strftime(now, "%Y-%m-%d")
-
+    def _compute_history(self, history_range):
+        now = date.today()
         for product in self:
-            if product.product_history_ids:
             if history_range == "months":
                 delta = rd(months=1)
             elif history_range == "weeks":
                 delta = rd(weeks=1)
             else:
                 delta = rd(days=1)
+            if product.product_history_ids.filtered(
+                    lambda h: h.history_range == history_range):
                 self.env.cr.execute(
                     """SELECT to_date, end_qty FROM product_history
-                    WHERE product_id=%s ORDER BY "id" DESC LIMIT 1"""
-                    % (product.id))
+                    WHERE product_id=%s AND history_range='%s'
+                    ORDER BY "id" DESC LIMIT 1"""
+                    % (product.id, history_range))
                 last_record = self.env.cr.fetchone()
-                last_date = last_record and last_record[0] or None
-                last_qty = last_record and last_record[1] or None
+                last_date = last_record and dt.strptime(
+                    last_record[0], "%Y-%m-%d") or old_date
+                last_qty = last_record and last_record[1] or 0
+                from_date = last_date + td(days=1)
             else:
                 self.env.cr.execute(
                     """SELECT date FROM stock_move
                     WHERE product_id=%s ORDER BY "date" LIMIT 1"""
                     % (product.id))
-                last_date = self.env.cr.fetchone()[0]
-                last_date = dt.strftime(dt.strptime(
-                    last_date, "%Y-%m-%d %X"), "%Y-%m-%d")
+                fetch = self.env.cr.fetchone()
+                from_date = fetch and dt.strptime(
+                    fetch[0], "%Y-%m-%d %X").date() or old_date
                 if history_range == "months":
                     from_date = date(
                         from_date.year, from_date.month, 1)
                 elif history_range == "weeks":
                     from_date = from_date - td(days=from_date.weekday())
                 last_qty = 0
-            while last_date < current_date:
-                new_from_date = dt.strftime(dt.strptime(
-                        last_date, "%Y-%m-%d") + td(
-                        seconds=1), "%Y-%m-%d %X")
-                new_last_date = dt.strftime(dt.strptime(
-                        last_date, "%Y-%m-%d") + td(days=1), "%Y-%m-%d")
+            while from_date + delta <= now:
+                last_date = from_date + delta - td(days=1)
                 res = product.with_context({
-                    'from_date': new_from_date,
-                    'to_date': new_last_date})._compute_qtys()
+                    'from_date': dt.strftime(from_date, "%Y-%m-%d"),
+                    'to_date': dt.strftime(last_date, "%Y-%m-%d")
+                    })._compute_qtys()
                 res2 = product.with_context({
-                    'to_date': new_last_date,
+                    'to_date': dt.strftime(last_date, "%Y-%m-%d"),
                     })._product_available()[product.id]
                 res3 = product.with_context({
-                    'to_date': new_last_date})._compute_qtys()
+                    'to_date': dt.strftime(last_date, "%Y-%m-%d")
+                    })._compute_qtys()
                 vals = {
                     'product_id': product.id,
                     'product_tmpl_id': product.product_tmpl_id.id,
                     'location_id': self.env['stock.location'].search([])[0].id,
-                    'from_date': new_from_date,
-                    'to_date': new_last_date,
+                    'from_date': dt.strftime(from_date, "%Y-%m-%d"),
+                    'to_date': dt.strftime(last_date, "%Y-%m-%d"),
                     'purchase_qty': res['purchase_qty'],
                     'sale_qty': res['sale_qty'],
                     'loss_qty': res['inventory_qty'],
@@ -178,10 +182,9 @@ class ProductProduct(models.Model):
                     'virtual_qty': res3['total_qty'] +
                     res2['incoming_qty'] - res2['outgoing_qty'],
                     'incoming_qty': res2['incoming_qty'],
-                    'outgoing_qty': res2['outgoing_qty'],
+                    'outgoing_qty': -res2['outgoing_qty'],
                     'history_range': history_range,
                     }
                 self.env['product.history'].create(vals)
-                last_date = new_last_date
                 last_qty = res3['total_qty']
-
+                from_date = last_date + td(days=1)
