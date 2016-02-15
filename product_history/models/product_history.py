@@ -55,3 +55,7 @@ class ProductHistory(models.Model):
     incoming_qty = fields.Float("Incoming quantity", default=0)
     outgoing_qty = fields.Float("Outgoing quantity", default=0)
     virtual_qty = fields.Float("Virtual quantity", default=0)
+    history_range = fields.Selection(
+        HISTORY_RANGE, "History range",
+        required=True)
+

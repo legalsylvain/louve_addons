@@ -41,6 +41,7 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
 # Column section
+    history_range = fields.Selection(HISTORY_RANGE, "History Range")
     product_history_ids = fields.One2many(
         comodel_name='product.history', inverse_name='product_id',
         string='History')
