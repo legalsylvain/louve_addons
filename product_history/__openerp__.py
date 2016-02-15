@@ -26,6 +26,8 @@
     'category': 'Product',
     'description': """
 Computes figures about the product's sales, purchases, stocks.
+In menu Inventory/Settings, you can choose if this data will be displayed per
+day/week/month.
 ===========================================================================
 
 Copyright, Author and Licence :
@@ -45,6 +47,7 @@ Copyright, Author and Licence :
     ],
     'data': [
         'views/product_product_view.xml',
+        'views/res_config_view.xml',
         # 'views/product_template_view.xml',
         'views/product_history_view.xml',
         'data/cron.xml',

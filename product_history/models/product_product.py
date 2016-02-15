@@ -26,6 +26,13 @@ from datetime import datetime as dt
 from datetime import timedelta as td
 
 
+HISTORY_RANGE = [
+        # ('days', 'Days'),
+        ('weeks', 'Week'),
+        # ('months', 'Month'),
+        ]
+
+
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
@@ -53,7 +60,7 @@ class ProductProduct(models.Model):
 
             for field, usage, sign in (
                     ('purchase_qty', 'supplier', 1),
-                    ('sale_qty', 'customer', -1),
+                    ('sale_qty', 'customer', 1),
                     ('inventory_qty', 'inventory', 1),
                     ('procurement_qty', 'procurement', 1),
                     ('production_qty', 'production', 1),
@@ -76,17 +83,38 @@ class ProductProduct(models.Model):
             return res
 
 # Action section
+#     @api.model
+#     def run_product_history_day(self):
+#         # This method is called by the cron task
+#         products = self.env['product.product'].search([
+#             '|', ('active', '=', True),
+#             ('active', '=', False)])
+#         products._compute_history('days')
+
     @api.model
-    def run_product_history(self):
+    def run_product_history_week(self):
         # This method is called by the cron task
         products = self.env['product.product'].search([
             '|', ('active', '=', True),
             ('active', '=', False)])
-        products._compute_history()
+        products._compute_history('weeks')
+
+    # @api.model
+    # def run_product_history_month(self):
+    #     # This method is called by the cron task
+    #     products = self.env['product.product'].search([
+    #         '|', ('active', '=', True),
+    #         ('active', '=', False)])
+    #     products._compute_history('months')
 
     @api.one
     def action_compute_history(self):
-        self._compute_history()
+        # dummy button function
+        # TODO: erase!
+        # self._compute_history('months')
+        self.product_history_ids.unlink()
+        self._compute_history('weeks')
+        # self._compute_history('days')
 
     @api.multi
     def _compute_history(self):
@@ -95,6 +123,12 @@ class ProductProduct(models.Model):
 
         for product in self:
             if product.product_history_ids:
+            if history_range == "months":
+                delta = rd(months=1)
+            elif history_range == "weeks":
+                delta = rd(weeks=1)
+            else:
+                delta = rd(days=1)
                 self.env.cr.execute(
                     """SELECT to_date, end_qty FROM product_history
                     WHERE product_id=%s ORDER BY "id" DESC LIMIT 1"""
@@ -110,6 +144,11 @@ class ProductProduct(models.Model):
                 last_date = self.env.cr.fetchone()[0]
                 last_date = dt.strftime(dt.strptime(
                     last_date, "%Y-%m-%d %X"), "%Y-%m-%d")
+                if history_range == "months":
+                    from_date = date(
+                        from_date.year, from_date.month, 1)
+                elif history_range == "weeks":
+                    from_date = from_date - td(days=from_date.weekday())
                 last_qty = 0
             while last_date < current_date:
                 new_from_date = dt.strftime(dt.strptime(
@@ -140,6 +179,7 @@ class ProductProduct(models.Model):
                     res2['incoming_qty'] - res2['outgoing_qty'],
                     'incoming_qty': res2['incoming_qty'],
                     'outgoing_qty': res2['outgoing_qty'],
+                    'history_range': history_range,
                     }
                 self.env['product.history'].create(vals)
                 last_date = new_last_date
