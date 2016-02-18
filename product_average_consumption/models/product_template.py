@@ -42,7 +42,7 @@ class ProductTemplate(models.Model):
         string='Real Calculation Range (days)',
         multi='average_consumption',
         help="""The calculation will be done for the last 365 days or"""
-        """ since the first purchase or sale of the product if it's"""
+        """ since the first stock move of the product if it's"""
         """ more recent""")
     display_range = fields.Integer(
         'Display Range in days', default=1, help="""Examples:
