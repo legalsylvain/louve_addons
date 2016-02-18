@@ -44,6 +44,14 @@ class ProductTemplate(models.Model):
         help="""The calculation will be done for the last 365 days or"""
         """ since the first stock move of the product if it's"""
         """ more recent""")
+    consumption_calculation_method = fields.Selection([
+        ('moves', 'Calculate consumption based on Stock Moves'),
+        ('history', 'Calculate consumption based on the Product History'),
+        ], 'Consumption Calculation Method', default='moves')
+    number_of_periods = fields.Integer(
+        'Number of valid history periods used for the calculation', default=6,
+        help="""This field is used if the selected method is based on"""
+        """ Product History""")
     display_range = fields.Integer(
         'Display Range in days', default=1, help="""Examples:
         1 -> Average Consumption per days
@@ -56,7 +64,7 @@ class ProductTemplate(models.Model):
         """ be done on last year.""")
 
     # Fields Function Section
-    @api.onchange('calculation_range')
+    @api.depends('product_variant_ids')
     @api.multi
     def _compute_average_consumption(self):
         for template in self:
@@ -73,7 +81,7 @@ class ProductTemplate(models.Model):
                     nb_days and
                     (total_consumption / nb_days) or False)
 
-    @api.onchange('display_range', 'average_consumption')
+    @api.depends('display_range', 'average_consumption')
     @api.multi
     def _displayed_average_consumption(self):
         for template in self:

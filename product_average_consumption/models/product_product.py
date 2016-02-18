@@ -47,6 +47,10 @@ class ProductProduct(models.Model):
         help="""The calculation will be done according to Calculation Range"""
         """ field or since the first stock move of the product if it's"""
         """ more recent""")
+    consumption_calculation_method = fields.Selection(
+        related='product_tmpl_id.consumption_calculation_method')
+    number_of_periods = fields.Integer(
+        related='product_tmpl_id.number_of_periods')
     display_range = fields.Integer(
         related='product_tmpl_id.display_range')
     calculation_range = fields.Integer(
@@ -64,9 +68,17 @@ class ProductProduct(models.Model):
             or time.strftime('%Y-%m-%d')
 
     # Fields Function Section
-    @api.onchange('calculation_range')
     @api.multi
     def _average_consumption(self):
+        for product in self:
+            if product.consumption_calculation_method == 'moves':
+                product._average_consumption_moves()
+            elif product.consumption_calculation_method == 'history':
+                product._average_consumption_history()
+
+    @api.onchange('calculation_range')
+    @api.multi
+    def _average_consumption_moves(self):
         context = self.env.context or {}
         domain_products = [('product_id', 'in', self.ids)]
         domain_move_out = []
@@ -105,6 +117,13 @@ class ProductProduct(models.Model):
                 (outgoing_qty / nb_days) or False)
             product.total_consumption = outgoing_qty or False
             product.nb_days = nb_days or False
+
+    @api.onchange('number_of_periods')
+    @api.multi
+    def _average_consumption_history(self):
+        for product in self:
+            nb = product.number_of_periods
+            history_range = product.history_range
 
     @api.onchange('display_range', 'average_consumption')
     @api.multi
