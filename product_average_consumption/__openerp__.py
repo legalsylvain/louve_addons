@@ -26,6 +26,8 @@
     'category': 'Product',
     'description': """
 Shows figures in the product form about the average consumption of products
+There are settings in Inventory/settings to define the calculation range and
+the display range.
 ===========================================================================
 
 Copyright, Author and Licence :
@@ -46,5 +48,6 @@ Copyright, Author and Licence :
     'data': [
         'views/product_product_view.xml',
         'views/product_template_view.xml',
+        'views/res_config_view.xml',
     ],
 }

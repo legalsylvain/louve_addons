@@ -31,28 +31,51 @@ class ProductTemplate(models.Model):
     average_consumption = fields.Float(
         compute='_compute_average_consumption',
         string='Average Consumption per day', multi='average_consumption')
+    displayed_average_consumption = fields.Float(
+        compute='_displayed_average_consumption',
+        string='Average Consumption')
     total_consumption = fields.Float(
         compute='_compute_average_consumption',
         string='Total Consumption', multi='average_consumption')
     nb_days = fields.Integer(
         compute='_compute_average_consumption',
-        string='Number of days for the calculation',
+        string='Real Calculation Range (days)',
         multi='average_consumption',
         help="""The calculation will be done for the last 365 days or"""
         """ since the first purchase or sale of the product if it's"""
         """ more recent""")
+    display_range = fields.Integer(
+        'Display Range in days', default=1, help="""Examples:
+        1 -> Average Consumption per days
+        7 -> Average Consumption per week
+        30 -> Average Consumption per month""")
+    calculation_range = fields.Integer(
+        'Asked Calculation Range (days)', default=365,
+        help=""" Number of days used for the calculation of the average """
+        """ consumption. For example: if you put 365, the calculation will """
+        """ be done on last year.""")
 
     # Fields Function Section
+    @api.onchange('calculation_range')
     @api.multi
     def _compute_average_consumption(self):
         for template in self:
-            nb_days = max(
-                product.nb_days for product in template.product_variant_ids)
-            total_consumption = sum(
-                product.total_consumption
-                for product in template.product_variant_ids)
-            template.nb_days = nb_days
-            template.total_consumption = total_consumption
-            template.average_consumption = (
-                nb_days and
-                (total_consumption / nb_days) or False)
+            if template.product_variant_ids:
+                nb_days = max(
+                    product.nb_days for product in
+                    template.product_variant_ids)
+                total_consumption = sum(
+                    product.total_consumption
+                    for product in template.product_variant_ids)
+                template.nb_days = nb_days
+                template.total_consumption = total_consumption
+                template.average_consumption = (
+                    nb_days and
+                    (total_consumption / nb_days) or False)
+
+    @api.onchange('display_range', 'average_consumption')
+    @api.multi
+    def _displayed_average_consumption(self):
+        for template in self:
+            template.displayed_average_consumption =\
+                template.average_consumption * template.display_range

@@ -34,6 +34,9 @@ class ProductProduct(models.Model):
     average_consumption = fields.Float(
         compute='_average_consumption',
         string='Average Consumption per day', multi='average_consumption')
+    displayed_average_consumption = fields.Float(
+        compute='_displayed_average_consumption',
+        string='Average Consumption')
     total_consumption = fields.Float(
         compute='_average_consumption',
         string='Total Consumption', multi='average_consumption')
@@ -41,12 +44,16 @@ class ProductProduct(models.Model):
         compute='_average_consumption',
         string='Number of days for the calculation',
         multi='average_consumption',
-        help="""The calculation will be done for the last 365 days or"""
-        """ since the first purchase or sale of the product if it's"""
-        """ more recent""")
+        help="""The calculation will be done according to calculation_range"""
+        """field or since the first purchase or sale of the product if it's"""
+        """more recent""")
+    display_range = fields.Integer(
+        related='product_tmpl_id.display_range')
+    calculation_range = fields.Integer(
+        related='product_tmpl_id.calculation_range')
 
     # Private Function Section
-    @api.one
+    @api.model
     def _min_date(self, product_id):
         query = """SELECT to_char(min(date), 'YYYY-MM-DD') \
                 from stock_move where product_id = %s""" % (product_id)
@@ -57,13 +64,9 @@ class ProductProduct(models.Model):
             or time.strftime('%Y-%m-%d')
 
     # Fields Function Section
+    @api.onchange('calculation_range')
     @api.multi
     def _average_consumption(self):
-        first_date = time.strftime('%Y-%m-%d')
-        begin_date = (
-            datetime.datetime.today() -
-            datetime.timedelta(days=365)).strftime('%Y-%m-%d')
-
         context = self.env.context or {}
         domain_products = [('product_id', 'in', self.ids)]
         domain_move_out = []
@@ -82,6 +85,10 @@ class ProductProduct(models.Model):
             lambda x: (x['product_id'][0], x['product_qty']), moves_out))
 
         for product in self:
+            begin_date = (
+                datetime.datetime.today() -
+                datetime.timedelta(days=product.calculation_range)
+                ).strftime('%Y-%m-%d')
             first_date = max(
                 begin_date,
                 self._min_date(product.id)
@@ -98,3 +105,10 @@ class ProductProduct(models.Model):
                 (outgoing_qty / nb_days) or False)
             product.total_consumption = outgoing_qty or False
             product.nb_days = nb_days or False
+
+    @api.onchange('display_range', 'average_consumption')
+    @api.multi
+    def _displayed_average_consumption(self):
+        for product in self:
+            product.displayed_average_consumption =\
+                product.average_consumption * product.display_range

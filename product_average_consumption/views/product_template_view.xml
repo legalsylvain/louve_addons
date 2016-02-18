@@ -28,9 +28,11 @@
         <field name="arch" type="xml">
             <group name="group_lots_and_weight" position="after">
                 <group name="Consumption" string="Consumption figures">
+                    <field name="calculation_range" />
                     <field name="nb_days"/>
                     <field name="total_consumption"/>
-                    <field name="average_consumption"/>
+                    <field name="displayed_average_consumption"/>
+                    <field name="display_range"/>
                 </group>
             </group>
         </field>
