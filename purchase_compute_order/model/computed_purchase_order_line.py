@@ -90,6 +90,10 @@ class ComputedPurchaseOrderLine(models.Model):
     stock_duration = fields.Float(
         compute='_compute_stock_duration', string='Stock Duration (Days)',
         readonly='True', help="Number of days the stock should last.")
+    virtual_duration = fields.Float(
+        compute='_compute_stock_duration', string='Virtual Duration (Days)',
+        readonly='True', help="""Number of days the stock should last after"""
+        """ the purchase.""")
     purchase_qty = fields.Float(
         'Quantity to purchase', required=True, default=0,
         help="The quantity you should purchase.")
@@ -218,6 +222,9 @@ class ComputedPurchaseOrderLine(models.Model):
                     cpol.stock_duration = (
                         cpol.computed_qty + cpol.manual_input_output_qty)\
                         / cpol.average_consumption
+                    cpol.virtual_duration = (
+                        cpol.computed_qty + cpol.manual_input_output_qty +
+                        cpol.purchase_qty) / cpol.average_consumption
 
     # View Section
     @api.onchange(

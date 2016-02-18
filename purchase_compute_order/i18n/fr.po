@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 13:53+0000\n"
-"PO-Revision-Date: 2016-02-18 13:53+0000\n"
+"POT-Creation-Date: 2016-02-18 14:47+0000\n"
+"PO-Revision-Date: 2016-02-18 14:47+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -280,7 +280,7 @@ msgstr "Var. manu."
 #. module: purchase_compute_order
 #: model:ir.model.fields,help:purchase_compute_order.field_computed_purchase_order_valid_psi
 msgid "Method of selection of suppliers"
-msgstr "Method of selection of suppliers"
+msgstr "Méthode de sélection des fournisseurs"
 
 #. module: purchase_compute_order
 #: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_computed_duration
@@ -298,6 +298,11 @@ msgstr "Poids net"
 #, python-format
 msgid "New"
 msgstr "Nouveau"
+
+#. module: purchase_compute_order
+#: model:ir.model.fields,help:purchase_compute_order.field_computed_purchase_order_line_virtual_duration
+msgid "Number of days the stock should last after the purchase."
+msgstr "Nombre théorique de jours d'autonomie après commande."
 
 #. module: purchase_compute_order
 #: model:ir.model.fields,help:purchase_compute_order.field_computed_purchase_order_line_stock_duration
@@ -570,7 +575,7 @@ msgid "This price will be considered as a price for the supplier Unit of Measure
 msgstr "Le prix du produit par UdM d'achat"
 
 #. module: purchase_compute_order
-#: code:addons/purchase_compute_order/model/computed_purchase_order_line.py:249
+#: code:addons/purchase_compute_order/model/computed_purchase_order_line.py:256
 #, python-format
 msgid "This product is already in the list!"
 msgstr "Ce produit est déjà dans la liste!"
@@ -636,6 +641,11 @@ msgid "Updated Products list"
 msgstr "Liste des produits modifiés"
 
 #. module: purchase_compute_order
+#: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_line_virtual_duration
+msgid "Virtual Duration (Days)"
+msgstr "Durée virtuelle (jours)"
+
+#. module: purchase_compute_order
 #: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_line_virtual_qty
 msgid "Virtual Quantity"
 msgstr "Entrées prévisionnelles"
@@ -669,15 +679,6 @@ msgstr "Date souhaitée pour la livraison."
 #: model:ir.model.fields,field_description:purchase_compute_order.field_update_products_line_wizard_wizard_id
 msgid "Wizard Reference"
 msgstr "Référence"
-
-#. module: purchase_compute_order
-#: model:ir.model.fields,help:purchase_compute_order.field_computed_purchase_order_line_manual_input_output_qty
-msgid "Write here some extra quantity depending of some input or output of products not entered in the software\n"
-"- negative quantity : extra output ; \n"
-"- positive quantity : extra input."
-msgstr "Indiquez ici une entrée ou sortie manuelle non enregistrée dans le logiciel\n"
-"- quantité négative : sortie ; \n"
-"- quantité positive : entrée."
 
 #. module: purchase_compute_order
 #: sql_constraint:product.supplierinfo:0

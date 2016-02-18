@@ -73,6 +73,7 @@
                                         <field name="stock_duration"/>
                                         <field name="package_quantity_inv"/>
                                         <field name="purchase_qty"/>
+                                        <field name="virtual_duration"/>
                                         <field name="uom_po_id"/>
                                         <field name="state" />
                                         <button name="unlink_psi" states="up_to_date,updated" type="object" icon="gtk-stop"
