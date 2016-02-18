@@ -67,7 +67,8 @@
                                         <field name="product_price_inv"/>
                                         <field name="computed_qty"/>
                                         <field name="manual_input_output_qty"/>
-                                        <field name="average_consumption"/>
+                                        <field name="displayed_average_consumption"/>
+                                        <field name="consumption_range"/>
                                         <field name="uom_id"/>
                                         <field name="stock_duration"/>
                                         <field name="package_quantity_inv"/>

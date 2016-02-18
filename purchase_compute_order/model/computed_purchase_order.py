@@ -341,7 +341,9 @@ class ComputedPurchaseOrder(models.Model):
                             'product_name': psi.product_name,
                             'product_price': psi.price,
                             'package_quantity': psi.package_qty or psi.min_qty,
-                            'average_consumption': pp.average_consumption,
+                            'displayed_average_consumption':
+                            pp.displayed_average_consumption,
+                            'consumption_range': pp.display_range,
                             'uom_po_id': psi.product_uom.id,
                         }))
             # update line_ids
