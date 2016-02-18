@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-25 21:46+0000\n"
-"PO-Revision-Date: 2016-01-25 21:46+0000\n"
+"POT-Creation-Date: 2016-02-18 13:53+0000\n"
+"PO-Revision-Date: 2016-02-18 13:53+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgid "Active"
 msgstr "Actif"
 
 #. module: purchase_compute_order
-#: code:addons/purchase_compute_order/model/computed_purchase_order.py:355
+#: code:addons/purchase_compute_order/model/computed_purchase_order.py:367
 #, python-format
 msgid "All purchase quantities are set to 0!"
 msgstr "Toutes les quantités d'achat sont à 0!"
@@ -37,9 +37,14 @@ msgid "Apply"
 msgstr "Appliquer"
 
 #. module: purchase_compute_order
-#: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_line_average_consumption
+#: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_line_displayed_average_consumption
 msgid "Average Consumption"
 msgstr "Conso moy"
+
+#. module: purchase_compute_order
+#: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_line_average_consumption
+msgid "Average consumption"
+msgstr "Consommation Moyenne"
 
 #. module: purchase_compute_order
 #: model:ir.model.fields,help:purchase_compute_order.field_computed_purchase_order_active
@@ -117,6 +122,18 @@ msgstr "Référence"
 #: model:ir.ui.view,arch_db:purchase_compute_order.view_computed_purchase_order_form
 msgid "Computed purchase order lines"
 msgstr "Lignes de calcul de commande d'achat"
+
+#. module: purchase_compute_order
+#: selection:computed.purchase.order,valid_psi:0
+#: selection:purchase.config.settings,default_valid_psi:0
+msgid "Consider all the suppliers registered on the product"
+msgstr "Considère tous les fournisseurs renseignés sur le produit"
+
+#. module: purchase_compute_order
+#: selection:computed.purchase.order,valid_psi:0
+#: selection:purchase.config.settings,default_valid_psi:0
+msgid "Consider only the first supplier on the product"
+msgstr "Considère uniquement le premier fournisseur valide enregistré sur le produit"
 
 #. module: purchase_compute_order
 #: model:ir.ui.view,arch_db:purchase_compute_order.view_computed_purchase_order_search
@@ -261,6 +278,11 @@ msgid "Manual variation"
 msgstr "Var. manu."
 
 #. module: purchase_compute_order
+#: model:ir.model.fields,help:purchase_compute_order.field_computed_purchase_order_valid_psi
+msgid "Method of selection of suppliers"
+msgstr "Method of selection of suppliers"
+
+#. module: purchase_compute_order
 #: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_computed_duration
 msgid "Minimum duration after order"
 msgstr "Durée minimum après commande"
@@ -329,15 +351,21 @@ msgid "Pending quantity taken in account"
 msgstr "Prendre en compte le stock virtuel"
 
 #. module: purchase_compute_order
+#: model:ir.model,name:purchase_compute_order.model_product_product
 #: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_line_product_id
 #: model:ir.model.fields,field_description:purchase_compute_order.field_update_products_line_wizard_product_id
 msgid "Product"
-msgstr "Article"
+msgstr "Produit"
 
 #. module: purchase_compute_order
 #: model:ir.ui.view,arch_db:purchase_compute_order.view_update_products_line_form
 msgid "Product Information"
 msgstr "Informations sur le produit"
+
+#. module: purchase_compute_order
+#: model:ir.model,name:purchase_compute_order.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
 
 #. module: purchase_compute_order
 #: sql_constraint:computed.purchase.order.line:0
@@ -351,8 +379,9 @@ msgid "Products to order."
 msgstr "Produits à commander."
 
 #. module: purchase_compute_order
-#: code:addons/purchase_compute_order/model/computed_purchase_order.py:377
+#: code:addons/purchase_compute_order/model/computed_purchase_order.py:389
 #: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_purchase_order_id
+#: model:ir.ui.view,arch_db:purchase_compute_order.view_cpo_config_settings
 #, python-format
 msgid "Purchase Order"
 msgstr "Commande d'achat"
@@ -369,9 +398,26 @@ msgid "Quantity On Hand"
 msgstr "Quantité disponible"
 
 #. module: purchase_compute_order
+#: model:ir.model.fields,help:purchase_compute_order.field_computed_purchase_order_line_virtual_qty
+msgid "Quantity on hand + Virtual incoming and outgoing entries"
+msgstr "Quantité disponible + Entrées et Sorties prévisionnelles"
+
+#. module: purchase_compute_order
 #: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_line_purchase_qty
 msgid "Quantity to purchase"
 msgstr "Qté achat"
+
+#. module: purchase_compute_order
+#: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_line_consumption_range
+msgid "Range (days)"
+msgstr "Plage (j)"
+
+#. module: purchase_compute_order
+#: model:ir.model.fields,help:purchase_compute_order.field_computed_purchase_order_line_consumption_range
+msgid "Range (in days) used to display the average\n"
+"        consumption"
+msgstr "Plage (en jours) pour l'affichage de la\n"
+"        consommation moyenne"
 
 #. module: purchase_compute_order
 #: model:ir.ui.view,arch_db:purchase_compute_order.view_computed_purchase_order_form
@@ -450,6 +496,12 @@ msgid "Supplier Unit of Measure"
 msgstr "UdM du fournisseur"
 
 #. module: purchase_compute_order
+#: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_valid_psi
+#: model:ir.model.fields,field_description:purchase_compute_order.field_purchase_config_settings_default_valid_psi
+msgid "Supplier choice"
+msgstr "Choix du fournisseur"
+
+#. module: purchase_compute_order
 #: model:ir.model.fields,help:purchase_compute_order.field_computed_purchase_order_partner_id
 msgid "Supplier of the purchase order."
 msgstr "Fournisseur de cette commande d'achat."
@@ -510,8 +562,7 @@ msgid "This defines the amount of products you want to purchase. \n"
 "* Target type 'kg': computed purchase order will weight at least the weight specified"
 msgstr "Cette sélection permet de définir la base de calcul des produits à commander. \n"
 "Le système calculera une commande basée sur vos stocks et la moyenne de consommation de chaque produit.* Base de calcul '€' : le montant de commande sera au minimum le montant spécifié.\n"
-"* Base de calcul 'Jours' : le système propose une commande assurant une couverture de stock correspondant au nombre de jours renseigné."
-"* Base de calcul 'kg' : la commande aura un poid minimum du poids indiqué."
+"* Base de calcul 'Jours' : le système propose une commande assurant une couverture de stock correspondant au nombre de jours renseigné.* Base de calcul 'kg' : la commande aura un poid minimum du poids indiqué."
 
 #. module: purchase_compute_order
 #: model:ir.model.fields,help:purchase_compute_order.field_update_products_line_wizard_price
@@ -519,7 +570,7 @@ msgid "This price will be considered as a price for the supplier Unit of Measure
 msgstr "Le prix du produit par UdM d'achat"
 
 #. module: purchase_compute_order
-#: code:addons/purchase_compute_order/model/computed_purchase_order_line.py:233
+#: code:addons/purchase_compute_order/model/computed_purchase_order_line.py:249
 #, python-format
 msgid "This product is already in the list!"
 msgstr "Ce produit est déjà dans la liste!"
@@ -585,6 +636,11 @@ msgid "Updated Products list"
 msgstr "Liste des produits modifiés"
 
 #. module: purchase_compute_order
+#: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_line_virtual_qty
+msgid "Virtual Quantity"
+msgstr "Entrées prévisionnelles"
+
+#. module: purchase_compute_order
 #: model:ir.model.fields,help:purchase_compute_order.field_computed_purchase_order_line_incoming_qty
 msgid "Virtual incoming entries"
 msgstr "Entrées prévisionnelles"
@@ -619,12 +675,13 @@ msgstr "Référence"
 msgid "Write here some extra quantity depending of some input or output of products not entered in the software\n"
 "- negative quantity : extra output ; \n"
 "- positive quantity : extra input."
-msgstr "Write here some extra quantity depending of some input or output of products not entered in the software\n"
-"- negative quantity : extra output ; \n"
-"- positive quantity : extra input."
+msgstr "Indiquez ici une entrée ou sortie manuelle non enregistrée dans le logiciel\n"
+"- quantité négative : sortie ; \n"
+"- quantité positive : entrée."
 
 #. module: purchase_compute_order
 #: sql_constraint:product.supplierinfo:0
+#: sql_constraint:product.template:0
 msgid "You cannot register several times the same supplier on a product!"
 msgstr "Vous ne pouvez pas enregistrer plusieurs fois le même fournisseur sur un produit!"
 
@@ -644,4 +701,9 @@ msgstr "kg"
 #: model:ir.ui.view,arch_db:purchase_compute_order.view_update_products_form
 msgid "or"
 msgstr "ou"
+
+#. module: purchase_compute_order
+#: model:ir.model,name:purchase_compute_order.model_purchase_config_settings
+msgid "purchase.config.settings"
+msgstr "purchase.config.settings"
 
