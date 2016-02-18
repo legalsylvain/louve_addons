@@ -178,13 +178,13 @@ class ComputedPurchaseOrderLine(models.Model):
                         cpol.computed_purchase_order_id.partner_id.id),
                     ('product_tmpl_id', '=',
                         cpol.product_id.product_tmpl_id.id)])
-        if len(psi):
-            psi = psi[0]
-            if psi:
-                cpol.product_code_inv = psi.product_code
-                cpol.product_name_inv = psi.product_name
-                cpol.product_price_inv = psi.price
-                cpol.package_quantity_inv = psi.package_qty
+            if len(psi):
+                psi = psi[0]
+                if psi:
+                    cpol.product_code_inv = psi.product_code
+                    cpol.product_name_inv = psi.product_name
+                    cpol.product_price_inv = psi.price
+                    cpol.package_quantity_inv = psi.package_qty
 
     @api.depends('product_code_inv')
     def _set_product_code(self):
