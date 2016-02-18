@@ -235,7 +235,7 @@ class ComputedPurchaseOrderLine(models.Model):
 
     @api.onchange(
         'computed_purchase_order_id', 'product_id',
-        'computed_purchase_order_id.partner_id')
+        )
     def onchange_product_id(self):
         vals = {
             'state': 'new',
