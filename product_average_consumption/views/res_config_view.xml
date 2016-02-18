@@ -7,8 +7,10 @@
             <field name="inherit_id" ref="stock.view_stock_config_settings"/>
             <field name="arch" type="xml">
                 <field name="group_stock_packaging" position="after">
-                    <field name="default_display_range"/>
-                    <field name="default_calculation_range"/>
+                    <group name="average_consumption" string="Product Average Consumption">
+                        <field name="default_display_range"/>
+                        <field name="default_calculation_range"/>
+                    </group>
                 </field>
             </field>
         </record>

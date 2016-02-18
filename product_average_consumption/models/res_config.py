@@ -7,13 +7,13 @@ class PurchaseConfigSettings(models.TransientModel):
     _inherit = 'stock.config.settings'
 
     default_display_range = fields.Integer(
-        'Average Consumption Display Range in days', default=1,
+        'Display Range in days', default=1,
         default_model='product.template', help="""Examples:
         1 -> Average Consumption per days
         7 -> Average Consumption per week
         30 -> Average Consumption per month""")
     default_calculation_range = fields.Integer(
-        'Average Consumption Calculation Range in days', default=365,
+        'Calculation Range in days', default=365,
         default_model='product.template', help="""Number of days used for
         the calculation of the average consumption. For example: if you put
         365, the calculation will be done on last year.""")

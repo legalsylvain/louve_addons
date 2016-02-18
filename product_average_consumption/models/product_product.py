@@ -44,9 +44,9 @@ class ProductProduct(models.Model):
         compute='_average_consumption',
         string='Number of days for the calculation',
         multi='average_consumption',
-        help="""The calculation will be done according to calculation_range"""
-        """field or since the first purchase or sale of the product if it's"""
-        """more recent""")
+        help="""The calculation will be done according to Calculation Range"""
+        """ field or since the first stock move of the product if it's"""
+        """ more recent""")
     display_range = fields.Integer(
         related='product_tmpl_id.display_range')
     calculation_range = fields.Integer(
