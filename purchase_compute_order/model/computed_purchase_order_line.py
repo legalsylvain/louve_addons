@@ -230,7 +230,7 @@ class ComputedPurchaseOrderLine(models.Model):
                 cpo = self.computed_purchase_order_id
                 # Check if the product is already in the list.
                 products = [x.product_id.id for x in cpo.line_ids]
-                if self.product_id in products:
+                if self.product_id.id in products:
                     raise ValidationError(
                         _('This product is already in the list!'))
                 if cpo.compute_pending_quantity:
@@ -253,7 +253,7 @@ class ComputedPurchaseOrderLine(models.Model):
                 ('name', '=', self.computed_purchase_order_id.partner_id.id),
                 ('product_tmpl_id', '=', pp.product_tmpl_id.id)])
             if psi_id:
-                psi = psi_obj.browse(psi_id)[0]
+                psi = psi_id[0]
                 vals.update({
                     'product_code_inv': psi.product_code,
                     'product_name_inv': psi.product_name,
@@ -262,15 +262,16 @@ class ComputedPurchaseOrderLine(models.Model):
                     'uom_po_id': psi.product_uom.id,
                     'state': 'up_to_date',
                 })
-        self.qty_available = vals['qty_available']
-        self.incoming_qty = vals['incoming_qty']
-        self.outgoing_qty = vals['outgoing_qty']
-        self.computed_qty = vals['computed_qty']
-        self.weight = vals['weight']
-        self.uom_po_id = vals['uom_po_id']
-        self.product_price_inv = vals['product_price_inv']
-        self.package_quantity_inv = vals['package_quantity_inv']
-        self.average_consumption = vals['average_consumption']
+            self.qty_available = vals['qty_available']
+            self.incoming_qty = vals['incoming_qty']
+            self.outgoing_qty = vals['outgoing_qty']
+            self.computed_qty = vals['computed_qty']
+            self.weight = vals['weight']
+            self.uom_po_id = vals['uom_po_id']
+            self.product_price_inv = vals['product_price_inv']
+            self.package_quantity_inv = vals['package_quantity_inv']
+            self.average_consumption = vals['average_consumption']
+            self.consumption_range = vals['consumption_range']
 
     @api.multi
     def unlink_psi(self):
