@@ -21,13 +21,48 @@
 #
 ##############################################################################
 
-from openerp import models, fields
+from openerp import models, fields, api
+
+
+HISTORY_RANGE = [
+    ('days', 'Days'),
+    ('weeks', 'Week'),
+    ('months', 'Month'),
+    ]
 
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
 # Columns section
-    product_history_ids = fields.One2many(
+    history_range = fields.Selection(HISTORY_RANGE, "History Range")
+    product_history_ids = fields.Many2many(
         comodel_name='product.history', inverse_name='product_tmpl_id',
-        string='History', readonly=True)
+        string='History', compute="_compute_product_history_ids")
+
+# Private section
+    @api.depends('history_range')
+    @api.multi
+    def _compute_product_history_ids(self):
+        for template in self:
+            template.product_history_ids.unlink()
+            ph_ids = self.env['product.history'].search([
+                ('product_tmpl_id', '=', template.id),
+                ('history_range', '=', template.history_range)])
+            ph_ids = [ph.id for ph in ph_ids]
+            template.product_history_ids = [(6, 0, ph_ids)]
+
+    @api.one
+    def action_compute_history(self):
+        # dummy button function
+        # TODO: erase!
+        for product in self.product_variant_ids:
+            self.env.cr.execute(
+                """delete from product_history_product_product_rel where """
+                """product_product_id=%s""" % (product.id))
+            self.env.cr.execute(
+                "delete from product_history where product_id=%s"
+                % (product.id))
+            product._compute_history('months')
+            product._compute_history('weeks')
+            product._compute_history('days')

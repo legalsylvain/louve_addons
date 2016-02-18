@@ -27,13 +27,6 @@ from datetime import datetime as dt
 from datetime import timedelta as td
 from dateutil.relativedelta import relativedelta as rd
 
-
-HISTORY_RANGE = [
-    # ('days', 'Days'),
-    ('weeks', 'Week'),
-    # ('months', 'Month'),
-    ]
-
 old_date = date(2015, 1, 1)
 
 
@@ -41,8 +34,9 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
 # Column section
-    history_range = fields.Selection(HISTORY_RANGE, "History Range")
-    product_history_ids = fields.One2many(
+    product_tmpl_id = fields.Many2one(comodel_name='product.template')
+    history_range = fields.Selection(related="product_tmpl_id.history_range")
+    product_history_ids = fields.Many2many(
         comodel_name='product.history', inverse_name='product_id',
         string='History')
 
@@ -88,13 +82,13 @@ class ProductProduct(models.Model):
             return res
 
 # Action section
-#     @api.model
-#     def run_product_history_day(self):
-#         # This method is called by the cron task
-#         products = self.env['product.product'].search([
-#             '|', ('active', '=', True),
-#             ('active', '=', False)])
-#         products._compute_history('days')
+    @api.model
+    def run_product_history_day(self):
+        # This method is called by the cron task
+        products = self.env['product.product'].search([
+            '|', ('active', '=', True),
+            ('active', '=', False)])
+        products._compute_history('days')
 
     @api.model
     def run_product_history_week(self):
@@ -105,19 +99,18 @@ class ProductProduct(models.Model):
         products._compute_history('weeks')
 
     # @api.model
-    # def run_product_history_month(self):
-    #     # This method is called by the cron task
-    #     products = self.env['product.product'].search([
-    #         '|', ('active', '=', True),
-    #         ('active', '=', False)])
-    #     products._compute_history('months')
+    def run_product_history_month(self):
+        # This method is called by the cron task
+        products = self.env['product.product'].search([
+            '|', ('active', '=', True),
+            ('active', '=', False)])
+        products._compute_history('months')
 
     @api.one
     def action_compute_history(self):
         # dummy button function
         # TODO: erase!
         # self._compute_history('months')
-        self.product_history_ids.unlink()
         self._compute_history('weeks')
         # self._compute_history('days')
 
@@ -150,7 +143,7 @@ class ProductProduct(models.Model):
                     % (product.id))
                 fetch = self.env.cr.fetchone()
                 from_date = fetch and dt.strptime(
-                    fetch[0], "%Y-%m-%d %X").date() or old_date
+                    fetch[0], "%Y-%m-%d %X").date() or now
                 if history_range == "months":
                     from_date = date(
                         from_date.year, from_date.month, 1)

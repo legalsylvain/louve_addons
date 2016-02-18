@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="0">
-<!--     <record forcecreate="True" id="ir_cron_product_stock_history_day" model="ir.cron">
+     <record forcecreate="True" id="ir_cron_product_stock_history_day" model="ir.cron">
       <field name="name">Calculation of product stock history per day</field>
       <field name="active" eval="True"/>
       <field name="user_id" ref="base.user_root" />
@@ -11,7 +11,7 @@
       <field name="doall" eval="True"/>
       <field name="model" eval="'product.product'"/>
       <field name="function" eval="'run_product_history_day'"/>
-    </record> -->
+    </record>
     <record forcecreate="True" id="ir_cron_product_stock_history_week" model="ir.cron">
       <field name="name">Calculation of product stock history per week</field>
       <field name="active" eval="True"/>
@@ -24,7 +24,7 @@
       <field name="model" eval="'product.product'"/>
       <field name="function" eval="'run_product_history_week'"/>
     </record>
-<!--     <record forcecreate="True" id="ir_cron_product_stock_history_month" model="ir.cron">
+     <record forcecreate="True" id="ir_cron_product_stock_history_month" model="ir.cron">
       <field name="name">Calculation of product stock history per month</field>
       <field name="active" eval="True"/>
       <field name="user_id" ref="base.user_root" />
@@ -35,5 +35,5 @@
       <field name="doall" eval="True"/>
       <field name="model" eval="'product.product'"/>
       <field name="function" eval="'run_product_history_month'"/>
-    </record> -->
+    </record>
 </odoo>
