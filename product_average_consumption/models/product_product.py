@@ -49,8 +49,11 @@ class ProductProduct(models.Model):
         """ more recent""")
     consumption_calculation_method = fields.Selection(
         related='product_tmpl_id.consumption_calculation_method')
-    number_of_periods = fields.Integer(
+    number_of_periods_target = fields.Integer(
         related='product_tmpl_id.number_of_periods')
+    number_of_periods_real = fields.Integer(
+        'Number of History periods',
+        help="""Number of valid history periods used for the calculation""")
     display_range = fields.Integer(
         related='product_tmpl_id.display_range')
     calculation_range = fields.Integer(
@@ -122,7 +125,7 @@ class ProductProduct(models.Model):
     @api.multi
     def _average_consumption_history(self):
         for product in self:
-            nb = product.number_of_periods
+            nb = product.number_of_periods_target
             history_range = product.history_range
             history_ids = self.env['product.history'].search([
                 ('history_range', '=', history_range),
@@ -131,6 +134,7 @@ class ProductProduct(models.Model):
             if nb == 0:
                 product.total_consumption = 0
                 product.average_consumption = 0
+                product.number_of_periods_real = 0
             else:
                 ids = range(nb)
                 total_consumption = 0
@@ -138,6 +142,7 @@ class ProductProduct(models.Model):
                     total_consumption += history_ids[id].sale_qty
                 product.total_consumption = total_consumption
                 product.average_consumption = total_consumption / nb
+                product.number_of_periods_real = nb
 
     @api.onchange('display_range', 'average_consumption')
     @api.multi
