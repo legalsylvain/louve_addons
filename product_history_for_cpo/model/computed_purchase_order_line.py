@@ -28,7 +28,7 @@ class ComputedPurchaseOrderLine(models.Model):
     _inherit = 'computed.purchase.order.line'
 
     # Columns section
-    displayed_product_history_ids = fields.One2many(
+    displayed_product_history_ids = fields.Many2many(
         'displayed.product.history', related='product_id.product_history_ids',
         string='Product History')
 
