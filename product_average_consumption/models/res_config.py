@@ -43,14 +43,15 @@ class PurchaseConfigSettings(models.TransientModel):
         if not self.module_product_history:
             self.default_consumption_calculation_method = 'moves'
 
-
-    @api.onchange('default_display_range')
     @api.multi
-    def _onchange_default_display_range(self):
+    def write(self, vals):
         for config in self:
-            self.env.cr.execute("""
-                UPDATE product_template
-                SET display_range=%i""" % (config.default_display_range))
+            if vals.get('default_display_range', False):
+                self.env.cr.execute("""
+                    UPDATE product_template
+                    SET display_range=%i""" % (
+                    vals.get('default_display_range')))
+        return super(PurchaseConfigSettings, self).write(vals)
 
     @api.onchange('default_calculation_range')
     @api.multi
