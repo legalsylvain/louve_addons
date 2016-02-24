@@ -106,13 +106,6 @@ class ProductProduct(models.Model):
             ('active', '=', False)])
         products._compute_history('months')
 
-    @api.one
-    def action_compute_history(self):
-        # dummy button function
-        # TODO: erase!
-        # self._compute_history('months')
-        self._compute_history('weeks')
-        # self._compute_history('days')
     @api.model
     def init_history(self):
         products = self.env['product.product'].search([
