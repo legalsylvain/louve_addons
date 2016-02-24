@@ -141,7 +141,7 @@ class ProductProduct(models.Model):
                     % (product.id, history_range))
                 last_record = self.env.cr.fetchone()
                 last_date = last_record and dt.strptime(
-                    last_record[0], "%Y-%m-%d") or old_date
+                    last_record[0], "%Y-%m-%d").date() or old_date
                 last_qty = last_record and last_record[1] or 0
                 from_date = last_date + td(days=1)
             else:
