@@ -145,8 +145,12 @@ class ProductProduct(models.Model):
                     WHERE product_id=%s ORDER BY "date" LIMIT 1"""
                     % (product.id))
                 fetch = self.env.cr.fetchone()
-                from_date = fetch and dt.strptime(
-                    fetch[0], "%Y-%m-%d %X").date() or now
+                try:
+                    from_date = fetch and dt.strptime(
+                        fetch[0], "%Y-%m-%d %X").date() or now
+                except:
+                    print fetch
+                    import pdb; pdb.set_trace()
                 if history_range == "months":
                     from_date = date(
                         from_date.year, from_date.month, 1)
