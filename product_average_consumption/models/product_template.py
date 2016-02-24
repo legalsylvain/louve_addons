@@ -49,9 +49,8 @@ class ProductTemplate(models.Model):
         ('history', 'Calculate consumption based on the Product History'),
         ], 'Consumption Calculation Method', default='moves')
     number_of_periods = fields.Integer(
-        'Number of valid history periods used for the calculation', default=6,
-        help="""This field is used if the selected method is based on"""
-        """ Product History""")
+        'Number of History periods', default=6,
+        help="""Number of valid history periods used for the calculation""")
     display_range = fields.Integer(
         'Display Range in days', default=1, help="""Examples:
         1 -> Average Consumption per days
