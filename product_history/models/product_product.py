@@ -113,6 +113,14 @@ class ProductProduct(models.Model):
         # self._compute_history('months')
         self._compute_history('weeks')
         # self._compute_history('days')
+    @api.model
+    def init_history(self):
+        products = self.env['product.product'].search([
+            '|', ('active', '=', True),
+            ('active', '=', False)])
+        products._compute_history('months')
+        products._compute_history('weeks')
+        products._compute_history('days')
 
     @api.multi
     def _compute_history(self, history_range):

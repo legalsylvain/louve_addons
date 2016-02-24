@@ -50,6 +50,7 @@ Copyright, Author and Licence :
         'views/res_config_view.xml',
         'views/product_template_view.xml',
         'views/product_history_view.xml',
+        'data/function.xml',
         'data/cron.xml',
         'security/ir_model_access_data.yml',
         'security/ir_rule_data.yml',
