@@ -70,6 +70,14 @@ class ProductTemplate(models.Model):
     @api.multi
     def _compute_average_consumption(self):
         for template in self:
+            if template.consumption_calculation_method == 'moves':
+                template._average_consumption_moves()
+            elif template.consumption_calculation_method == 'history':
+                template._average_consumption_history()
+
+    @api.multi
+    def _average_consumption_moves(self):
+        for template in self:
             if template.product_variant_ids:
                 nb_days = max(
                     product.nb_days for product in
@@ -82,6 +90,24 @@ class ProductTemplate(models.Model):
                 template.average_consumption = (
                     nb_days and
                     (total_consumption / nb_days) or False)
+
+    @api.multi
+    def _average_consumption_history(self):
+        for template in self:
+            if template.product_variant_ids:
+                for product in template.product_variant_ids:
+                    product._average_consumption_history()
+                number_of_periods = max(
+                    product.number_of_periods_real for product in
+                    template.product_variant_ids)
+                total_consumption = sum(
+                    product.total_consumption
+                    for product in template.product_variant_ids)
+                template.number_of_periods = number_of_periods
+                template.total_consumption = total_consumption
+                template.average_consumption = (
+                    number_of_periods and
+                    (total_consumption / number_of_periods) or False)
 
     @api.depends('display_range', 'average_consumption')
     @api.multi
