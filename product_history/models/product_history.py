@@ -60,6 +60,12 @@ class ProductHistory(models.Model):
         HISTORY_RANGE, "History range",
         required=True)
 
+    _sql_constraints = [
+        ('history_uniq', 'unique(\
+            product_id, location_id, from_date, to_date,\
+            history_range)', 'This history line already exists!'),
+    ]
+
 # Private section
     @api.multi
     def ignore_line(self):
