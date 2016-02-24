@@ -35,7 +35,8 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
 # Columns section
-    history_range = fields.Selection(HISTORY_RANGE, "History Range")
+    history_range = fields.Selection(
+        HISTORY_RANGE, "History Range", default="weeks")
     product_history_ids = fields.Many2many(
         comodel_name='product.history', inverse_name='product_tmpl_id',
         string='History', compute="_compute_product_history_ids")
