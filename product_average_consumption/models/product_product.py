@@ -71,6 +71,9 @@ class ProductProduct(models.Model):
             or time.strftime('%Y-%m-%d')
 
     # Fields Function Section
+    @api.onchange(
+        'consumption_calculation_method',
+        'number_of_periods_target', 'calculation_range')
     @api.multi
     def _average_consumption(self):
         for product in self:
@@ -121,7 +124,6 @@ class ProductProduct(models.Model):
             product.total_consumption = outgoing_qty or False
             product.nb_days = nb_days or False
 
-    @api.onchange('number_of_periods')
     @api.multi
     def _average_consumption_history(self):
         for product in self:

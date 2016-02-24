@@ -63,6 +63,9 @@ class ProductTemplate(models.Model):
         """ be done on last year.""")
 
     # Fields Function Section
+    @api.onchange(
+        'consumption_calculation_method', 'number_of_periods',
+        'calculation_range')
     @api.depends('product_variant_ids')
     @api.multi
     def _compute_average_consumption(self):
