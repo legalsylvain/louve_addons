@@ -124,6 +124,20 @@ class ProductProduct(models.Model):
         for product in self:
             nb = product.number_of_periods
             history_range = product.history_range
+            history_ids = self.env['product.history'].search([
+                ('history_range', '=', history_range),
+                ('ignored', '=', 0)]).sorted()
+            nb = min(len(history_ids), nb)
+            if nb == 0:
+                product.total_consumption = 0
+                product.average_consumption = 0
+            else:
+                ids = range(nb)
+                total_consumption = 0
+                for id in ids:
+                    total_consumption += history_ids[id].sale_qty
+                product.total_consumption = total_consumption
+                product.average_consumption = total_consumption / nb
 
     @api.onchange('display_range', 'average_consumption')
     @api.multi
