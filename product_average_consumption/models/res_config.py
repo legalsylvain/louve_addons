@@ -51,6 +51,21 @@ class PurchaseConfigSettings(models.TransientModel):
                     UPDATE product_template
                     SET display_range=%i""" % (
                     vals.get('default_display_range')))
+            if vals.get('default_calculation_range', False):
+                self.env.cr.execute("""
+                    UPDATE product_template
+                    SET calculation_range=%i""" % (
+                    vals.get('default_calculation_range')))
+            if vals.get('default_number_of_periods', False):
+                self.env.cr.execute("""
+                    UPDATE product_template
+                    SET number_of_periods=%i""" % (
+                    vals.get('default_number_of_periods')))
+            if vals.get('default_consumption_calculation_method', False):
+                self.env.cr.execute("""
+                    UPDATE product_template
+                    SET consumption_calculation_method='%s'""" % (
+                    vals.get('default_consumption_calculation_method')))
         return super(PurchaseConfigSettings, self).write(vals)
 
     @api.onchange('default_calculation_range')
