@@ -125,8 +125,10 @@ class ProductProduct(models.Model):
                 delta = rd(weeks=1)
             else:
                 delta = rd(days=1)
-            if product.product_history_ids.filtered(
-                    lambda h: h.history_range == history_range):
+            history_ids = self.env['product.history'].search([
+                ('history_range', '=', history_range),
+                ('product_id', '=', product.id)])
+            if history_ids:
                 self.env.cr.execute(
                     """SELECT to_date, end_qty FROM product_history
                     WHERE product_id=%s AND history_range='%s'
