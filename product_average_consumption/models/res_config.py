@@ -40,7 +40,7 @@ class PurchaseConfigSettings(models.TransientModel):
 
     @api.onchange('module_product_history')
     def _onchange_module_product_history(self):
-        if self.module_product_history == False:
+        if not self.module_product_history:
             self.default_consumption_calculation_method = 'moves'
 
 
