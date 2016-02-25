@@ -22,4 +22,3 @@
 ##############################################################################
 
 from . import computed_purchase_order_line
-# from . import res_config

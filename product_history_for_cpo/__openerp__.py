@@ -89,6 +89,5 @@ Copyright, Author and Licence :
     'data': [
         'views/action.xml',
         'views/view.xml',
-        # 'views/res_config_view.xml',
     ],
 }
