@@ -42,7 +42,11 @@ class ComputedPurchaseOrderLine(models.Model):
         action = self.pool[model].read(
             self._cr, self._uid, action_id, context=self._context)
         ids = []
+        history_ranges = []
         for cpol in self:
                 ids.append(cpol.product_id.id)
-        action['domain'] = [('product_id', 'in', ids)]
+                history_ranges.append(cpol.product_id.history_range)
+        action['domain'] = [
+            ('product_id', 'in', ids),
+            ('history_range', 'in', history_ranges)]
         return action
