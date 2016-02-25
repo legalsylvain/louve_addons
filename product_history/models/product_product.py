@@ -98,7 +98,7 @@ class ProductProduct(models.Model):
             ('active', '=', False)])
         products._compute_history('weeks')
 
-    # @api.model
+    @api.model
     def run_product_history_month(self):
         # This method is called by the cron task
         products = self.env['product.product'].search([
