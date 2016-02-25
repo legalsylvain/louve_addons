@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-13 20:25+0000\n"
-"PO-Revision-Date: 2016-02-13 20:25+0000\n"
+"POT-Creation-Date: 2016-02-25 15:42+0000\n"
+"PO-Revision-Date: 2016-02-25 15:42+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr "Créé le"
 
 #. module: product_history
 #: selection:product.history,history_range:0
-#: selection:product.product,history_range:0
+#: selection:product.template,history_range:0
 #: selection:stock.config.settings,default_history_range:0
 msgid "Days"
 msgstr "Jours"
@@ -61,11 +61,13 @@ msgstr "Date de début"
 #: model:ir.model.fields,field_description:product_history.field_product_product_product_history_ids
 #: model:ir.model.fields,field_description:product_history.field_product_template_product_history_ids
 #: model:ir.ui.view,arch_db:product_history.view_product_history_form
+#: model:ir.ui.view,arch_db:product_history.view_template_history_form
 msgid "History"
 msgstr "Historique"
 
 #. module: product_history
 #: model:ir.model.fields,field_description:product_history.field_product_product_history_range
+#: model:ir.model.fields,field_description:product_history.field_product_template_history_range
 msgid "History Range"
 msgstr "Période d'historique"
 
@@ -116,7 +118,7 @@ msgstr "Pertes"
 
 #. module: product_history
 #: selection:product.history,history_range:0
-#: selection:product.product,history_range:0
+#: selection:product.template,history_range:0
 #: selection:stock.config.settings,default_history_range:0
 msgid "Month"
 msgstr "Mois"
@@ -135,11 +137,12 @@ msgstr "Qté sortante"
 #: model:ir.model,name:product_history.model_product_product
 #: model:ir.model.fields,field_description:product_history.field_product_history_product_id
 msgid "Product"
-msgstr "Article"
+msgstr "Produit"
 
 #. module: product_history
 #: model:ir.ui.view,arch_db:product_history.view_product_history_form
 #: model:ir.ui.view,arch_db:product_history.view_product_history_tree
+#: model:ir.ui.view,arch_db:product_history.view_template_history_form
 msgid "Product History"
 msgstr "Historique Produit"
 
@@ -169,9 +172,20 @@ msgid "Sales"
 msgstr "Ventes"
 
 #. module: product_history
+#: code:addons/product_history/models/product_history.py:80
+#, python-format
+msgid "String"
+msgstr "String"
+
+#. module: product_history
 #: model:ir.model.fields,field_description:product_history.field_product_history_product_tmpl_id
 msgid "Template"
 msgstr "Modèle"
+
+#. module: product_history
+#: sql_constraint:product.history:0
+msgid "This history line already exists!"
+msgstr "Cette ligne d'historique existe déjà!"
 
 #. module: product_history
 #: model:ir.model.fields,field_description:product_history.field_product_history_to_date
@@ -185,7 +199,7 @@ msgstr "Stock virtuel"
 
 #. module: product_history
 #: selection:product.history,history_range:0
-#: selection:product.product,history_range:0
+#: selection:product.template,history_range:0
 #: selection:stock.config.settings,default_history_range:0
 msgid "Week"
 msgstr "Semaine"
