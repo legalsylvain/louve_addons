@@ -150,7 +150,8 @@ class ProductProduct(models.Model):
                         fetch[0], "%Y-%m-%d %X").date() or now
                 except:
                     print fetch
-                    import pdb; pdb.set_trace()
+                    from_date = fetch and dt.strptime(
+                        fetch[0], "%Y-%m-%d %X").date() or now
                 if history_range == "months":
                     from_date = date(
                         from_date.year, from_date.month, 1)
