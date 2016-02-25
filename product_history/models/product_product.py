@@ -147,11 +147,11 @@ class ProductProduct(models.Model):
                 fetch = self.env.cr.fetchone()
                 try:
                     from_date = fetch and dt.strptime(
-                        fetch[0], "%Y-%m-%d %X").date() or now
+                        fetch[0].split(" ")[0], "%Y-%m-%d").date() or now
                 except:
                     print fetch
                     from_date = fetch and dt.strptime(
-                        fetch[0], "%Y-%m-%d %X").date() or now
+                        fetch[0].split(" ")[0], "%Y-%m-%d").date() or now
                 if history_range == "months":
                     from_date = date(
                         from_date.year, from_date.month, 1)
