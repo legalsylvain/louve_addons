@@ -22,13 +22,16 @@
 ##############################################################################
 {
     'name': 'Product - History',
-    'version': '9.0.1',
+    'version': '9.0.2',
     'category': 'Product',
     'description': """
 Computes figures about the product's sales, purchases, stocks.
 In menu Inventory/Settings, you can choose if this data will be displayed per
 day/week/month.
 ===========================================================================
+Possible improvements:
+    Register history per location_id
+    Add production_qty
 
 Copyright, Author and Licence :
 -------------------------------
