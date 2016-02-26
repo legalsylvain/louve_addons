@@ -30,7 +30,7 @@ class ProductTemplate(models.Model):
     # Columns Section
     average_consumption = fields.Float(
         compute='_compute_average_consumption',
-        string='Average Consumption per day', multi='average_consumption')
+        string='Average Consumption', multi='average_consumption')
     displayed_average_consumption = fields.Float(
         compute='_displayed_average_consumption',
         string='Average Consumption')

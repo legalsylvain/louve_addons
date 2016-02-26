@@ -36,8 +36,8 @@ msgstr "Conso moy"
 
 #. module: product_average_consumption
 #: model:ir.model.fields,field_description:product_average_consumption.field_product_template_average_consumption
-msgid "Average Consumption per day"
-msgstr "Consommation moyenne par jour"
+msgid "Average Consumption"
+msgstr "Consommation moyenne"
 
 #. module: product_average_consumption
 #: selection:product.template,consumption_calculation_method:0
