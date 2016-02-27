@@ -141,7 +141,7 @@ class ProductProduct(models.Model):
                 ids = range(nb)
                 total_consumption = 0
                 for id in ids:
-                    total_consumption += history_ids[id].sale_qty
+                    total_consumption -= history_ids[id].sale_qty
                 product.total_consumption = total_consumption
                 product.average_consumption = total_consumption / nb
                 product.number_of_periods_real = nb
