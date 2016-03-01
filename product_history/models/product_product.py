@@ -35,12 +35,28 @@ class ProductProduct(models.Model):
 
 # Column section
     product_tmpl_id = fields.Many2one(comodel_name='product.template')
-    history_range = fields.Selection(related="product_tmpl_id.history_range")
+    history_range = fields.Selection(related="product_tmpl_id.history_range",
+                                     readonly=True)
     product_history_ids = fields.Many2many(
         comodel_name='product.history', inverse_name='product_id',
-        string='History')
+        string='History', compute="_compute_product_history_ids")
 
 # Private section
+    @api.onchange('history_range')
+    @api.multi
+    def _average_consumption(self):
+        return super(ProductProduct, self)._average_consumption()
+
+    @api.depends('history_range')
+    @api.multi
+    def _compute_product_history_ids(self):
+        for product in self:
+            ph_ids = self.env['product.history'].search([
+                ('product_id', '=', product.id),
+                ('history_range', '=', product.history_range)])
+            ph_ids = [ph.id for ph in ph_ids]
+            product.product_history_ids = [(6, 0, ph_ids)]
+
     @api.multi
     def _compute_qtys(self, states=('done',)):
         domain = [('state', 'in', states)] + self._get_domain_dates()
