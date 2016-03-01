@@ -52,18 +52,3 @@ class ProductTemplate(models.Model):
                 ('history_range', '=', template.history_range)])
             ph_ids = [ph.id for ph in ph_ids]
             template.product_history_ids = [(6, 0, ph_ids)]
-
-    @api.one
-    def action_compute_history(self):
-        # dummy button function
-        # TODO: erase!
-        for product in self.product_variant_ids:
-            self.env.cr.execute(
-                """delete from product_history_product_product_rel where """
-                """product_product_id=%s""" % (product.id))
-            self.env.cr.execute(
-                "delete from product_history where product_id=%s"
-                % (product.id))
-            product._compute_history('months')
-            product._compute_history('weeks')
-            product._compute_history('days')
