@@ -130,6 +130,7 @@ class ProductProduct(models.Model):
             nb = product.number_of_periods_target
             history_range = product.history_range
             history_ids = self.env['product.history'].search([
+                ('product_id', '=', product.id),
                 ('history_range', '=', history_range),
                 ('ignored', '=', 0)]).sorted()
             nb = min(len(history_ids), nb)
