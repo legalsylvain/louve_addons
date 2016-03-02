@@ -67,12 +67,28 @@ class ProductHistory(models.Model):
     ]
 
 # Private section
-    @api.multi
+    @api.one
     def ignore_line(self):
         for line in self:
             line.ignored = True
+            line.product_id._average_consumption()
+        context = self.env.context
+        model = context.get('active_model', False)
+        id = context.get('active_id', False)
+        cpol = self.env[model].browse(id)
+        cpol.displayed_average_consumption =\
+            line.product_id.displayed_average_consumption
+        return cpol.view_history()
 
-    @api.multi
+    @api.one
     def unignore_line(self):
         for line in self:
             line.ignored = False
+            line.product_id._average_consumption()
+        context = self.env.context
+        model = context.get('active_model', False)
+        id = context.get('active_id', False)
+        cpol = self.env[model].browse(id)
+        cpol.displayed_average_consumption =\
+            line.product_id.displayed_average_consumption
+        return cpol.view_history()
