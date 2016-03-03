@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ********************************************************************** -->
+<!-- See __openerp__.py file for Copyright and Licence Informations.         -->
+<!-- ********************************************************************** -->
+<openerp>
+    <data>
+<!-- View : computed.purchase.order -->
+        <record id="louve_computed_purchase_order_form" model="ir.ui.view">
+            <field name="name">computed.purchase.order.form.louve</field>
+            <field name="model">computed.purchase.order</field>
+            <field name="inherit_id" ref="purchase_compute_order.view_computed_purchase_order_form"/>
+            <field name="arch" type="xml">
+                <page name="stockdetails" position="replace"/>
+                <field name="computed_qty" position="replace">
+                    <field name="qty_available"/>
+                    <field name="virtual_qty"/>
+                </field>
+                <field name="manual_input_output_qty" position="replace"/>
+            </field>
+        </record>
+    </data>
+</openerp>
