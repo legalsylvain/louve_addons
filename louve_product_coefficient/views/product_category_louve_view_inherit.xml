@@ -1,0 +1,24 @@
+<openerp>
+    <data>
+    	<record id="view_form_product_category_louve_coefficients" model="ir.ui.view">
+            <field name="name">product.category.common.form.inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+            <xpath expr="//form[2]" position="after">
+ 			
+	 			<group name="coeff" string="Coefficients" colspan="8" style="background-color:#D1F0FF">
+	 				<field name="coeff1_id" />
+	 				<field name="coeff2_id" />
+					<field name="coeff3_id" />
+					<field name="coeff4_id" />
+					<field name="coeff5_id" />
+					<field name="coeffLOUVE_id" />
+				</group>
+
+ 	        
+	      </xpath>
+	</field>
+	</record>
+	</data>
+</openerp>

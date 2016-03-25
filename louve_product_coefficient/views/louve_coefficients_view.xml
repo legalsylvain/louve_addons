@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<record id="view_form_product_template_louve_coefficients" model="ir.ui.view">
+            <field name="name">product.template.common.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+            <field name="list_price" position="replace"/>
+         	<xpath expr="//notebook[1]" position="after" >
+				<group colspan="4" >
+					<group><field name="base_price" style="background-color:#FFAD5C" /></group>
+					<group></group>  
+				</group> 
+				<group colspan="4" string="Coefficients">
+					<group>
+					<field name="uom_id" on_change="onchange_uom(uom_id,uom_po_id)" groups="product.group_uom"/>
+					<field name="coeff1_inter"  style="background-color:#D1F0FF" />
+					<field name="coeff2_inter" style="background-color:#D1F0FF" />
+					<field name="coeff3_inter" style="background-color:#D1F0FF" />
+					<field name="coeff4_inter" style="background-color:#D1F0FF" />
+					<field name="coeff5_inter" style="background-color:#D1F0FF" />
+					<field name="with_margin" style="background-color:#FFCBA4" />
+					</group>
+
+					<group>
+					<field name="coeff1_id"  style="background-color:#FFE6E6" />
+					<field name="coeff2_id" style="background-color:#FFE6E6"  />
+					<field name="coeff3_id" style="background-color:#FFE6E6"  />
+					<field name="coeff4_id" style="background-color:#FFE6E6"  />
+					<field name="coeff5_id" style="background-color:#FFE6E6"  />
+					<field name="coeffLOUVE_id" style="background-color:#FFCBA4"  />
+					</group>
+					<group >
+					<field name="info_price" style="background-color: #90EE90" invisible="0" />
+					<field name="list_price" style="background-color: #90EE90" invisible="1" />
+					<field name="lst_price" string="prix public + taxes" style="background-color: #90EE90" invisible="1"/>
+					</group>
+				</group>
+			</xpath>
+		</field>
+	</record>
+	
+	<act_window id="action_product_coefficient"
+	name="Products Coefficients"
+	res_model="product.coefficient"
+	view_mode="tree,form" />
+	
+	<menuitem id="menu_product_coefficient"
+	name="Products Coefficients"
+	parent="purchase.menu_procurement_management"
+	sequence="20"
+	action="action_product_coefficient" />      
+       
+    </data>
+</openerp>
