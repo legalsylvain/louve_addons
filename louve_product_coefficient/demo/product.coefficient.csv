@@ -1,0 +1,12 @@
+"id","code","name","type","value"
+"product_coefficient_1","COEFF_PERTE","Coeff Perte ( x 0.06)","Multi","0.06"
+"product_coefficient_2","MRG_LOUVE","Marge Louve 20%","Multi","0.2"
+"product_coefficient_3","COEFF FRUITS","Coeff exotique (x0.05)","Multi","0.05"
+"product_coefficient_4","COEFF TRANSP 01","Coeff Transport ( x 0.11 )","Multi","0.11"
+"product_coefficient_5","COETEST","test_pcoe","Multi","0.03"
+"product_coefficient_6","MRG_LOUVE_21","Marge LOUVE 21%","Multi","0.21"
+"product_coefficient_7","MRG_LOUVE_13","Marge LOUVE 13%","Multi","0.13"
+"product_coefficient_8","COEFF XY","Coeff XY","Amount","0.06"
+"product_coefficient_9","MRG LOUVE 10 ","Marge LOUVE 10%","Multi","0.1"
+"product_coefficient_10","MRG_LOUVE_5","Marge LOUVE 5%","Multi","0.05"
+

@@ -1,0 +1,4 @@
+"id","coeff1_id/id","coeff2_id/id","coeff3_id/id","coeff4_id/id","coeff5_id/id","coeffLOUVE_id/id","parent_left","parent_id/id","parent_right","property_stock_account_input_categ/id","property_stock_journal/id","property_stock_account_output_categ/id","property_stock_valuation_account_id/id","type"
+"product_category_3","product_coefficient_1","","","","","","4","","7","","stock_account.stock_journal","","","View"
+"product_category_4","","product_coefficient_4","","","","","5","__export__.product_category_3","6","","stock_account.stock_journal","","","Normal"
+"product_category_5","product_coefficient_1","product_coefficient_3","","","","","8","","9","","stock_account.stock_journal","","","Normal"

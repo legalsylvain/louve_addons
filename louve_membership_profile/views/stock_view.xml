@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+
+        <record id="action_picking_tree" model="ir.actions.act_window">
+            <field name="name">Receipts</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context" 
+            eval="{'search_default_picking_type_id': [ref('stock.picking_type_in')],'default_picking_type_id': ref('stock.picking_type_in'),'contact_display': 'partner_address',
+           }"/>
+
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a stock operation. 
+              </p><p>
+                Most operations are prepared automatically by Odoo according
+                to your preconfigured logistics rules, but you can also record
+                manual stock movements.
+              </p>
+            </field>
+        </record>
+<!--          <menuitem   id="adc_purchase_partner_picking_tree"
+        		parent="purchase.menu_procurement_management_inventory"
+        		action="action_picking_tree"
+        		sequence="20"/> -->
+
+        <record id="adc_view_picking_form" model="ir.ui.view">
+            <field name="name">adc.stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="priority" eval="500"/>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group/group/field[@name='min_date']" position="attributes">
+                       <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="/form/sheet/group/group/label[@for='owner_id']" position="attributes">
+                       <attribute name="string">User</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
