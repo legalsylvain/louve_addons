@@ -38,6 +38,8 @@ class ProductHistory(models.Model):
     product_id = fields.Many2one(
         comodel_name='product.product', string='Product',
         required=True, ondelete='cascade')
+    company_id = fields.Many2one(
+        'res.company', related='product_id.company_id')
     product_tmpl_id = fields.Many2one(
         'product.template', related='product_id.product_tmpl_id',
         string='Template', store=True)

@@ -4,7 +4,7 @@
     <record id="view_product_history_tree" model="ir.ui.view">
         <field name="model">product.history</field>
         <field name="arch" type="xml">
-            <tree string="Product History" editable="0" create="false" delete="false">
+            <tree string="Product History" edit="false" create="false" delete="false">
                 <field name="product_id"/>
                 <field name="from_date"/>
                 <field name="to_date"/>
