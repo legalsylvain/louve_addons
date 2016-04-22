@@ -10,8 +10,8 @@
         <field name="barcode">123</field>
     </record>
 
-<!--    <record model="res.groups" id="base.user_demo">-->
-<!--        <field name="barcode">456</field>-->
-<!--    </record>-->
+    <record model="res.users" id="base.user_demo">
+        <field name="barcode">456</field>
+    </record>
 
 </odoo>
