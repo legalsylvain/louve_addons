@@ -15,18 +15,18 @@ Authentication
 User must select Database name, login and password. (The user must be
 member of the new group 'Badge Reader - Manager')
 
-.. image:: ./badge_reader/static/description/authentication.png
+.. image:: /badge_reader/static/description/authentication.png
 
 User Search
 -----------
 
 User should scan User barcode.
 
-.. image:: ./badge_reader/static/description/user_search.png
+.. image:: /badge_reader/static/description/user_search.png
 
 If the barcode is unknown a specific sound is played.
 
-.. image:: ./badge_reader/static/description/user_not_found.png
+.. image:: /badge_reader/static/description/user_not_found.png
 
 Partner Form
 ------------
@@ -34,13 +34,13 @@ Partner Form
 If the barcode matches with a user, the partner is display with some
 informations.
 
-.. image:: ./badge_reader/static/description/partner_success.png
+.. image:: /badge_reader/static/description/partner_success.png
 
 
 If the partner has some special state, an alternative background color is
 displayed with the reason.
 
-.. image:: ./badge_reader/static/description/partner_warning.png
+.. image:: /badge_reader/static/description/partner_warning.png
 
 Move Logs
 ---------
@@ -48,7 +48,7 @@ Move Logs
 The use of this badge reader is logged and and logs are available in
 back-office
 
-.. image:: ./badge_reader/static/description/user_moves.png
+.. image:: /badge_reader/static/description/user_moves.png
 
 Technical Information - Back office
 -----------------------------------
@@ -64,9 +64,13 @@ Technical Information - JS Apps
 -------------------------------
 
 The extra libs used are
+
 * Bootstrap - v3.3.6 <http://getbootstrap.com>
+
 * AngularJS - v1.3.15 <http://angularjs.org>
+
 * IonicJS - v1.0.0 <http://ionicframework.com/>
+
 * Angular Odoo <https://github.com/akretion/angular-odoo>, little JS framework
   based on angular, that provides functions to connect and communicate with
   Odoo / OCB
@@ -76,6 +80,7 @@ Possible Improvments
 ====================
 
 * display partner with bootstrap colors in kanban and tree view
+
 * The JS apps is not translatable for the time being and is available only
   in french
 
