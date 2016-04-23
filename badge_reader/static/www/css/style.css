@@ -21,3 +21,11 @@ div.jumbotron{
 .partner-search {
     background-color: #FFF;
 }
+
+.authentication-ok {
+    background-color: #FFF;
+}
+
+.authentication-acces-right-problem, .authentication-incorrect {
+    background-color: #d9534f;
+}

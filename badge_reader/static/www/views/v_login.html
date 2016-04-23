@@ -1,6 +1,6 @@
-<ion-view view-title="Identification">
+<ion-view view-title="Identification"
+        class="{{login.css_class}}">
     <ion-content class="padding">
-        <div ng-show="errorMessage">{{ errorMessage }}</div>
 
         <form ng-submit="submit()">
             <div class="container theme-showcase" role="main">
@@ -32,6 +32,11 @@
                     <div class="row">
                         <div class="col-sm-12" style="text-align:center;padding-top:30px">
                             <input type="submit" class="button button-positive" value="S'identifier">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" style="text-align:center;padding-top:30px">
+                            <div class="label label-danger" ng-show="errorMessage">{{ errorMessage }}</div>
                         </div>
                     </div>
                 </div>

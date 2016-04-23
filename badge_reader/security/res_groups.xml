@@ -6,8 +6,16 @@
 -->
 
 <odoo>
-    <record model="res.groups" id="user">
+
+    <record model="res.groups" id="group_user">
         <field name="name">Badge Reader User</field>
-        <field name="category_id" eval="ref('base.module_category_extra')" />
+        <field name="category_id" ref="category_badge_reader" />
     </record>
+
+    <record model="res.groups" id="group_manager">
+        <field name="name">Badge Reader Manager</field>
+        <field name="implied_ids" eval="[(6, False, [ref('group_user')])]" />
+        <field name="category_id" ref="category_badge_reader" />
+    </record>
+
 </odoo>

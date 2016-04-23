@@ -15,8 +15,13 @@
         'base',
     ],
     'data': [
+        'security/ir_module_category.xml',
         'security/res_groups.xml',
+        'security/ir.model.access.csv',
         'views/view_res_partner.xml',
+        'views/view_res_users_move.xml',
+        'views/action.xml',
+        'views/menu.xml',
     ],
     'demo': [
         'demo/res_groups.xml',

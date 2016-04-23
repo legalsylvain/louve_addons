@@ -13,7 +13,9 @@ angular.module('starter').controller('UserSearchCtrl', ['$scope', '$state', 'Res
             if (user_res.length == 1){
                 $scope.search_value.css_class = 'partner-search';
                 $scope.errorMessage = '';
-                $state.go('partner_form', {partner_id: user_res[0]['partner_id'][0]});
+                ResUsersModel.LogMove(user_res[0]['id']).then(function (res) {
+                    $state.go('partner_form', {partner_id: user_res[0]['partner_id'][0]});
+                });
             }
             else{
                 $scope.search_value.css_class = 'partner-danger';

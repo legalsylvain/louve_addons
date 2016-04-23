@@ -5,11 +5,17 @@
 
 from openerp import fields, models, api
 
-# TODO Set exhaustive state
+# TODO @LA LOUVE. Set exhaustive state
 _BADGE_PARTNER_STATE = [
     ('ok', 'OK'),
     ('membership_problem', 'Membership Problem'),
     ('work_problem', 'Work Problem'),
+]
+
+_BADGE_PARTNER_BOOTSTRAP_STATE = [
+    ('success', 'OK'),
+    ('warning', 'Warning'),
+    ('danger', 'Danger'),
 ]
 
 
@@ -17,18 +23,19 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     # Column Section
-    bootstrap_state = fields.Char(
-        compute='_compute_bootstrap_state', string='Bootstrap State',
-        store=True)
-
     state = fields.Selection(
         selection=_BADGE_PARTNER_STATE, state='state', default='ok')
+
+    bootstrap_state = fields.Selection(
+        compute='_compute_bootstrap_state', string='Bootstrap State',
+        selection=_BADGE_PARTNER_BOOTSTRAP_STATE, store=True)
 
     # Compute Section
     @api.multi
     @api.depends('state')
     def _compute_bootstrap_state(self):
         for partner in self:
+            # TODO @LA LOUVE. Define boostrap state for each partner state
             if partner.state == 'work_problem':
                 partner.bootstrap_state = 'danger'
             elif partner.state == 'membership_problem':
