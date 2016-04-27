@@ -352,11 +352,12 @@ class ComputedPurchaseOrder(models.Model):
     @api.multi
     def compute_purchase_quantities(self):
         for cpo in self:
-            if cpo.target_type == 'time':
-                return cpo._compute_purchase_quantities_days()
-            else:
-                return cpo._compute_purchase_quantities_other(
-                    field=cpo.target_type)
+            if any([line.average_consumption for line in cpo.line_ids]):
+                if cpo.target_type == 'time':
+                    return cpo._compute_purchase_quantities_days()
+                else:
+                    return cpo._compute_purchase_quantities_other(
+                        field=cpo.target_type)
 
     @api.multi
     def make_order(self):
