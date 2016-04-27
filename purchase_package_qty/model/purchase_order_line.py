@@ -31,9 +31,9 @@ class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
     package_qty = fields.Float(
-        'Package Qty', readonly=True,
+        'Package Qty', compute='_compute_package_qty',
         help="""The quantity of products in the supplier package.""")
-    indicative_package = fields.Boolean('Indicative Package', readonly=True)
+    indicative_package = fields.Boolean('Indicative Package')
     product_qty_package = fields.Float(
         'Number of packages', help="""The number of packages you'll buy.""")
 
@@ -85,7 +85,28 @@ class PurchaseOrderLine(models.Model):
         self._check_purchase_qty()
         return res
 
+    @api.multi
+    @api.depends('product_id')
+    def _compute_package_qty(self):
+        for pol in self:
+            if pol.product_id:
+                for supplier in pol.product_id.seller_ids:
+                    if pol.partner_id and (supplier.name == pol.partner_id):
+                        pol.package_qty = supplier.package_qty
+
     # Views section
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        res = super(PurchaseOrderLine, self).onchange_product_id()
+        if self.product_id:
+            for supplier in self.product_id.seller_ids:
+                if self.partner_id and (supplier.name == self.partner_id):
+                    self.package_qty = supplier.package_qty
+                    self.product_qty = supplier.package_qty
+                    self.product_qty_package = 1
+                    self.indicative_package = supplier.indicative_package
+        return res
+
     @api.onchange('product_qty', 'product_uom')
     def onchange_product_qty(self):
         res = {}
@@ -101,16 +122,10 @@ class PurchaseOrderLine(models.Model):
                     self.product_uom.name)}
             self.product_qty = ceil(
                 self.product_qty / self.package_qty) * self.package_qty
+        if self.package_qty:
+            self.product_qty_package = self.product_qty / self.package_qty
         return res
 
-    @api.onchange('product_id')
-    def onchange_product_id(self):
-        res = super(PurchaseOrderLine, self).onchange_product_id()
-        if self.product_id:
-            for supplier in self.product_id.seller_ids:
-                if self.partner_id and (supplier.name == self.partner_id):
-                    self.package_qty = supplier.package_qty
-                    self.product_qty = supplier.package_qty
-                    self.product_qty_package = 1
-                    self.indicative_package = supplier.indicative_package
-        return res
+    @api.onchange('product_qty_package')
+    def onchange_product_qty_package(self):
+            self.product_qty = self.package_qty * self.product_qty_package
