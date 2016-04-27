@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Purchase - Package Quantity Module for Odoo
-#    Copyright (C) 2013-Today GRAP (http://www.grap.coop)
+#    Copyright (C) 2016-Today Akretion (https://www.akretion.com)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
