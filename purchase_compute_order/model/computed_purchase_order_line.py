@@ -215,6 +215,7 @@ class ComputedPurchaseOrderLine(models.Model):
             self.state = 'updated'
 
     @api.multi
+    @api.depends('purchase_qty')
     def _compute_stock_duration(self):
         for cpol in self:
             if cpol.product_id:
