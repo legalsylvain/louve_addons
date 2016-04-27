@@ -23,7 +23,7 @@
 
 {
     'name': 'Purchase - Package Quantity',
-    'version': '9.1.1',
+    'version': '9.1.2',
     'category': 'Purchase',
     'description': """
 Allow user to define the package of products the supplier sells
@@ -64,6 +64,7 @@ Copyright, Author and Licence :
     ],
     'data': [
         'views/product_supplierinfo_view.xml',
+        'views/purchase_order_view.xml',
         'data/function.xml',
     ],
 }
