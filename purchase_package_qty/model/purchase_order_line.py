@@ -24,11 +24,18 @@
 from math import ceil
 
 from openerp.osv.osv import except_osv
-from openerp import api, models, _
+from openerp import api, fields, models, _
 
 
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
+
+    package_qty = fields.Float(
+        'Package Qty', readonly=True,
+        help="""The quantity of products in the supplier package.""")
+    indicative_package = fields.Boolean('Indicative Package', readonly=True)
+    product_qty_package = fields.Float(
+        'Number of packages', help="""The number of packages you'll buy.""")
 
     # Constraints section
     # TODO: Rewrite me in _contraint, if the Orm V8 allows param in message.
@@ -82,23 +89,28 @@ class PurchaseOrderLine(models.Model):
     @api.onchange('product_qty', 'product_uom')
     def onchange_product_qty(self):
         res = {}
+        if (not(self.indicative_package) and self.package_qty > 0 and
+                int(self.product_qty / self.package_qty) !=
+                self.product_qty / self.package_qty):
+            res['warning'] = {
+                'title': _('Warning!'),
+                'message': _(
+                    """The selected supplier only sells"""
+                    """this product by %s %s""") % (
+                    self.package_qty,
+                    self.product_uom.name)}
+            self.product_qty = ceil(
+                self.product_qty / self.package_qty) * self.package_qty
+        return res
+
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        res = super(PurchaseOrderLine, self).onchange_product_id()
         if self.product_id:
-            product = self.product_id
-            for supplier in product.seller_ids:
+            for supplier in self.product_id.seller_ids:
                 if self.partner_id and (supplier.name == self.partner_id):
                     self.package_qty = supplier.package_qty
-                    self.indicative = supplier.indicative_package
-                    if (not(self.indicative) and
-                            int(self.product_qty / self.package_qty) !=
-                            self.product_qty / self.package_qty):
-                        res['warning'] = {
-                            'title': _('Warning!'),
-                            'message': _(
-                                """The selected supplier only sells"""
-                                """this product by %s %s""") % (
-                                supplier.package_qty,
-                                supplier.product_uom.name)}
-                        self.product_qty = ceil(
-                            self.product_qty / self.package_qty)\
-                            * self.package_qty
+                    self.product_qty = supplier.package_qty
+                    self.product_qty_package = 1
+                    self.indicative_package = supplier.indicative_package
         return res
