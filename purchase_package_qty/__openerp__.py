@@ -63,7 +63,7 @@ Copyright, Author and Licence :
         'purchase',
     ],
     'data': [
-        'view/view.xml',
+        'views/product_supplierinfo_view.xml',
         'data/function.xml',
     ],
 }
