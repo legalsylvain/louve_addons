@@ -80,7 +80,7 @@ class ProductProduct(models.Model):
                     ('procurement_qty', 'procurement', 1),
                     ('production_qty', 'production', 1),
                     ('transit_qty', 'transit', 1),
-                    ):
+            ):
                 moves = move_pool.read_group(domain_product + [
                     ('location_id.usage', '=', usage),
                     ('location_dest_id.usage', '=', 'internal'),
@@ -174,13 +174,13 @@ class ProductProduct(models.Model):
                 res = product.with_context({
                     'from_date': dt.strftime(from_date, "%Y-%m-%d"),
                     'to_date': dt.strftime(last_date, "%Y-%m-%d")
-                    })._compute_qtys()
+                })._compute_qtys()
                 res2 = product.with_context({
                     'to_date': dt.strftime(last_date, "%Y-%m-%d"),
-                    })._product_available()[product.id]
+                })._product_available()[product.id]
                 res3 = product.with_context({
                     'to_date': dt.strftime(last_date, "%Y-%m-%d")
-                    })._compute_qtys()
+                })._compute_qtys()
                 vals = {
                     'product_id': product.id,
                     'product_tmpl_id': product.product_tmpl_id.id,
@@ -197,7 +197,7 @@ class ProductProduct(models.Model):
                     'incoming_qty': res2['incoming_qty'],
                     'outgoing_qty': -res2['outgoing_qty'],
                     'history_range': history_range,
-                    }
+                }
                 self.env['product.history'].create(vals)
                 last_qty = res3['total_qty']
                 from_date = last_date + td(days=1)
