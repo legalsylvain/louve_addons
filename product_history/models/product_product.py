@@ -42,7 +42,7 @@ class ProductProduct(models.Model):
         string='History', compute="_compute_product_history_ids")
 
 # Private section
-    @api.onchange('history_range')
+    @api.onchange('history_range', 'product_history_ids')
     @api.multi
     def _average_consumption(self):
         return super(ProductProduct, self)._average_consumption()
