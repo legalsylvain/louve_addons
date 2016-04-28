@@ -13,7 +13,7 @@
                 <page name="stockdetails" position="replace"/>
                 <field name="computed_qty" position="replace">
                     <field name="qty_available"/>
-                    <field name="virtual_qty"/>
+                    <field name="incoming_qty"/>
                 </field>
                 <field name="manual_input_output_qty" position="replace"/>
                 <field name="product_code_inv" position="replace"/>
