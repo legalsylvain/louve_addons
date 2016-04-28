@@ -338,7 +338,7 @@ msgstr "Cond."
 #: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_line_package_quantity
 #: model:ir.model.fields,field_description:purchase_compute_order.field_computed_purchase_order_line_package_quantity_inv
 msgid "Package quantity"
-msgstr "Qté colis"
+msgstr "Colisage"
 
 #. module: purchase_compute_order
 #: model:ir.model,name:purchase_compute_order.model_res_partner

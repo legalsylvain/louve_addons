@@ -64,17 +64,17 @@
                                         <field name="product_id"/>
                                         <field name="product_code_inv"/>
                                         <field name="product_name_inv"/>
-                                        <field name="product_price_inv"/>
                                         <field name="computed_qty"/>
                                         <field name="manual_input_output_qty"/>
-                                        <field name="displayed_average_consumption"/>
                                         <field name="consumption_range"/>
+                                        <field name="displayed_average_consumption"/>
                                         <field name="uom_id"/>
                                         <field name="stock_duration"/>
                                         <field name="package_quantity_inv"/>
                                         <field name="purchase_qty"/>
-                                        <field name="virtual_duration"/>
                                         <field name="uom_po_id"/>
+                                        <field name="product_price_inv"/>
+                                        <field name="virtual_duration"/>
                                         <field name="state" />
                                         <button name="unlink_psi" states="up_to_date,updated" type="object" icon="gtk-stop"
             help="If you click this button, it means you don't want to buy this product to this supplier anymore. The supplier will thus be removed from the product form."/>
