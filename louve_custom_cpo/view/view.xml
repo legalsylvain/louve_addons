@@ -16,6 +16,8 @@
                     <field name="virtual_qty"/>
                 </field>
                 <field name="manual_input_output_qty" position="replace"/>
+                <field name="product_code_inv" position="replace"/>
+                <field name="product_name_inv" position="replace"/>
             </field>
         </record>
     </data>
