@@ -27,15 +27,16 @@
     ],
     'author': 'La Louve',
     'description': """
-        Add coefficients to product templates
+    Add coefficients to product templates
     """,
-    'summary': 'Louve Product Coefficients',
+    'summary': 'Louve Product Coefficients', 
     'website': 'http://',
-    'category': 'Product',
+    'category': 'Product', 
     'sequence': 10,
-    'data': ['views/louve_coefficients_view.xml','security/ir.model.access.csv'] 
-    ,
-    'demo': ['demo/product.coefficient.csv','demo/product.template.csv','demo/product.category.csv'],
+    'data': ['views/louve_coefficients_view.xml', 
+    'security/ir.model.access.csv'] ,
+    'demo': ['demo/product.coefficient.csv', 
+    'demo/product.template.csv', 'demo/product.category.csv'], 
     'test':['test/product_coefficient_test.yml'], 
     'auto_install': False,
     'installable': True,
