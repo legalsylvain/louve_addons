@@ -72,6 +72,9 @@ class ComputedPurchaseOrderLine(models.Model):
     product_price_inv = fields.Float(
         compute='_get_product_information', inverse='_set_product_price',
         string='Supplier Product Price', multi='product_code_name_price',)
+    subtotal = fields.Float(
+        'Subtotal', compute='_compute_subtotal_price',
+        digits_compute=dp.get_precision('Product Price'))
     package_quantity = fields.Float('Package quantity')
     package_quantity_inv = fields.Float(
         compute='_get_product_information', inverse='_set_package_quantity',
@@ -128,6 +131,12 @@ class ComputedPurchaseOrderLine(models.Model):
     ]
 
     # Columns section
+    @api.onchange('purchase_qty', 'product_price', 'product_price_inv')
+    @api.multi
+    def _compute_subtotal_price(self):
+        for line in self:
+            line.subtotal = line.purchase_qty * line.product_price_inv
+
     @api.onchange('displayed_average_consumption', 'consumption_range')
     @api.multi
     def _compute_average_consumption(self):
