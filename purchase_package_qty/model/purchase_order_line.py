@@ -116,7 +116,7 @@ class PurchaseOrderLine(models.Model):
             res['warning'] = {
                 'title': _('Warning!'),
                 'message': _(
-                    """The selected supplier only sells"""
+                    """The selected supplier only sells """
                     """this product by %s %s""") % (
                     self.package_qty,
                     self.product_uom.name)}
