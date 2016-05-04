@@ -109,6 +109,7 @@ class PurchaseOrderLine(models.Model):
 
     @api.onchange('product_qty', 'product_uom')
     def onchange_product_qty(self):
+        super(PurchaseOrderLine, self)._onchange_quantity()
         res = {}
         if (not(self.indicative_package) and self.package_qty > 0 and
                 int(self.product_qty / self.package_qty) !=
@@ -124,6 +125,7 @@ class PurchaseOrderLine(models.Model):
                 self.product_qty / self.package_qty) * self.package_qty
         if self.package_qty:
             self.product_qty_package = self.product_qty / self.package_qty
+        super(PurchaseOrderLine, self)._compute_amount()
         return res
 
     @api.onchange('product_qty_package')
