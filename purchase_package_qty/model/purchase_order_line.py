@@ -128,4 +128,5 @@ class PurchaseOrderLine(models.Model):
 
     @api.onchange('product_qty_package')
     def onchange_product_qty_package(self):
-            self.product_qty = self.package_qty * self.product_qty_package
+            if self.product_qty_package == int(self.product_qty_package):
+                self.product_qty = self.package_qty * self.product_qty_package
