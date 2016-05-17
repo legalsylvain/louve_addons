@@ -106,7 +106,7 @@ class ProductProduct(models.Model):
             begin_date = (
                 datetime.datetime.today() -
                 datetime.timedelta(days=product.calculation_range)
-                ).strftime('%Y-%m-%d')
+            ).strftime('%Y-%m-%d')
             first_date = max(
                 begin_date,
                 self._min_date(product.id)
