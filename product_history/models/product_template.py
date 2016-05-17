@@ -28,7 +28,7 @@ HISTORY_RANGE = [
     ('days', 'Days'),
     ('weeks', 'Week'),
     ('months', 'Month'),
-    ]
+]
 
 
 class ProductTemplate(models.Model):
