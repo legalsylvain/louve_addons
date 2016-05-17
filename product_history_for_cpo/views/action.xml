@@ -10,7 +10,7 @@
             <field name="res_model">product.history</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
-            <field name="view_id" ref="product_history.view_product_history_tree"/>
+            <field name="view_id" ref="product_history_for_cpo.view_product_history_tree"/>
             <field name="target">new</field>
             <field name="domain">[]</field>
         </record>

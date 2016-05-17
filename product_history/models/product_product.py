@@ -45,7 +45,7 @@ class ProductProduct(models.Model):
     @api.onchange('history_range', 'product_history_ids')
     @api.multi
     def _average_consumption(self):
-        return super(ProductProduct, self)._average_consumption()
+        super(ProductProduct, self)._average_consumption()
 
     @api.depends('history_range')
     @api.multi

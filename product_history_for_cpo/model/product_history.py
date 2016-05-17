@@ -1,7 +1,7 @@
-# -*- encoding: utf-8 -*-
+# *- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Purchase - Computed Purchase Order Module for Odoo
+#    Product - Average Consumption Module for Odoo
 #    Copyright (C) 2013-Today GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
@@ -21,5 +21,31 @@
 #
 ##############################################################################
 
-from . import computed_purchase_order_line
-from . import product_history
+from openerp import models, api
+
+
+class ProductHistory(models.Model):
+    _inherit = "product.history"
+
+# Private section
+    @api.multi
+    def ignore_line_cpo(self):
+        self.mark_line(True)
+        context = self.env.context
+        model = context.get('active_model', False)
+        id = context.get('active_id', False)
+        cpol = self.env[model].browse(id)
+        cpol.displayed_average_consumption =\
+            self.product_id.displayed_average_consumption
+        cpol.view_history()
+
+    @api.multi
+    def unignore_line_cpo(self):
+        self.mark_line(False)
+        context = self.env.context
+        model = context.get('active_model', False)
+        id = context.get('active_id', False)
+        cpol = self.env[model].browse(id)
+        cpol.displayed_average_consumption =\
+            self.product_id.displayed_average_consumption
+        cpol.view_history()

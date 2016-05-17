@@ -51,7 +51,7 @@ Copyright, Author and Licence :
     ],
     'auto_install': True,
     'data': [
-        'views/action.xml',
         'views/view.xml',
+        'views/action.xml',
     ],
 }

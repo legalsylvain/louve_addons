@@ -71,7 +71,7 @@ class ProductProduct(models.Model):
             or time.strftime('%Y-%m-%d')
 
     # Fields Function Section
-    @api.onchange(
+    @api.depends(
         'consumption_calculation_method',
         'number_of_periods_target', 'calculation_range')
     @api.multi
