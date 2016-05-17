@@ -27,18 +27,21 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <group name="group_lots_and_weight" position="after">
-                <field name="consumption_calculation_method" invisible="1"/>
-                <group name="ConsumptionMove" string="Consumption figures" attrs="{'invisible': [('consumption_calculation_method','!=','moves')]}">
-                    <field name="calculation_range" />
-                    <field name="nb_days"/>
-                    <field name="total_consumption"/>
-                    <field name="displayed_average_consumption"/>
-                    <field name="display_range"/>
-                </group>
-                <group name="ConsumptionHistory" string="Consumption figures" attrs="{'invisible': [('consumption_calculation_method','!=','history')]}">
-                    <field name="number_of_periods" />
-                    <field name="total_consumption"/>
-                    <field name="average_consumption"/>
+                <group name="ConsumptionMove" string="Consumption figures">
+                    <field name="consumption_calculation_method"/>
+                    <group name="ConsumptionMove" attrs="{'invisible': [('consumption_calculation_method','!=','moves')]}">
+                        <field name="calculation_range" />
+                        <field name="nb_days"/>
+                        <field name="total_consumption"/>
+                        <field name="displayed_average_consumption"/>
+                        <field name="display_range"/>
+                    </group>
+                    <group name="ConsumptionHistory" attrs="{'invisible': [('consumption_calculation_method','!=','history')]}">
+                        <field name="number_of_periods" />
+                        <field name="total_consumption"/>
+                        <field name="displayed_average_consumption"/>
+                        <field name="display_range"/>
+                    </group>
                 </group>
             </group>
         </field>

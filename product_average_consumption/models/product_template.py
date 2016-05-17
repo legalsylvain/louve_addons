@@ -45,9 +45,10 @@ class ProductTemplate(models.Model):
         """ since the first stock move of the product if it's"""
         """ more recent""")
     consumption_calculation_method = fields.Selection([
-        ('moves', 'Calculate consumption based on Stock Moves'),
-        ('history', 'Calculate consumption based on the Product History'),
-        ], 'Consumption Calculation Method', default='moves')
+        ('moves', 'Moves (calculate consumption based on Stock Moves)'),
+        ('history', 'History (calculate consumption based on the Product\
+            History)'),
+    ], 'Consumption Calculation Method', default='moves')
     number_of_periods = fields.Integer(
         'Number of History periods', default=6,
         help="""Number of valid history periods used for the calculation""")
