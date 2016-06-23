@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ********************************************************************** -->
+<!-- See __openerp__.py file for Copyright and Licence Informations.         -->
+<!-- ********************************************************************** -->
+<openerp>
+    <data>
+        <record id="action_add_template_registration" model="ir.actions.act_window">
+            <field name="name">Add Template Registration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">add.template.registration.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_add_template_registration_wizard_form"/>
+        </record>
+        <record id="view_res_partner_shift_form" model="ir.ui.view">
+            <field name="model">res.partner</field>
+            <field name="name">res.partner.form.shift</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <page name="sales_purchases" position="after">
+                    <page name="shifts" string="Shifts">
+                        <group name="button">
+                            <button name="%(coop_shift.action_add_template_registration)d" type="action" class="oe_highlight" icon="fa-cogs" string="Add Template Registration"/>
+                        </group>
+                        <group string="Template Registrations">
+                            <field name="tmpl_reg_line_ids" nolabel="1">
+                                <tree colors="blue:is_current" create="false" editable="top">
+                                    <field name="shift_template_id" readonly="1"/>
+                                    <field name="shift_ticket_id" readonly="1"/>
+                                    <field name="date_begin"/>
+                                    <field name="date_end"/>
+                                    <field name="state"/>
+                                    <field name="is_current" invisible="1"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Shift Registrations">
+                            <field name="registration_ids" readonly="1" nolabel="1">
+                                <tree>
+                                    <field name="shift_id"/>
+                                    <field name="shift_ticket_id"/>
+                                    <field name="date_begin"/>
+                                    <field name="date_end"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </page>
+                <div name="button_box" position="inside">
+                    <button name="%(coop_shift.act_shift_registration_from_partner)d"
+                        type="action"
+                        class="oe_stat_button oe_event_attendee_button"
+                        icon="fa-calendar"
+                        help="View partner Registrations">
+                        <field name="upcoming_registration_count" widget="statinfo" string="Upc. Registr."/>
+                    </button>
+                    <button name="%(coop_shift.act_template_registration_from_partner)d"
+                        type="action"
+                        class="oe_stat_button oe_event_attendee_button"
+                        icon="fa-calendar-plus-o"
+                        help="View partner Template Registrations">
+                        <field name="tmpl_registration_count" widget="statinfo" string="Tmpl. Registr."/>
+                    </button>
+                </div>
+            </field>
+        </record>
+    </data>
+</openerp>
