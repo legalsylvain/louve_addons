@@ -28,7 +28,7 @@
         'membership',
         'calendar',
         'smile_purchase_access_rights',
-            ],
+    ],
     'author': 'La Louve',
     'description': """
     Module profil comptabilité \n

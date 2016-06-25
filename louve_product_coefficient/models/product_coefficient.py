@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, exceptions
+from openerp import models, fields, api
 
 TYPE = [('multi', 'Multi'),
         ('amount', 'Amount')]
@@ -35,23 +35,23 @@ class ProductCoefficient(models.Model):
 
 class ProductCategory(models.Model):
     _inherit = 'product.category'
-    coeff1_id = fields.Many2one('product.coefficient', 
-                                'Coeff Perte', 
+    coeff1_id = fields.Many2one('product.coefficient',
+                                'Coeff Perte',
                                 domain="[('code','like','COEFF')]")
-    coeff2_id = fields.Many2one('product.coefficient', 
-                                'Coeff2', 
+    coeff2_id = fields.Many2one('product.coefficient',
+                                'Coeff2',
                                 domain="[('code','like','COEFF')]")
-    coeff3_id = fields.Many2one('product.coefficient', 
-                                'Coeff3', 
+    coeff3_id = fields.Many2one('product.coefficient',
+                                'Coeff3',
                                 domain="[('code','like','COEFF')]")
-    coeff4_id = fields.Many2one('product.coefficient', 
-                                'Coeff4', 
+    coeff4_id = fields.Many2one('product.coefficient',
+                                'Coeff4',
                                 domain="[('code','like','COEFF')]")
-    coeff5_id = fields.Many2one('product.coefficient', 
-                                'Coeff5', 
+    coeff5_id = fields.Many2one('product.coefficient',
+                                'Coeff5',
                                 domain="[('code','like','COEFF')]")
-    coeffLOUVE_id = fields.Many2one('product.coefficient', 
-                                    'LOUVE margin', 
+    coeffLOUVE_id = fields.Many2one('product.coefficient',
+                                    'LOUVE margin',
                                     domain="[('code','like','MRG')]")
 
 

@@ -32,7 +32,8 @@ class StockPicking(models.Model):
         """
             Override to update approval user in invoice
         """
-        res = super(StockPicking, self)._get_invoice_vals(key, inv_type, journal_id, origin)
+        res = super(StockPicking, self)._get_invoice_vals(
+            key, inv_type, journal_id, origin)
         if inv_type == 'in_invoice':
             res.update({'origin': origin.picking_id.origin})
         return res

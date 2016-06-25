@@ -34,8 +34,8 @@
         'calendar',
         'smile_access_control',
         'louve_crm_membership',
-        'louve_accounting_profile', 
-        #'smile_base',
+        'louve_accounting_profile',
+        # 'smile_base',
     ],
     'author': 'La Louve',
     'description': """
@@ -45,10 +45,10 @@
     'website': 'http://www.cooplalouve.fr',
     'category': 'Profile',
     'sequence': 10,
-   'data': [],
-   #'views/res_partner_view.xml',
-   # 'data/company_data.xml',
-    
+    'data': [],
+    # 'views/res_partner_view.xml',
+    # 'data/company_data.xml',
+
     'auto_install': False,
     'installable': True,
     'application': False,
