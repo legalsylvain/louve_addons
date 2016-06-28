@@ -27,7 +27,7 @@
         'sale',
         'membership',
         'calendar',
-        'smile_purchase_access_rights',
+        # 'smile_purchase_access_rights',
     ],
     'author': 'La Louve',
     'description': """
