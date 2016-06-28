@@ -43,7 +43,7 @@
         # 'demo/product.category.csv'
     ],
     'test': [
-        'test/product_coefficient_test.yml'
+        # 'test/product_coefficient_test.yml'
     ],
     'auto_install': False,
     'installable': True,
