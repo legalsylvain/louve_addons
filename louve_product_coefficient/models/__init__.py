@@ -19,4 +19,4 @@
 #
 ##############################################################################
 
-import product_coefficient
+from . import product_coefficient
