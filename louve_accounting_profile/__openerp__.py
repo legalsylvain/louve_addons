@@ -23,7 +23,7 @@
     'name': 'Louve Accounting Package',
     'version': '1.0',
     'depends': [
-        'coop_accounting_package',
+        # 'coop_accounting_package',
         'sale',
         'membership',
         'calendar',
