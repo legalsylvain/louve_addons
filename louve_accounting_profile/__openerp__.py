@@ -38,7 +38,7 @@
     'category': 'Profile',
     'sequence': 10,
     'data': [],
-    #'data/company_data.xml',
+    # 'data/company_data.xml',
     'auto_install': False,
     'installable': True,
     'application': False,

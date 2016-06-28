@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import http
+# from openerp import http
 
 # class LouveCrmMembership(http.Controller):
 #     @http.route('/louve_crm_membership/louve_crm_membership/', auth='public')
@@ -16,7 +16,7 @@ from openerp import http
 #         })
 
 #     @http.route('/louve_crm_membership/louve_crm_membership/objects/<model(
-        # "louve_crm_membership.louve_crm_membership"):obj>/', auth='public')
+#    "louve_crm_membership.louve_crm_membership"):obj>/', auth='public')
 #     def object(self, obj, **kw):
 #         return http.request.render('louve_crm_membership.object', {
 #             'object': obj
