@@ -39,7 +39,7 @@
     ],
     'demo': [
         'demo/product.coefficient.csv',
-        'demo/product.template.csv',
+        # 'demo/product.template.csv',
         'demo/product.category.csv'
     ],
     'test': [
