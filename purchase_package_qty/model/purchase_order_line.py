@@ -124,6 +124,7 @@ class PurchaseOrderLine(models.Model):
                     self.package_qty = supplier.package_qty
                     self.product_qty = supplier.package_qty
                     self.product_qty_package = 1
+                    self.price_policy = supplier.price_policy
                     self.indicative_package = supplier.indicative_package
         return res
 
