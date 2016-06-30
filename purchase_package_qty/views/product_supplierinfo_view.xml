@@ -32,6 +32,9 @@
                         <field name="indicative_package"/>
                     </group>
                 </label>
+                <field name="price" position="after">
+                    <field name="price_policy" nolabel="1"/>
+                </field>
             </field>
         </record>
 
@@ -43,6 +46,9 @@
                 <field name="min_qty" position="after">
                         <field name="package_qty"/>
                         <field name="indicative_package"/>
+                </field>
+                <field name="price" position="after">
+                    <field name="price_policy"/>
                 </field>
             </field>
         </record>

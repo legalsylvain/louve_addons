@@ -58,6 +58,9 @@ class ProductSupplierinfo(models.Model):
         help="""If checked, the system will not force you to purchase"""
         """a strict multiple of package quantity""",
         default=False)
+    price_policy = fields.Selection(
+        [('uom', 'per UOM'), ('package', 'per Package')], "Price Policy",
+        default='uom', required=True)
 
     # Constraints section
     @api.multi
