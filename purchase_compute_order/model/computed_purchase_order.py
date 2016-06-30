@@ -259,12 +259,12 @@ class ComputedPurchaseOrder(models.Model):
                         days * line.average_consumption *
                         line.uom_po_id.factor / line.uom_id.factor -
                         line.computed_qty, 0)
-                    if line.package_quantity \
-                            and quantity % line.package_quantity:
-                        quantity = ceil(quantity / line.package_quantity) *\
-                            line.package_quantity
+                    if line.package_qty \
+                            and quantity % line.package_qty:
+                        quantity = ceil(quantity / line.package_qty) *\
+                            line.package_qty
                 elif line.computed_qty == 0:
-                    quantity = line.package_quantity or 0
+                    quantity = line.package_qty or 0
                 else:
                     quantity = 0
                 line.purchase_qty = quantity
@@ -293,12 +293,12 @@ class ComputedPurchaseOrder(models.Model):
                             days * line.average_consumption *
                             line.uom_po_id.factor / line.uom_id.factor -
                             line.computed_qty, 0)
-                        if line.package_quantity and\
-                                quantity % line.package_quantity:
-                            quantity = ceil(quantity / line.package_quantity)\
-                                * line.package_quantity
+                        if line.package_qty and\
+                                quantity % line.package_qty:
+                            quantity = ceil(quantity / line.package_qty)\
+                                * line.package_qty
                     elif line.computed_qty == 0:
-                        quantity = line.package_quantity or 0
+                        quantity = line.package_qty or 0
                     else:
                         quantity = 0
                     qty_tmp[line.id] = quantity
@@ -340,7 +340,7 @@ class ComputedPurchaseOrder(models.Model):
                             'product_code': psi.product_code,
                             'product_name': psi.product_name,
                             'product_price': psi.price,
-                            'package_quantity': psi.package_qty or psi.min_qty,
+                            'package_qty': psi.package_qty or psi.min_qty,
                             'displayed_average_consumption':
                             pp.displayed_average_consumption,
                             'consumption_range': pp.display_range,

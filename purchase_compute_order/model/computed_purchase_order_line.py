@@ -75,9 +75,9 @@ class ComputedPurchaseOrderLine(models.Model):
     subtotal = fields.Float(
         'Subtotal', compute='_compute_subtotal_price',
         digits_compute=dp.get_precision('Product Price'))
-    package_quantity = fields.Float('Package quantity')
-    package_quantity_inv = fields.Float(
-        compute='_get_product_information', inverse='_set_package_quantity',
+    package_qty = fields.Float('Package quantity')
+    package_qty_inv = fields.Float(
+        compute='_get_product_information', inverse='_set_package_qty',
         string='Package quantity', multi='product_code_name_price',)
     weight = fields.Float(
         related='product_id.weight', string='Net Weight', readonly='True')
@@ -179,12 +179,12 @@ class ComputedPurchaseOrderLine(models.Model):
                 cpol.product_code_inv = None
                 cpol.product_name_inv = None
                 cpol.product_price_inv = 0.0
-                cpol.package_quantity_inv = 0.0
+                cpol.package_qty_inv = 0.0
             elif cpol.state in ('updated', 'new'):
                 cpol.product_code_inv = cpol.product_code
                 cpol.product_name_inv = cpol.product_name
                 cpol.product_price_inv = cpol.product_price
-                cpol.package_quantity_inv = cpol.package_quantity
+                cpol.package_qty_inv = cpol.package_qty
             else:
                 psi = psi_obj.search([
                     ('name', '=',
@@ -217,9 +217,9 @@ class ComputedPurchaseOrderLine(models.Model):
         if self.state == 'up_to_date':
             self.state = 'updated'
 
-    @api.depends('package_quantity_inv')
-    def _set_package_quantity(self):
-        self.package_quantity = self.product_quantity_inv
+    @api.onchange('package_qty_inv')
+    def _set_package_qty(self):
+        self.package_qty = self.package_qty_inv
         if self.state == 'up_to_date':
             self.state = 'updated'
 
@@ -239,7 +239,7 @@ class ComputedPurchaseOrderLine(models.Model):
     # View Section
     @api.onchange(
         'product_code_inv', 'product_name_inv', 'product_price_inv',
-        'package_quantity_inv')
+        'package_qty_inv', 'price_policy')
     def onchange_product_info(self):
         self.state = 'updated'
 
@@ -274,7 +274,7 @@ class ComputedPurchaseOrderLine(models.Model):
                 'weight': pp.weight,
                 'uom_po_id': pp.uom_id.id,
                 'product_price_inv': 0,
-                'package_quantity_inv': 0,
+                'package_qty_inv': 0,
                 'average_consumption': pp.displayed_average_consumption,
                 'consumption_range': pp.display_range,
             })
@@ -290,7 +290,7 @@ class ComputedPurchaseOrderLine(models.Model):
                     'product_code_inv': psi.product_code,
                     'product_name_inv': psi.product_name,
                     'product_price_inv': psi.price,
-                    'package_quantity_inv': psi.package_qty,
+                    'package_qty_inv': psi.package_qty,
                     'uom_po_id': psi.product_uom.id,
                     'state': 'up_to_date',
                 })
@@ -301,7 +301,7 @@ class ComputedPurchaseOrderLine(models.Model):
             self.weight = vals['weight']
             self.uom_po_id = vals['uom_po_id']
             self.product_price_inv = vals['product_price_inv']
-            self.package_quantity_inv = vals['package_quantity_inv']
+            self.package_qty_inv = vals['package_qty_inv']
             self.average_consumption = vals['average_consumption']
             self.consumption_range = vals['consumption_range']
 
@@ -334,8 +334,8 @@ class ComputedPurchaseOrderLine(models.Model):
                 'product_name': cpol.product_name,
                 'product_code': cpol.product_code,
                 'product_uom': cpol.uom_po_id.id,
-                'package_qty': cpol.package_quantity_inv,
-                'min_qty': cpol.package_quantity,
+                'package_qty': cpol.package_qty_inv,
+                'min_qty': cpol.package_qty,
                 'product_id': product_tmpl_id,
                 'pricelist_ids': [(0, 0, {
                     'min_quantity': 0, 'price': cpol.product_price_inv})],
