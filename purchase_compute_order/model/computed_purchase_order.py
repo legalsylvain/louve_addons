@@ -239,6 +239,7 @@ class ComputedPurchaseOrder(models.Model):
                     'product_qty': line.purchase_qty,
                     'product_qty_package':
                         line.purchase_qty / line.package_qty,
+                    'price_policy': line.price_policy,
                     'date_planned': (
                         self.incoming_date or fields.Date.context_today(self)),
                     'product_uom': line.product_id.uom_po_id.id,
