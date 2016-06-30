@@ -72,6 +72,12 @@ class ComputedPurchaseOrderLine(models.Model):
     product_price_inv = fields.Float(
         compute='_get_product_information', inverse='_set_product_price',
         string='Supplier Product Price', multi='product_code_name_price',)
+    price_policy = fields.Selection(
+        [('uom', 'per UOM'), ('package', 'per Package')], "Price Policy",
+        default='uom', required=True)
+    product_price_inv_eq = fields.Float(
+        compute='_compute_product_price_inv_eq',
+        string='Supplier Product Price per Uom',)
     subtotal = fields.Float(
         'Subtotal', compute='_compute_subtotal_price',
         digits_compute=dp.get_precision('Product Price'))
@@ -131,11 +137,29 @@ class ComputedPurchaseOrderLine(models.Model):
     ]
 
     # Columns section
-    @api.onchange('purchase_qty', 'product_price', 'product_price_inv')
+    @api.model
+    @api.onchange('package_qty_inv', 'product_price_inv', 'price_policy')
+    def _compute_product_price_inv_eq(self):
+        if self.price_policy == 'package':
+            if self.package_qty_inv:
+                self.product_price_inv_eq = self.product_price_inv /\
+                    self.package_qty_inv
+            else:
+                self.product_price_inv_eq = 0
+        else:
+            self.product_price_inv_eq = self.product_price_inv
+
+    @api.onchange(
+        'purchase_qty', 'product_price', 'product_price_inv', 'price_policy',
+        'package_qty_inv')
     @api.multi
     def _compute_subtotal_price(self):
         for line in self:
-            line.subtotal = line.purchase_qty * line.product_price_inv
+            if line.price_policy == 'package':
+                line.subtotal = line.package_qty_inv and line.purchase_qty *\
+                    line.product_price_inv / line.package_qty_inv or 0
+            else:
+                line.subtotal = line.purchase_qty * line.product_price_inv
 
     @api.onchange('displayed_average_consumption', 'consumption_range')
     @api.multi
@@ -179,6 +203,7 @@ class ComputedPurchaseOrderLine(models.Model):
                 cpol.product_code_inv = None
                 cpol.product_name_inv = None
                 cpol.product_price_inv = 0.0
+                cpol.price_policy = 'uom'
                 cpol.package_qty_inv = 0.0
             elif cpol.state in ('updated', 'new'):
                 cpol.product_code_inv = cpol.product_code
@@ -246,13 +271,13 @@ class ComputedPurchaseOrderLine(models.Model):
 
     @api.onchange(
         'computed_purchase_order_id', 'product_id',
-        )
+    )
     def onchange_product_id(self):
         vals = {
             'state': 'new',
             'purchase_qty': 0,
             'manual_input_output_qty': 0,
-            }
+        }
         if self.product_id:
             psi_obj = self.env['product.supplierinfo']
             pp = self.product_id
@@ -275,6 +300,7 @@ class ComputedPurchaseOrderLine(models.Model):
                 'weight': pp.weight,
                 'uom_po_id': pp.uom_id.id,
                 'product_price_inv': 0,
+                'price_policy': 'uom',
                 'package_qty_inv': 0,
                 'average_consumption': pp.displayed_average_consumption,
                 'consumption_range': pp.display_range,
@@ -291,6 +317,7 @@ class ComputedPurchaseOrderLine(models.Model):
                     'product_code_inv': psi.product_code,
                     'product_name_inv': psi.product_name,
                     'product_price_inv': psi.price,
+                    'price_policy': psi.price_policy,
                     'package_qty_inv': psi.package_qty,
                     'uom_po_id': psi.product_uom.id,
                     'state': 'up_to_date',
@@ -302,6 +329,7 @@ class ComputedPurchaseOrderLine(models.Model):
             self.weight = vals['weight']
             self.uom_po_id = vals['uom_po_id']
             self.product_price_inv = vals['product_price_inv']
+            self.price_policy = vals['price_policy']
             self.package_qty_inv = vals['package_qty_inv']
             self.average_consumption = vals['average_consumption']
             self.consumption_range = vals['consumption_range']
@@ -340,6 +368,7 @@ class ComputedPurchaseOrderLine(models.Model):
                 'product_id': product_tmpl_id,
                 'pricelist_ids': [(0, 0, {
                     'min_quantity': 0, 'price': cpol.product_price_inv})],
+                'price_policy': cpol.price_policy,
             }
             psi_id = psi_obj.create(vals)
             cpol.state = 'up_to_date'

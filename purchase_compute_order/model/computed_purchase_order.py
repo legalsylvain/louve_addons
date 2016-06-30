@@ -42,7 +42,7 @@ class ComputedPurchaseOrder(models.Model):
     ]
 
     _TARGET_TYPE = [
-        ('product_price_inv', '€'),
+        ('product_price_inv_eq', '€'),
         ('time', 'days'),
         ('weight', 'kg'),
     ]
@@ -92,7 +92,7 @@ class ComputedPurchaseOrder(models.Model):
     purchase_target = fields.Integer('Purchase Target', default=0)
     target_type = fields.Selection(
         _TARGET_TYPE, 'Target Type', required=True,
-        default='product_price_inv',
+        default='product_price_inv_eq',
         help="""This defines the amount of products you want to"""
         """ purchase. \n"""
         """The system will compute a purchase order based on the stock"""
@@ -138,7 +138,7 @@ class ComputedPurchaseOrder(models.Model):
                     duration = (line.computed_qty + line.purchase_qty)\
                         / line.average_consumption
                     min_duration = min(duration, min_duration)
-                amount += line.purchase_qty * line.product_price_inv
+                amount += line.subtotal
             cpo.computed_amount = amount
             cpo.computed_duration = min_duration
 
@@ -157,7 +157,7 @@ class ComputedPurchaseOrder(models.Model):
     def onchange_partner_id(self):
         # TODO: create a wizard to validate the change
         self.purchase_target = 0
-        self.target_type = 'product_price_inv'
+        self.target_type = 'product_price_inv_eq'
         if self.partner_id:
             self.purchase_target = self.partner_id.purchase_target
             self.target_type = self.partner_id.target_type
@@ -333,7 +333,7 @@ class ComputedPurchaseOrder(models.Model):
             for psi in psi_obj.search([('name', '=', cpo.partner_id.id)]):
                 for pp in psi.product_tmpl_id.filtered(
                         lambda pt: pt.state not in ('end', 'obsolete')
-                        ).product_variant_ids:
+                ).product_variant_ids:
                     valid_psi = pp._valid_psi(cpo.valid_psi)
                     if valid_psi and psi in valid_psi[0]:
                         cpol_list.append((0, 0, {
@@ -342,6 +342,7 @@ class ComputedPurchaseOrder(models.Model):
                             'product_code': psi.product_code,
                             'product_name': psi.product_name,
                             'product_price': psi.price,
+                            'price_policy': psi.price_policy,
                             'package_qty': psi.package_qty or psi.min_qty,
                             'displayed_average_consumption':
                             pp.displayed_average_consumption,
