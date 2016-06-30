@@ -69,9 +69,10 @@ class PurchaseOrderLine(models.Model):
                             """ following line:"""
                             """ \n - Product: %s;"""
                             """ \n - Quantity: %s;"""
-                            """ \n - Unit Price: %s;""" % (
+                            """ \n - Unit Price: %s;"""
+                            """ \n - Package quantity: %s;""" % (
                                 pol.product_id.name, pol.product_qty,
-                                pol.price_unit)))
+                                pol.price_unit, package_qty)))
 
     @api.model
     def create(self, vals):
