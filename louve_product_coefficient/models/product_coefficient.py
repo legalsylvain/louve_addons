@@ -32,7 +32,7 @@ class ProductCoefficient(models.Model):
         required=True, default='multiplier')
 
     coefficient_type = fields.Selection(
-        string='Operation Type', selection=_SELECT_COEFFICIENT_TYPE,
+        string='Coefficient Type', selection=_SELECT_COEFFICIENT_TYPE,
         required=True, default='custom')
 
     # Compute Section
