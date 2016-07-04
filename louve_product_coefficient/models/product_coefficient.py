@@ -17,6 +17,7 @@ class ProductCoefficient(models.Model):
     ]
 
     _SELECT_COEFFICIENT_TYPE = [
+        ('shipping', 'Shipping Coefficient'),
         ('loss', 'Loss Coefficient'),
         ('custom', 'Custom Coefficient'),
         ('margin', 'Margin Coefficient'),

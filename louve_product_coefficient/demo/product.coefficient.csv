@@ -1,11 +1,12 @@
 id,name,operation_type,coefficient_type,value
-product_coefficient_1,Coeff Perte ( x 0.06),multiplier,loss,0.06
-product_coefficient_3,Coeff exotique (x0.05),multiplier,custom,0.05
-product_coefficient_4,Coeff Transport ( x 0.11 ),multiplier,custom,0.11
-product_coefficient_5,test_pcoe,multiplier,custom,0.03
-product_coefficient_8,Coeff XY,fixed,custom,0.06
-product_coefficient_10,Marge LOUVE 5%,multiplier,margin,0.05
-product_coefficient_9,Marge LOUVE 10%,multiplier,margin,0.1
-product_coefficient_7,Marge LOUVE 13%,multiplier,margin,0.13
-product_coefficient_2,Marge Louve 20%,multiplier,margin,0.2
-product_coefficient_6,Marge LOUVE 21%,multiplier,margin,0.21
+product_coefficient_01,Shipping Coeff ( x 1.04),multiplier,shipping,0.04
+product_coefficient_02,Shipping Coeff ( x 1.10),multiplier,shipping,0.10
+product_coefficient_03,Little Loss ( x 1.06),multiplier,loss,1.06
+product_coefficient_04,Big Loss ( x 1..20),multiplier,loss,0.20
+product_coefficient_05,Custom Coeff 1 (x0.05),multiplier,custom,0.05
+product_coefficient_06,Custom Coeff 2 (x0.05),multiplier,custom,0.05
+product_coefficient_07,"Fixed Coefficient (+1,20)",fixed,custom,1.20
+product_coefficient_08,Extra Reduced Marging  5%,multiplier,margin,0.05
+product_coefficient_09,Reduced Marging  10%,multiplier,margin,0.10
+product_coefficient_10,Normal Marging  20%,multiplier,margin,0.20
+product_coefficient_11,Big Marging  50%,multiplier,margin,0.50

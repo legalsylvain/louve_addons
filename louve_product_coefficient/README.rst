@@ -26,20 +26,17 @@ Two operation are allowed:
 
 .. image:: /louve_product_coefficient/static/description/product_coefficient.png
 
-Product Categories
-------------------
-
-6 Coefficients can be set on product categories
-
-The products of this category will use this coefficient.
-
-.. image:: /louve_product_coefficient/static/description/product_category.png
-
-
 Products
 --------
 
-Finally on the product form, a new page displays price details, using
+6 Coefficients can be set on products.
+
+- A first one is a shipping coefficient.
+- A Second one is a loss coefficient.
+- 3 Custom coefficients can be set.
+- Finally, a Margin coefficient can be applied.
+
+On the product form, a new page displays price details, using
 category coefficients previously defined.
 
 The base price is based on the supplier sale price. (see technical information
@@ -53,11 +50,14 @@ sale price, a button is available to apply the change on the product form.
 
 .. image:: /louve_product_coefficient/static/description/use_theoritical_price_one.png
 
-User can select all the products that have a sale price differents and  can
+User can select all the products that have a sale price differents and can
 change prices massively, using a wizard :
 
 .. image:: /louve_product_coefficient/static/description/use_theoritical_price_multi.png
 
+You can mass edit coefficient on many products, via a new tree editable view
+
+.. image:: /louve_product_coefficient/static/description/product_template_tree.png
 
 Technical Information
 ---------------------
@@ -65,8 +65,6 @@ Technical Information
 If user set end dates on supplier info, base prices will be incorrect after
 a certain date. For that purpose, an extra button is available on the product
 form, and cron task is available to recompute base prices each night.
-
-
 
 Installation
 ============
@@ -79,8 +77,7 @@ Configuration
 * Go to 'Sale' / 'Configuration' / 'Product Coefficients'
   and create your coefficients
 
-* Go to 'Sale' / 'Configuration' / 'Products' / 'Product Categories'
-  and affect coefficients to your categories.
+* Go to 'Sale' / 'Sales' / 'Products' and affect coefficients to your products.
 
 Credits
 =======

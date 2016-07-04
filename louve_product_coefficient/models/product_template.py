@@ -13,23 +13,23 @@ class ProductTemplate(models.Model):
 
     # Column Section
     coeff1_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Loss Coefficient',
-        related='categ_id.coeff1_id', readonly=True, store=True)
+        comodel_name='product.coefficient', string='Shipping Coefficient',
+        domain="[('coefficient_type', '=', 'shipping')]")
     coeff2_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 2',
-        related='categ_id.coeff2_id', readonly=True, store=True)
+        comodel_name='product.coefficient', string='Loss Coefficient',
+        domain="[('coefficient_type', '=', 'loss')]")
     coeff3_id = fields.Many2one(
         comodel_name='product.coefficient', string='Coefficient 3',
-        related='categ_id.coeff3_id', readonly=True, store=True)
+        domain="[('coefficient_type', '=', 'custom')]")
     coeff4_id = fields.Many2one(
         comodel_name='product.coefficient', string='Coefficient 4',
-        related='categ_id.coeff4_id', readonly=True, store=True)
+        domain="[('coefficient_type', '=', 'custom')]")
     coeff5_id = fields.Many2one(
         comodel_name='product.coefficient', string='Coefficient 5',
-        related='categ_id.coeff5_id', readonly=True, store=True)
+        domain="[('coefficient_type', '=', 'custom')]")
     coeff6_id = fields.Many2one(
         comodel_name='product.coefficient', string='Margin Coefficient',
-        related='categ_id.coeff6_id', readonly=True, store=True)
+        domain="[('coefficient_type', '=', 'margin')]")
 
     base_price = fields.Float(
         string='Base Price', compute='_compute_base_price', store=True,
@@ -41,10 +41,10 @@ class ProductTemplate(models.Model):
         " updated nightly, by a cron task.")
 
     coeff1_inter = fields.Float(
-        string='With Loss Coefficient', compute='_compute_coeff1_inter',
+        string='With Shipping Coefficient', compute='_compute_coeff1_inter',
         store=True)
     coeff2_inter = fields.Float(
-        string='With Coefficient 2', compute='_compute_coeff2_inter',
+        string='With Loss Coefficient', compute='_compute_coeff2_inter',
         store=True)
     coeff3_inter = fields.Float(
         string='With Coefficient 3', compute='_compute_coeff3_inter',
