@@ -159,13 +159,13 @@ class ProductTemplate(models.Model):
         for template in self:
             multi = 1
             for tax in template.taxes_id:
-                if tax.amount_type != 'division' or not tax.price_include:
+                if tax.amount_type != 'percent' or not tax.price_include:
                     raise exceptions.UserError(_(
                         "Unimplemented Feature\n"
                         "The Tax %s is not correctly set for computing"
                         " prices with coefficients for the product %s") % (
                         tax.name, template.name))
-                multi *= 1 + tax.amount / 100
+                multi *= 1 + (tax.amount / 100)
             template.theoritical_price = template.coeff6_inter * multi
 
     @api.multi

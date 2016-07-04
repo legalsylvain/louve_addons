@@ -18,6 +18,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/view_product_template.xml',
+        'views/view_product_product.xml',
         'views/view_product_category.xml',
         'views/view_product_coefficient.xml',
         'views/view_wizard_use_theoritical_price.xml',
