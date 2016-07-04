@@ -15,7 +15,8 @@ Product Coefficients
 
 A coefficient can be:
 
-* A coefficient of Loss (it will be used at the beginning of the computation)
+* A coefficient of Shipping (it will be used at the beginning of the computation)
+* A coefficient of Loss (it will be used after for the computation)
 * A Custom Coefficient (it will be used at the middle of the computation)
 * A Coefficient of Margin (it will be used at the end of the computation)
 
@@ -30,11 +31,6 @@ Products
 --------
 
 6 Coefficients can be set on products.
-
-- A first one is a shipping coefficient.
-- A Second one is a loss coefficient.
-- 3 Custom coefficients can be set.
-- Finally, a Margin coefficient can be applied.
 
 On the product form, a new page displays price details, using
 category coefficients previously defined.
