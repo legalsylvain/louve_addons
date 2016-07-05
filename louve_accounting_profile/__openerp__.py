@@ -23,12 +23,12 @@
     'name': 'Louve Accounting Package',
     'version': '1.0',
     'depends': [
-        'coop_accounting_package',
+        # 'coop_accounting_package',
         'sale',
         'membership',
         'calendar',
-        'smile_purchase_access_rights',
-            ],
+        # 'smile_purchase_access_rights',
+    ],
     'author': 'La Louve',
     'description': """
     Module profil comptabilité \n
@@ -38,7 +38,7 @@
     'category': 'Profile',
     'sequence': 10,
     'data': [],
-    #'data/company_data.xml',
+    # 'data/company_data.xml',
     'auto_install': False,
     'installable': True,
     'application': False,

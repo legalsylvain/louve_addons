@@ -30,12 +30,31 @@ from openerp import api, fields, models, _
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
+    @api.depends('product_qty', 'price_unit', 'taxes_id', 'price_policy')
+    def _compute_amount(self):
+        for line in self:
+            if line.price_policy == 'package':
+                qty = line.product_qty_package
+            else:
+                qty = line.product_qty
+            taxes = line.taxes_id.compute_all(
+                line.price_unit, line.order_id.currency_id, qty,
+                product=line.product_id, partner=line.order_id.partner_id)
+            line.update({
+                'price_tax': taxes['total_included'] - taxes['total_excluded'],
+                'price_total': taxes['total_included'],
+                'price_subtotal': taxes['total_excluded'],
+            })
+
     package_qty = fields.Float(
         'Package Qty', compute='_compute_package_qty',
         help="""The quantity of products in the supplier package.""")
     indicative_package = fields.Boolean('Indicative Package')
     product_qty_package = fields.Float(
         'Number of packages', help="""The number of packages you'll buy.""")
+    price_policy = fields.Selection(
+        [('uom', 'per UOM'), ('package', 'per Package')], "Price Policy",
+        default='uom', required=True)
 
     # Constraints section
     # TODO: Rewrite me in _contraint, if the Orm V8 allows param in message.
@@ -69,9 +88,10 @@ class PurchaseOrderLine(models.Model):
                             """ following line:"""
                             """ \n - Product: %s;"""
                             """ \n - Quantity: %s;"""
-                            """ \n - Unit Price: %s;""" % (
+                            """ \n - Unit Price: %s;"""
+                            """ \n - Package quantity: %s;""" % (
                                 pol.product_id.name, pol.product_qty,
-                                pol.price_unit)))
+                                pol.price_unit, package_qty)))
 
     @api.model
     def create(self, vals):
@@ -104,6 +124,7 @@ class PurchaseOrderLine(models.Model):
                     self.package_qty = supplier.package_qty
                     self.product_qty = supplier.package_qty
                     self.product_qty_package = 1
+                    self.price_policy = supplier.price_policy
                     self.indicative_package = supplier.indicative_package
         return res
 
@@ -125,7 +146,7 @@ class PurchaseOrderLine(models.Model):
                 self.product_qty / self.package_qty) * self.package_qty
         if self.package_qty:
             self.product_qty_package = self.product_qty / self.package_qty
-        super(PurchaseOrderLine, self)._compute_amount()
+        self._compute_amount()
         return res
 
     @api.onchange('product_qty_package')

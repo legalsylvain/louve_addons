@@ -58,6 +58,25 @@ class ProductSupplierinfo(models.Model):
         help="""If checked, the system will not force you to purchase"""
         """a strict multiple of package quantity""",
         default=False)
+    price_policy = fields.Selection(
+        [('uom', 'per UOM'), ('package', 'per Package')], "Price Policy",
+        default='uom', required=True)
+    base_price = fields.Float(
+        'Price', required=True,
+        digits_compute=dp.get_precision('Product Price'),
+        help="The price to purchase a product")
+    price = fields.Float(compute="_compute_price", required=False)
+
+    @api.onchange('base_price', 'price_policy', 'package_qty')
+    @api.multi
+    def _compute_price(self):
+        for psi in self:
+            if psi.price_policy == 'package':
+                if psi.package_qty == 0:
+                    psi.package_qty = 1
+                psi.price = psi.base_price / psi.package_qty
+            else:
+                psi.price = psi.base_price
 
     # Constraints section
     @api.multi
@@ -74,6 +93,7 @@ class ProductSupplierinfo(models.Model):
         for psi in self.browse(cr, SUPERUSER_ID, psi_ids, context=context):
             package_qty = max(psi.min_qty, 1)
             self.write(
-                cr, SUPERUSER_ID, psi.id, {'package_qty': package_qty},
+                cr, SUPERUSER_ID, psi.id, {
+                    'package_qty': package_qty, 'base_price': psi.price},
                 context=context)
         return psi_ids

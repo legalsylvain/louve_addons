@@ -19,33 +19,45 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields
+
 
 class louve_crm_contact_origin(models.Model):
-    _name='res.contact_origin'
+    _name = 'res.contact_origin'
     name = fields.Char()
-    partner_ids = fields.One2many(comodel_name="res.partner", inverse_name="contact_origin_id",  string="Members")
+    partner_ids = fields.One2many(
+        comodel_name="res.partner", inverse_name="contact_origin_id",
+        string="Members")
+
 
 class louve_crm_membership(models.Model):
-    #@api.multi
-    #def onchange_type(self, is_company):
-        # FIXME : why do we do this ? it's already done in the standard module??
-        #res = super(louve_crm_membership, self).onchange_type(is_company)
-        #if 'invisible' not in res :
-        #    res.update({'invisible':{}})
-        #if self.is_company:
-        #    res['invisible']['company_id'] = False
-        #else:
-        #    res['invisible']['company_id'] = True
-        #return res
-        
+    # @api.multi
+    # def onchange_type(self, is_company):
+    #     # FIXME : why do we do this ? it's already done in the standard
+    #     # module??
+    #     res = super(louve_crm_membership, self).onchange_type(is_company)
+    #     if 'invisible' not in res :
+    #         res.update({'invisible':{}})
+    #     if self.is_company:
+    #         res['invisible']['company_id'] = False
+    #     else:
+    #         res['invisible']['company_id'] = True
+    #     return res
+
     _inherit = 'res.partner'
-    contact_origin_id = fields.Many2one(comodel_name="res.contact_origin", string="Contact Origin")
-    company_type_id = fields.Many2one(comodel_name="res.company_type", string="Company Type")
-    is_deceased = fields.Boolean("Is Deceased")     
-    adult_number_in_family = fields.Integer(string="Nb adults", help="Number of adults in the family")     
+
+    contact_origin_id = fields.Many2one(
+        comodel_name="res.contact_origin", string="Contact Origin")
+    company_type_id = fields.Many2one(
+        comodel_name="res.company_type", string="Company Type")
+    is_deceased = fields.Boolean("Is Deceased")
+    adult_number_in_family = fields.Integer(
+        string="Nb adults", help="Number of adults in the family")
+
 
 class louve_crm_company_type(models.Model):
-    _name='res.company_type'
+    _name = 'res.company_type'
     name = fields.Char()
-    partner_ids = fields.One2many(comodel_name="res.partner", inverse_name="company_type_id",  string="Company Type")
+    partner_ids = fields.One2many(
+        comodel_name="res.partner", inverse_name="company_type_id",
+        string="Company Type")

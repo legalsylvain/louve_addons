@@ -29,7 +29,7 @@ class ResPartner(models.Model):
 
     # Constant Values
     _TARGET_TYPE = [
-        ('product_price_inv', '€'),
+        ('product_price_inv_eq', '€'),
         ('time', 'days'),
         ('weight_net', 'kg'),
     ]
