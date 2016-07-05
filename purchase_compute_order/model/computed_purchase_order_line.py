@@ -355,19 +355,15 @@ class ComputedPurchaseOrderLine(models.Model):
     @api.multi
     def unlink_psi(self):
         psi_obj = self.env["product.supplierinfo"]
-        cpol_obj = self.env["computed.purchase.order.line"]
-        psi2unlink = []
         for cpol in self:
             cpo = cpol.computed_purchase_order_id
             partner_id = cpo.partner_id.id
             product_tmpl_id = cpol.product_id.product_tmpl_id.id
-            psi_ids = psi_obj.search(self.cr, self.uid, [
+            psi_ids = psi_obj.search([
                 ('name', '=', partner_id),
-                ('product_id', '=', product_tmpl_id)],
-                context=self.env.context)
-            psi2unlink += psi_ids
-        psi_obj.unlink(psi2unlink)
-        cpol_obj.unlink(self.ids)
+                ('product_id', '=', product_tmpl_id)])
+            psi_ids.unlink()
+            cpol.unlink()
 
     @api.multi
     def create_psi(self):
