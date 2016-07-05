@@ -271,6 +271,7 @@ class ComputedPurchaseOrder(models.Model):
                 else:
                     quantity = 0
                 line.purchase_qty = quantity
+                line.purchase_qty_package = quantity / line.package_qty
 
     @api.multi
     def _compute_purchase_quantities_other(self, field):
@@ -310,6 +311,7 @@ class ComputedPurchaseOrder(models.Model):
 
             for line in cpo.line_ids:
                 line.purchase_qty = qty_tmp[line.id]
+                line.purchase_qty_package = qty_tmp[line.id] / line.package_qty
 
     @api.model
     def _check_purchase_qty(self, target=0, field_list=None, qty_tmp=None):

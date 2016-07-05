@@ -70,6 +70,7 @@
                                         <field name="displayed_average_consumption"/>
                                         <field name="uom_id"/>
                                         <field name="stock_duration"/>
+                                        <field name="purchase_qty_package"/>
                                         <field name="package_qty_inv"/>
                                         <field name="purchase_qty"/>
                                         <field name="uom_po_id"/>

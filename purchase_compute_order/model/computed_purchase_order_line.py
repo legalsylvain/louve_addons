@@ -103,6 +103,8 @@ class ComputedPurchaseOrderLine(models.Model):
         compute='_compute_stock_duration', string='Virtual Duration (Days)',
         readonly='True', help="""Number of days the stock should last after"""
         """ the purchase.""")
+    purchase_qty_package = fields.Float(
+        'Number of packages', help="""The number of packages you'll buy.""")
     purchase_qty = fields.Float(
         'Quantity to purchase', required=True, default=0,
         help="The quantity you should purchase.")
@@ -137,6 +139,22 @@ class ComputedPurchaseOrderLine(models.Model):
     ]
 
     # Columns section
+    @api.multi
+    @api.onchange('purchase_qty')
+    def onchange_purchase_qty(self):
+        for cpol in self:
+            if cpol.package_qty_inv:
+                cpol.purchase_qty_package = cpol.purchase_qty /\
+                    cpol.package_qty_inv
+
+    @api.multi
+    @api.onchange('purchase_qty_package', 'package_qty_inv')
+    def onchange_purchase_qty_package(self):
+        for cpol in self:
+            if cpol.purchase_qty_package == int(cpol.purchase_qty_package):
+                cpol.purchase_qty = cpol.package_qty_inv *\
+                    cpol.purchase_qty_package
+
     @api.model
     @api.onchange('package_qty_inv', 'product_price_inv', 'price_policy')
     def _compute_product_price_inv_eq(self):
