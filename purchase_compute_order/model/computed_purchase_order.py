@@ -342,7 +342,7 @@ class ComputedPurchaseOrder(models.Model):
                             'state': 'up_to_date',
                             'product_code': psi.product_code,
                             'product_name': psi.product_name,
-                            'product_price': psi.price,
+                            'product_price': psi.base_price,
                             'price_policy': psi.price_policy,
                             'package_qty': psi.package_qty or psi.min_qty,
                             'displayed_average_consumption':

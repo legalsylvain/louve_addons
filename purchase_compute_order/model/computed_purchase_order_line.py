@@ -221,7 +221,7 @@ class ComputedPurchaseOrderLine(models.Model):
                     if psi:
                         cpol.product_code_inv = psi.product_code
                         cpol.product_name_inv = psi.product_name
-                        cpol.product_price_inv = psi.price
+                        cpol.product_price_inv = psi.base_price
                         cpol.package_qty_inv = psi.package_qty
                         cpol.price_policy = psi.price_policy
 
