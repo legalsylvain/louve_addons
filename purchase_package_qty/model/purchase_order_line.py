@@ -31,9 +31,11 @@ class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
     package_qty = fields.Float(
-        'Package Qty', compute='_compute_package_qty',
+        'Package Qty', compute='_compute_package_qty', multi='seller_info',
         help="""The quantity of products in the supplier package.""")
-    indicative_package = fields.Boolean('Indicative Package')
+    indicative_package = fields.Boolean(
+        'Indicative Package', compute='_compute_package_qty',
+        multi='seller_info',)
     product_qty_package = fields.Float(
         'Number of packages', help="""The number of packages you'll buy.""")
 
@@ -93,6 +95,7 @@ class PurchaseOrderLine(models.Model):
                 for supplier in pol.product_id.seller_ids:
                     if pol.partner_id and (supplier.name == pol.partner_id):
                         pol.package_qty = supplier.package_qty
+                        pol.indicative_package = supplier.indicative_package
 
     # Views section
     @api.onchange('product_id')
