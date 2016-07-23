@@ -42,3 +42,4 @@ class ResPartner(models.Model):
                 partner.bootstrap_state = 'warning'
             elif partner.state == 'ok':
                 partner.bootstrap_state = 'success'
+
