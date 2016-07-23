@@ -9,10 +9,11 @@ from openerp import models, api
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    # Exist because has_group function is not correctly decorated.
-    @api.multi
-    def check_group(self, group_ext_id):
-        return self.has_group(group_ext_id)
+    # TODO Improve Odoo-JS lib
+    # Exist because 'has_group' function doesn't accept context args
+    # that is not manage by the Odoo-JS lib
+    def check_group(self, cr, uid, group_ext_id, context=None):
+        return self.has_group(cr, uid, group_ext_id)
 
     # Compute Section
     @api.multi
