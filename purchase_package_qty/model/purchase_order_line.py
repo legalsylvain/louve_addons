@@ -113,6 +113,8 @@ class PurchaseOrderLine(models.Model):
                 for supplier in pol.product_id.seller_ids:
                     if pol.partner_id and (supplier.name == pol.partner_id):
                         pol.package_qty = supplier.package_qty
+                    else:
+                        pol.package_qty = 1
 
     # Views section
     @api.onchange('product_id')
