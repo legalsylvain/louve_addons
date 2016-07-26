@@ -80,24 +80,6 @@ class ProductSupplierinfo(models.Model):
             else:
                 psi.price = psi.base_price
 
-    @api.multi
-    def write(self, vals):
-        if not ('base_price' in vals.keys()):
-            if 'price' in vals.keys():
-                vals['base_price'] = vals['price']
-            else:
-                vals['base_price'] = 0
-        return super(ProductSupplierinfo, self).write(vals)
-
-    @api.multi
-    def create(self, vals):
-        if not ('base_price' in vals.keys()):
-            if 'price' in vals.keys():
-                vals['base_price'] = vals['price']
-            else:
-                vals['base_price'] = 0
-        return super(ProductSupplierinfo, self).create(vals)
-
     # Constraints section
     @api.multi
     @api.constrains('package_qty')
