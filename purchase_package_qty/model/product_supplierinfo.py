@@ -65,7 +65,8 @@ class ProductSupplierinfo(models.Model):
         'Price', required=True,
         digits_compute=dp.get_precision('Product Price'),
         help="The price to purchase a product")
-    price = fields.Float("Price per Unit", compute='_compute_price',
+    price = fields.Float(
+        "Price per Unit", compute='_compute_price',
         required=False, store=True, readonly=True)
 
     @api.depends('base_price', 'price_policy', 'package_qty')
