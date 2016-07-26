@@ -21,11 +21,19 @@
 #
 ##############################################################################
 
+from openerp import api, models
 
-from . import product_supplierinfo
-from . import purchase_order_line
-from . import stock_move
-from . import stock_picking
-from . import stock_pack_operation
-from . import account_invoice
-from . import account_invoice_line
+
+class AccountInvoice(models.Model):
+    _inherit = 'account.invoice'
+
+    @api.onchange('purchase_id')
+    def purchase_order_change(self):
+        res = super(AccountInvoice, self).purchase_order_change()
+        for line in self.invoice_line_ids:
+            line.price_policy = line.purchase_line_id.price_policy
+            line.quantity = line.purchase_line_id.product_qty
+            line.package_qty = line.purchase_line_id.package_qty
+            line.product_qty_package =\
+                line.purchase_line_id.product_qty_package
+        return res
