@@ -124,10 +124,12 @@ class PurchaseOrderLine(models.Model):
             for supplier in self.product_id.seller_ids:
                 if self.partner_id and (supplier.name == self.partner_id):
                     self.package_qty = supplier.package_qty
+                    self.indicative_package = supplier.indicative_package
                     self.product_qty = supplier.package_qty
                     self.product_qty_package = 1
                     self.price_policy = supplier.price_policy
-                    self.indicative_package = supplier.indicative_package
+                    if supplier.price_policy == "package":
+                        self.price_unit = supplier.base_price
         return res
 
     @api.onchange('product_qty', 'product_uom')
