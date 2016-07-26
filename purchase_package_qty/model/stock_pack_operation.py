@@ -34,9 +34,9 @@ class StockPackOperation(models.Model):
     product_qty_package = fields.Float(
         'Number of packages', help="""The number of packages you'll buy.""",
         readonly=True)
-    qty_done = fields.Float("To do (uom)")
+    qty_done = fields.Float("Done (uom)")
     qty_done_package = fields.Float(
-        "To do (package)", help="""The number of packages you've received.""",
+        "Done (package)", help="""The number of packages you've received.""",
         digits_compute=dp.get_precision('Product Unit of Measure'))
 
     @api.onchange('qty_done')
