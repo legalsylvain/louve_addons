@@ -155,17 +155,18 @@ class ComputedPurchaseOrderLine(models.Model):
                 cpol.purchase_qty = cpol.package_qty_inv *\
                     cpol.purchase_qty_package
 
-    @api.model
+    @api.multi
     @api.onchange('package_qty_inv', 'product_price_inv', 'price_policy')
     def _compute_product_price_inv_eq(self):
-        if self.price_policy == 'package':
-            if self.package_qty_inv:
-                self.product_price_inv_eq = self.product_price_inv /\
-                    self.package_qty_inv
+        for line in self:
+            if line.price_policy == 'package':
+                if line.package_qty_inv:
+                    line.product_price_inv_eq = line.product_price_inv /\
+                        line.package_qty_inv
+                else:
+                    line.product_price_inv_eq = 0
             else:
-                self.product_price_inv_eq = 0
-        else:
-            self.product_price_inv_eq = self.product_price_inv
+                line.product_price_inv_eq = line.product_price_inv
 
     @api.onchange(
         'purchase_qty', 'product_price', 'product_price_inv', 'price_policy',
