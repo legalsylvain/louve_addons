@@ -27,6 +27,11 @@ from openerp import models, fields, api
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+    def _get_consumption_calculation_method(self):
+        return [
+            ('moves', 'Moves (calculate consumption based on Stock Moves)'),
+        ]
+
     # Columns Section
     average_consumption = fields.Float(
         compute='_compute_average_consumption',
@@ -44,11 +49,9 @@ class ProductTemplate(models.Model):
         help="""The calculation will be done for the last 365 days or"""
         """ since the first stock move of the product if it's"""
         """ more recent""")
-    consumption_calculation_method = fields.Selection([
-        ('moves', 'Moves (calculate consumption based on Stock Moves)'),
-        ('history', 'History (calculate consumption based on the Product\
-            History)'),
-    ], 'Consumption Calculation Method', default='moves')
+    consumption_calculation_method = fields.Selection(
+        _get_consumption_calculation_method,
+        'Consumption Calculation Method', default='moves')
     number_of_periods = fields.Integer(
         'Number of History periods', default=6,
         help="""Number of valid history periods used for the calculation""")
