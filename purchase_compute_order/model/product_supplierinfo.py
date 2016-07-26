@@ -30,7 +30,7 @@ class ProductSupplierinfo(models.Model):
     # Constraints section
     _sql_constraints = [
         (
-            'psi_product_name_uniq', 'unique(name, product_id)',
+            'psi_product_name_uniq', 'unique(name, product_tmpl_id)',
             """You cannot register several times the same supplier on a"""
             """ product!"""),
     ]
@@ -41,7 +41,7 @@ class ProductSupplierinfo(models.Model):
             SELECT pp.id
             FROM
                 product_supplierinfo psi
-                INNER JOIN product_template pt ON psi.product_id = pt.id
+                INNER JOIN product_template pt ON psi.product_tmpl_id = pt.id
                 INNER JOIN product_product pp ON pp.product_tmpl_id = pt.id
             GROUP BY
                 pp.id, psi.name
