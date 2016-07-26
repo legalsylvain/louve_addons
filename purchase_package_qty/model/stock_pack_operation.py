@@ -29,7 +29,7 @@ class StockPackOperation(models.Model):
     _inherit = 'stock.pack.operation'
 
     package_qty = fields.Float(
-        'Package Qty', readonly=True,
+        'Package Qty',
         help="""The quantity of products in the supplier package.""")
     product_qty_package = fields.Float(
         'Number of packages', help="""The number of packages you'll buy.""",
