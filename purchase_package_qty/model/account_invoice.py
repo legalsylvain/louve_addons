@@ -37,3 +37,53 @@ class AccountInvoice(models.Model):
             line.product_qty_package =\
                 line.purchase_line_id.product_qty_package
         return res
+
+    @api.multi
+    def get_taxes_values(self):
+        # We have to override the method in account module
+        tax_grouped = {}
+        for line in self.invoice_line_ids:
+            price_unit = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+            if line.price_policy == 'package':
+                taxes = line.invoice_line_tax_ids.compute_all(
+                    price_unit, self.currency_id, line.product_qty_package,
+                    line.product_id, self.partner_id)['taxes']
+            else:
+                taxes = line.invoice_line_tax_ids.compute_all(
+                    price_unit, self.currency_id, line.quantity,
+                    line.product_id, self.partner_id)['taxes']
+            for tax in taxes:
+                val = {
+                    'invoice_id': self.id,
+                    'name': tax['name'],
+                    'tax_id': tax['id'],
+                    'amount': tax['amount'],
+                    'manual': False,
+                    'sequence': tax['sequence'],
+                    'account_analytic_id': tax['analytic'] and
+                    line.account_analytic_id.id or False,
+                    'account_id': self.type in (
+                        'out_invoice', 'in_invoice') and
+                    (tax['account_id'] or line.account_id.id) or
+                    (tax['refund_account_id'] or line.account_id.id),
+                }
+
+                # If the taxes generate moves on the same financial account as
+                # the invoice line, propagate the analytic account from the
+                # invoice line to the tax line.
+                # This is necessary in situations were (part of) the taxes
+                # cannot be reclaimed, to ensure the tax move is allocated to
+                # the proper analytic account.
+                if not val.get('account_analytic_id') and\
+                        line.account_analytic_id and\
+                        val['account_id'] == line.account_id.id:
+                    val['account_analytic_id'] = line.account_analytic_id.id
+
+                key = self.env['account.tax'].browse(tax['id']).\
+                    get_grouping_key(val)
+
+                if key not in tax_grouped:
+                    tax_grouped[key] = val
+                else:
+                    tax_grouped[key]['amount'] += val['amount']
+        return tax_grouped
