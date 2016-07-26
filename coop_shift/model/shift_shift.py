@@ -82,7 +82,7 @@ class ShiftShift(models.Model):
 
     @api.model
     def _default_tickets(self):
-        return
+        return None
 
     @api.model
     def _default_shift_tickets(self):
