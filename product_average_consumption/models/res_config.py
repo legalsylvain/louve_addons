@@ -6,11 +6,11 @@ from openerp import fields, models, api
 class PurchaseConfigSettings(models.TransientModel):
     _inherit = 'stock.config.settings'
 
-    default_consumption_calculation_method = fields.Selection([
-        ('moves', 'Calculate consumption based on Stock Moves'),
-        ('history', 'Calculate consumption based on the Product History'),
-    ], 'Consumption Calculation Method', default='moves',
-        default_model='product.template')
+    default_consumption_calculation_method = fields.Selection(
+        [('moves', 'Calculate consumption based on Stock Moves'),
+         ('history', 'Calculate consumption based on the Product History'),
+         ], 'Consumption Calculation Method', default='moves',
+            default_model='product.template')
     default_number_of_periods = fields.Integer(
         'Number of valid history periods used for the calculation', default=6,
         default_model='product.template',
