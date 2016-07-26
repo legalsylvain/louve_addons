@@ -58,7 +58,6 @@ class AccountInvoiceLine(models.Model):
             currency = self.invoice_id and self.invoice_id.currency_id or None
             price = self.price_unit * (1 - (self.discount or 0.0) / 100.0)
             taxes = False
-            import pdb; pdb.set_trace()
             if self.invoice_line_tax_ids:
                 taxes = self.invoice_line_tax_ids.compute_all(
                     price, currency, self.product_qty_package,
