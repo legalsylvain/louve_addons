@@ -41,8 +41,10 @@ Copyright, Author and Licence :
     'license': 'AGPL-3',
     'depends': [
         'purchase',
+        'product',
     ],
     'data': [
         'views/purchase_order_view.xml',
+        'views/product_supplierinfo_view.xml',
     ],
 }
