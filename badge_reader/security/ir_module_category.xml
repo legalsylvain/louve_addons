@@ -6,7 +6,7 @@
 -->
 
 <odoo>
-    <record model="res.groups" id="category_badge_reader">
+    <record model="ir.module.category" id="category_badge_reader">
         <field name="name">Badge Reader</field>
     </record>
 

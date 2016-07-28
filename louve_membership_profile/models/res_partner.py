@@ -19,13 +19,13 @@
 #
 ##############################################################################
 
-from lxml import etree
-from openerp import SUPERUSER_ID
-from openerp import models, fields, api
+# from lxml import etree
+# from openerp import SUPERUSER_ID
+from openerp import models, fields
 
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    first_name = fields.Char(string='First Name',size=64)
-    last_name = fields.Char(string='Last Name',size=64)        
+    first_name = fields.Char(string='First Name', size=64)
+    last_name = fields.Char(string='Last Name', size=64)

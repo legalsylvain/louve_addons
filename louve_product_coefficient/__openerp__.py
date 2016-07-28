@@ -1,44 +1,34 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2015 Smile (<http://www.smile.fr>). All Rights Reserved
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# -*- coding: utf-8 -*-
+# Copyright (C) 2015-Today: Smile (<http://www.smile.fr>)
+# Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
     'name': 'Louve Product Coefficient',
     'version': '1.0',
+    'summary': 'Louve Product Coefficients',
+    'author': 'La Louve,Smile',
+    'website': 'http://www.lalouve.net',
+    'category': 'Product',
     'depends': [
         'product',
+        'account',
     ],
-    'author': 'La Louve',
-    'description': """
-    Add coefficients to product templates
-    """,
-    'summary': 'Louve Product Coefficients', 
-    'website': 'http://',
-    'category': 'Product', 
-    'sequence': 10,
-    'data': ['views/louve_coefficients_view.xml', 
-    'security/ir.model.access.csv'] ,
-    'demo': ['demo/product.coefficient.csv', 
-    'demo/product.template.csv', 'demo/product.category.csv'], 
-    'test':['test/product_coefficient_test.yml'], 
-    'auto_install': False,
+    'data': [
+        'security/ir.model.access.csv',
+        'views/view_product_template.xml',
+        'views/view_product_product.xml',
+        'views/view_product_coefficient.xml',
+        'views/view_wizard_use_theoritical_price.xml',
+        'views/action.xml',
+        'views/menu.xml',
+        'data/ir_cron.xml',
+    ],
+    'demo': [
+        'demo/res_groups.xml',
+        'demo/product.coefficient.csv',
+        'demo/product_template.xml',
+    ],
     'installable': True,
-    'application': False,
 }

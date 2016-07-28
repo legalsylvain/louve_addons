@@ -32,6 +32,14 @@
                         <field name="indicative_package"/>
                     </group>
                 </label>
+                <xpath expr="//field[@name='price']/.." position="replace">
+                    <group col="6" colspan="4">
+                        <field name="base_price"/>
+                        <field name="price_policy" nolabel="1"/>
+                    </group>
+                    <field name="price" string="Price per unit" attrs="{'invisible':[('price_policy', '!=', 'package')]}"/>
+                </xpath>
+                <label for="price" position="replace"/>
             </field>
         </record>
 
@@ -43,6 +51,10 @@
                 <field name="min_qty" position="after">
                         <field name="package_qty"/>
                         <field name="indicative_package"/>
+                </field>
+                <field name="price" position="replace">
+                    <field name="base_price"/>
+                    <field name="price_policy"/>
                 </field>
             </field>
         </record>

@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 
+*~
+
 # C extensions
 *.so
 
@@ -10,11 +12,9 @@ __pycache__/
 env/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
-lib_/
 lib64/
 parts/
 sdist/
