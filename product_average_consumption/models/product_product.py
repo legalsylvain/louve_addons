@@ -49,11 +49,6 @@ class ProductProduct(models.Model):
         """ more recent""")
     consumption_calculation_method = fields.Selection(
         related='product_tmpl_id.consumption_calculation_method')
-    number_of_periods_target = fields.Integer(
-        related='product_tmpl_id.number_of_periods')
-    number_of_periods_real = fields.Integer(
-        'Number of History periods',
-        help="""Number of valid history periods used for the calculation""")
     display_range = fields.Integer(
         related='product_tmpl_id.display_range')
     calculation_range = fields.Integer(
@@ -72,15 +67,12 @@ class ProductProduct(models.Model):
 
     # Fields Function Section
     @api.depends(
-        'consumption_calculation_method',
-        'number_of_periods_target', 'calculation_range')
+        'consumption_calculation_method', 'calculation_range')
     @api.multi
     def _average_consumption(self):
         for product in self:
             if product.consumption_calculation_method == 'moves':
                 product._average_consumption_moves()
-            elif product.consumption_calculation_method == 'history':
-                product._average_consumption_history()
 
     @api.onchange('calculation_range')
     @api.multi
@@ -123,29 +115,6 @@ class ProductProduct(models.Model):
                 (outgoing_qty / nb_days) or False)
             product.total_consumption = outgoing_qty or False
             product.nb_days = nb_days or False
-
-    @api.multi
-    def _average_consumption_history(self):
-        for product in self:
-            nb = product.number_of_periods_target
-            history_range = product.history_range
-            history_ids = self.env['product.history'].search([
-                ('product_id', '=', product.id),
-                ('history_range', '=', history_range),
-                ('ignored', '=', 0)]).sorted()
-            nb = min(len(history_ids), nb)
-            if nb == 0:
-                product.total_consumption = 0
-                product.average_consumption = 0
-                product.number_of_periods_real = 0
-            else:
-                ids = range(nb)
-                total_consumption = 0
-                for id in ids:
-                    total_consumption -= history_ids[id].sale_qty
-                product.total_consumption = total_consumption
-                product.average_consumption = total_consumption / nb
-                product.number_of_periods_real = nb
 
     @api.onchange('display_range', 'average_consumption')
     @api.multi
