@@ -29,6 +29,12 @@ from dateutil.relativedelta import relativedelta as rd
 
 old_date = date(2015, 1, 1)
 
+DAYS_IN_RANGE = {
+    'days': 1,
+    'weeks': 7,
+    'months': 30,
+}
+
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
@@ -47,7 +53,8 @@ class ProductProduct(models.Model):
         related='product_tmpl_id.number_of_periods')
 
 # Private section
-    @api.onchange('history_range', 'product_history_ids')
+    @api.onchange(
+        'history_range', 'product_history_ids', 'number_of_periods_target')
     @api.multi
     def _average_consumption(self):
         for product in self:
@@ -125,8 +132,10 @@ class ProductProduct(models.Model):
                 for id in ids:
                     total_consumption -= history_ids[id].sale_qty
                 product.total_consumption = total_consumption
-                product.average_consumption = total_consumption / nb
+                product.average_consumption = total_consumption / nb /\
+                    DAYS_IN_RANGE[product.history_range]
                 product.number_of_periods_real = nb
+                self._displayed_average_consumption
 
 # Action section
     @api.model

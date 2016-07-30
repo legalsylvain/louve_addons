@@ -16,11 +16,6 @@ class PurchaseConfigSettings(models.TransientModel):
         _get_consumption_calculation_method,
         'Consumption Calculation Method', default='moves',
         default_model='product.template')
-    default_number_of_periods = fields.Integer(
-        'Number of valid history periods used for the calculation', default=6,
-        default_model='product.template',
-        help="""This field is used if the selected method is based on"""
-        """ Product History""")
     default_calculation_range = fields.Integer(
         'Calculation Range in days', default=365,
         default_model='product.template', help="""This field is used if the"""
