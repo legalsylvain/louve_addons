@@ -30,6 +30,12 @@ HISTORY_RANGE = [
     ('months', 'Month'),
 ]
 
+DAYS_IN_RANGE = {
+    'days': 1,
+    'weeks': 7,
+    'months': 30,
+}
+
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
@@ -93,4 +99,5 @@ class ProductTemplate(models.Model):
                 template.total_consumption = total_consumption
                 template.average_consumption = (
                     number_of_periods and
-                    (total_consumption / number_of_periods) or False)
+                    (total_consumption / number_of_periods /
+                        DAYS_IN_RANGE[product.history_range]) or False)
