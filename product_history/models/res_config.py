@@ -10,7 +10,7 @@ class ProductHistorySettings(models.TransientModel):
         ('days', 'Days'),
         ('weeks', 'Week'),
         ('months', 'Month'),
-        ], 'Product History Display Range', default='weeks',
+    ], 'Product History Display Range', default='weeks',
         default_model='product.product')
     default_number_of_periods = fields.Integer(
         'Number of valid history periods used for the calculation', default=6,
