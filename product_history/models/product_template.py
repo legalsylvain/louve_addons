@@ -34,7 +34,18 @@ HISTORY_RANGE = [
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+    def _get_consumption_calculation_method(self):
+        selection = super(ProductTemplate, self).\
+            _get_consumption_calculation_method()
+        selection.append(
+            ('history', 'History (calculate consumption based on the Product\
+            History)'),)
+        return selection
+
 # Columns section
+    consumption_calculation_method = fields.Selection(
+        _get_consumption_calculation_method,
+        'Consumption Calculation Method', default='moves')
     history_range = fields.Selection(
         HISTORY_RANGE, "History Range", default="weeks")
     product_history_ids = fields.Many2many(
