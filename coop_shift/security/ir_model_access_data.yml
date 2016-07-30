@@ -113,15 +113,6 @@
     perm_write: false
     perm_unlink: false
 -
-  !record {model: ir.model.access, id: ir_model_access_shift_template_registration_user}:
-    group_id: coop_shift.group_shift_user
-    model_id: coop_shift.model_shift_template_registration
-    name: shift_template_registration user
-    perm_create: false
-    perm_read: true
-    perm_write: false
-    perm_unlink: false
--
   !record {model: ir.model.access, id: ir_model_access_shift_template_registration_manager}:
     group_id: coop_shift.group_shift_manager
     model_id: coop_shift.model_shift_template_registration
@@ -130,6 +121,15 @@
     perm_read: true
     perm_write: true
     perm_unlink: true
+-
+  !record {model: ir.model.access, id: ir_model_access_shift_template_registration_user}:
+    group_id: coop_shift.group_shift_user
+    model_id: coop_shift.model_shift_template_registration
+    name: shift_template_registration user
+    perm_create: false
+    perm_read: true
+    perm_write: false
+    perm_unlink: false
 -
   !record {model: ir.model.access, id: ir_model_access_shift_template_registration_line_user}:
     group_id: coop_shift.group_shift_user
