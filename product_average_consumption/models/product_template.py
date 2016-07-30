@@ -65,8 +65,7 @@ class ProductTemplate(models.Model):
 
     # Fields Function Section
     @api.onchange(
-        'consumption_calculation_method', 'number_of_periods',
-        'calculation_range')
+        'consumption_calculation_method', 'calculation_range')
     @api.depends('product_variant_ids')
     @api.multi
     def _compute_average_consumption(self):

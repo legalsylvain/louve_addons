@@ -43,6 +43,8 @@ class ProductProduct(models.Model):
     number_of_periods_real = fields.Integer(
         'Number of History periods',
         help="""Number of valid history periods used for the calculation""")
+    number_of_periods_target = fields.Integer(
+        related='product_tmpl_id.number_of_periods')
 
 # Private section
     @api.onchange('history_range', 'product_history_ids')

@@ -49,8 +49,6 @@ class ProductProduct(models.Model):
         """ more recent""")
     consumption_calculation_method = fields.Selection(
         related='product_tmpl_id.consumption_calculation_method')
-    number_of_periods_target = fields.Integer(
-        related='product_tmpl_id.number_of_periods')
     display_range = fields.Integer(
         related='product_tmpl_id.display_range')
     calculation_range = fields.Integer(
@@ -69,8 +67,7 @@ class ProductProduct(models.Model):
 
     # Fields Function Section
     @api.depends(
-        'consumption_calculation_method',
-        'number_of_periods_target', 'calculation_range')
+        'consumption_calculation_method', 'calculation_range')
     @api.multi
     def _average_consumption(self):
         for product in self:

@@ -73,26 +73,12 @@ class ProductHistory(models.Model):
     def mark_line(self, ignored=True):
         for line in self:
             line.ignored = ignored
-            line.product_id._average_consumption()
+            line.product_id.product_tmpl_id._compute_average_consumption()
 
     @api.multi
     def ignore_line(self):
         self.mark_line(True)
-        # return self.return_view()
 
     @api.multi
     def unignore_line(self):
         self.mark_line(False)
-        # return self.return_view()
-
-    # @api.model
-    # def return_view(self):
-    #     return {
-    #         'view_type': 'form',
-    #         'view_mode': 'form,tree',
-    #         'res_model': 'product.template',
-    #         'context': self._context,
-    #         'type': 'ir.actions.act_window',
-    #         'target': 'current',
-    #         'res_id': self.product_tmpl_id.id,
-    #     }
