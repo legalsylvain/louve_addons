@@ -21,11 +21,30 @@
 #
 ##############################################################################
 
+from openerp import fields, models, api
+import openerp.addons.decimal_precision as dp
 
-from . import product_supplierinfo
-from . import purchase_order_line
-from . import stock_move
-from . import stock_picking
-from . import stock_pack_operation
-from . import account_invoice
-from . import account_invoice_line
+
+class StockPackOperation(models.Model):
+    _inherit = 'stock.pack.operation'
+
+    package_qty = fields.Float(
+        'Package Qty',
+        help="""The quantity of products in the supplier package.""")
+    product_qty_package = fields.Float(
+        'Number of packages', help="""The number of packages you'll buy.""",
+        readonly=True)
+    qty_done = fields.Float("Done (uom)")
+    qty_done_package = fields.Float(
+        "Done (package)", help="""The number of packages you've received.""",
+        digits_compute=dp.get_precision('Product Unit of Measure'))
+
+    @api.onchange('qty_done')
+    def onchange_qty_done(self):
+        if self.package_qty:
+            self.qty_done_package = self.qty_done / self.package_qty
+
+    @api.onchange('qty_done_package')
+    def onchange_qty_done_package(self):
+        if self.qty_done_package == int(self.qty_done_package):
+            self.qty_done = self.package_qty * self.qty_done_package

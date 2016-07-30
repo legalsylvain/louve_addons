@@ -65,6 +65,8 @@ Copyright, Author and Licence :
     'data': [
         'views/product_supplierinfo_view.xml',
         'views/purchase_order_view.xml',
+        'views/stock_picking_view.xml',
+        'views/account_invoice_view.xml',
         'data/function.xml',
     ],
 }

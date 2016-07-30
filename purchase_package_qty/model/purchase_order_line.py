@@ -116,6 +116,8 @@ class PurchaseOrderLine(models.Model):
                     if pol.partner_id and (supplier.name == pol.partner_id):
                         pol.package_qty = supplier.package_qty
                         pol.indicative_package = supplier.indicative_package
+                    else:
+                        pol.package_qty = 1
 
     # Views section
     @api.onchange('product_id')
@@ -125,10 +127,12 @@ class PurchaseOrderLine(models.Model):
             for supplier in self.product_id.seller_ids:
                 if self.partner_id and (supplier.name == self.partner_id):
                     self.package_qty = supplier.package_qty
+                    self.indicative_package = supplier.indicative_package
                     self.product_qty = supplier.package_qty
                     self.product_qty_package = 1
                     self.price_policy = supplier.price_policy
-                    self.indicative_package = supplier.indicative_package
+                    if supplier.price_policy == "package":
+                        self.price_unit = supplier.base_price
         return res
 
     @api.onchange('product_qty', 'product_uom')
@@ -156,3 +160,12 @@ class PurchaseOrderLine(models.Model):
     def onchange_product_qty_package(self):
             if self.product_qty_package == int(self.product_qty_package):
                 self.product_qty = self.package_qty * self.product_qty_package
+
+    @api.multi
+    def _create_stock_moves(self, picking):
+        res = super(PurchaseOrderLine, self)._create_stock_moves(picking)
+        for move in res:
+            move.package_qty = move.purchase_line_id.package_qty
+            move.product_qty_package = \
+                move.purchase_line_id.product_qty_package
+        return res

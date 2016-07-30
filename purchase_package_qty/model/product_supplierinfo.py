@@ -65,9 +65,11 @@ class ProductSupplierinfo(models.Model):
         'Price', required=True,
         digits_compute=dp.get_precision('Product Price'),
         help="The price to purchase a product")
-    price = fields.Float(compute="_compute_price", required=False)
+    price = fields.Float(
+        "Price per Unit", compute='_compute_price',
+        required=False, store=True, readonly=True)
 
-    @api.onchange('base_price', 'price_policy', 'package_qty')
+    @api.depends('base_price', 'price_policy', 'package_qty')
     @api.multi
     def _compute_price(self):
         for psi in self:
