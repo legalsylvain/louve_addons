@@ -19,7 +19,7 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <page name="sales_purchases" position="after">
-                    <page name="shifts" string="Shifts">
+                    <page name="shifts" string="Shifts" groups="coop_shift.group_shift_manager">
                         <group name="button">
                             <button name="%(coop_shift.action_add_template_registration)d" type="action" class="oe_highlight" icon="fa-cogs" string="Add Template Registration"/>
                         </group>
@@ -53,14 +53,16 @@
                         type="action"
                         class="oe_stat_button oe_event_attendee_button"
                         icon="fa-calendar"
-                        help="View partner Registrations">
+                        help="View partner Registrations"
+                        groups="coop_shift.group_shift_manager">
                         <field name="upcoming_registration_count" widget="statinfo" string="Upc. Registr."/>
                     </button>
                     <button name="%(coop_shift.act_template_registration_from_partner)d"
                         type="action"
                         class="oe_stat_button oe_event_attendee_button"
                         icon="fa-calendar-plus-o"
-                        help="View partner Template Registrations">
+                        help="View partner Template Registrations"
+                        groups="coop_shift.group_shift_manager">
                         <field name="tmpl_registration_count" widget="statinfo" string="Tmpl. Registr."/>
                     </button>
                 </div>
