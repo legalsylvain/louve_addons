@@ -52,9 +52,6 @@ class ProductTemplate(models.Model):
     consumption_calculation_method = fields.Selection(
         _get_consumption_calculation_method,
         'Consumption Calculation Method', default='moves')
-    number_of_periods = fields.Integer(
-        'Number of History periods', default=6,
-        help="""Number of valid history periods used for the calculation""")
     display_range = fields.Integer(
         'Display Range in days', default=1, help="""Examples:
         1 -> Average Consumption per days
@@ -76,8 +73,6 @@ class ProductTemplate(models.Model):
         for template in self:
             if template.consumption_calculation_method == 'moves':
                 template._average_consumption_moves()
-            elif template.consumption_calculation_method == 'history':
-                template._average_consumption_history()
 
     @api.multi
     def _average_consumption_moves(self):
@@ -94,24 +89,6 @@ class ProductTemplate(models.Model):
                 template.average_consumption = (
                     nb_days and
                     (total_consumption / nb_days) or False)
-
-    @api.multi
-    def _average_consumption_history(self):
-        for template in self:
-            if template.product_variant_ids:
-                for product in template.product_variant_ids:
-                    product._average_consumption_history()
-                number_of_periods = max(
-                    product.number_of_periods_real for product in
-                    template.product_variant_ids)
-                total_consumption = sum(
-                    product.total_consumption
-                    for product in template.product_variant_ids)
-                template.number_of_periods = number_of_periods
-                template.total_consumption = total_consumption
-                template.average_consumption = (
-                    number_of_periods and
-                    (total_consumption / number_of_periods) or False)
 
     @api.depends('display_range', 'average_consumption')
     @api.multi
