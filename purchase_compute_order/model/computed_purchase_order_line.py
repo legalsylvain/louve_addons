@@ -168,7 +168,7 @@ class ComputedPurchaseOrderLine(models.Model):
             else:
                 line.product_price_inv_eq = line.product_price_inv
 
-    @api.onchange(
+    @api.depends(
         'purchase_qty', 'product_price', 'product_price_inv', 'price_policy',
         'package_qty_inv')
     @api.multi
