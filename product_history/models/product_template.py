@@ -67,10 +67,9 @@ class ProductTemplate(models.Model):
             ph_ids = [ph.id for ph in ph_ids]
             template.product_history_ids = [(6, 0, ph_ids)]
 
-    @api.onchange(
+    @api.depends(
         'consumption_calculation_method', 'number_of_periods',
-        'calculation_range')
-    @api.depends('product_variant_ids')
+        'calculation_range', 'product_history_ids', 'product_variant_ids')
     @api.multi
     def _compute_average_consumption(self):
         for template in self:
