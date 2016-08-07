@@ -85,6 +85,13 @@
                                 help="Register with this template"
                                 string="Attendees">
                             </button>
+                            <button name="act_template_shift_from_template"
+                                type="object"
+                                class="oe_stat_button oe_shift_attendee_button"
+                                icon="fa-calendar"
+                                help="View Shifts">
+                                <field name="shifts_count" widget="statinfo" string="Shifts"/>
+                            </button>
                         </div>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only"/>
