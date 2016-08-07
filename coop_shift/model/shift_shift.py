@@ -67,7 +67,7 @@ class ShiftShift(models.Model):
         'shift.ticket', 'shift_id', string='Shift Ticket',
         default=lambda rec: rec._default_shift_tickets(), copy=True)
     date_tz = fields.Selection('_tz_get', string='Timezone', default=False)
-    date_without_time = fields.Datetime(
+    date_without_time = fields.Date(
         string='Date', compute='_get_date_without_time', store=True)
     begin_time = fields.Float(
         string='Start Time', compute='_get_begin_time', store=True)
