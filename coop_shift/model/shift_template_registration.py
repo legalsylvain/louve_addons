@@ -119,3 +119,12 @@ class ShiftTemplateRegistration(models.Model):
                     """ \n - Line2: begin: %s    end: %s    state: %s;""" % (
                         line.date_begin, line.date_end, line.state,
                         line2.date_begin, line2.date_end, line2.state)))
+
+    @api.multi
+    @api.onchange("shift_template_id")
+    def onchange_shift_id(self):
+        standard_product = self.env.ref(
+            "coop_shift.product_product_shift_standard")
+        for reg in self:
+            reg.shift_ticket_id = reg.shift_template_id.shift_ticket_ids.\
+                filtered(lambda t: t.product_id == standard_product)
