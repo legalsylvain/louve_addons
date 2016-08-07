@@ -204,6 +204,7 @@
                     <filter string="Upcoming" name="upcoming"
                         domain="['&amp;', ('state', '!=', 'cancel'), ('date_begin','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]" help="Upcoming shifts from today" />
                     <field name="week_number"/>
+                    <field name="week_list"/>
                     <field name="shift_type_id"/>
                     <field name="user_id"/>
                     <field name="date_without_time" string="Date"/>
