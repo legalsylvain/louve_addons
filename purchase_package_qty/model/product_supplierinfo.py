@@ -93,9 +93,12 @@ class ProductSupplierinfo(models.Model):
     def _init_package_qty(self, cr, uid, ids=None, context=None):
         psi_ids = self.search(cr, SUPERUSER_ID, [], context=context)
         for psi in self.browse(cr, SUPERUSER_ID, psi_ids, context=context):
-            package_qty = max(psi.min_qty, 1)
-            self.write(
-                cr, SUPERUSER_ID, psi.id, {
-                    'package_qty': package_qty, 'base_price': psi.price},
-                context=context)
+            vals = {}
+            if not psi.package_qty:
+                vals['package_qty'] = max(psi.min_qty, 1)
+            if not psi.base_price:
+                vals['base_price'] = psi.price
+            if vals:
+                self.write(
+                    cr, SUPERUSER_ID, psi.id, vals, context=context)
         return psi_ids
