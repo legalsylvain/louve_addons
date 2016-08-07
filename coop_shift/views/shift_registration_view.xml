@@ -24,7 +24,7 @@
                     <field name="partner_id"/>
                     <field name="name"/>
                     <field name="email"/>
-                    <field name="shift_id" />
+                    <field name="shift_id"/>
                     <field name="shift_ticket_id"/>
                     <field name="state"/>
                     <field name="message_needaction" invisible="1"/>
@@ -58,14 +58,14 @@
                     <sheet string="Registration">
                         <group>
                             <group string="Attendee" name="attendee">
-                                <field name="partner_id" attrs="{'readonly':[('state', '!=', 'draft')]}" groups="coop_shift.group_shift_manager"/>
+                                <field name="partner_id" attrs="{'readonly':[('state', '!=', 'draft')]}" groups="coop_shift.group_shift_manager" options="{'no_create': True}"/>
                                 <field name="name"/>
                                 <field name="phone"/>
                                 <field name="email"/>
                             </group>
                             <group string="Shift Information" name="shift">
-                                <field name="shift_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                                <field name="shift_ticket_id" domain="[('shift_id', '=', shift_id)]"/>
+                                <field name="shift_id" attrs="{'readonly': [('state', '!=', 'draft')]}" options="{'no_create': True}"/>
+                                <field name="shift_ticket_id" domain="[('shift_id', '=', shift_id)]" options="{'no_create': True}"/>
                                 <field name="date_open" groups="base.group_no_one"/>
                                 <field name="date_closed" groups="base.group_no_one"/>
                             </group>

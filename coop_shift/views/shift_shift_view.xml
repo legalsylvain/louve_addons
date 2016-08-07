@@ -38,9 +38,9 @@
                         </div>
                         <group name="main_field_group">
                             <group>
-                                <field name="shift_template_id" groups="coop_shift.group_shift_manager"/>
-                                <field name="user_id"/>
-                                <field name="shift_type_id"/>
+                                <field name="shift_template_id" groups="coop_shift.group_shift_manager" options="{'no_create': True}"/>
+                                <field name="user_id" options="{'no_create': True}"/>
+                                <field name="shift_type_id" options="{'no_create': True}"/>
                                 <!-- <field name="date_tz" /> -->
                             </group>
                             <group name="datetime">
@@ -67,7 +67,7 @@
                                 <field name="shift_ticket_ids" context="{'default_name': name}">
                                     <tree string="Tickets" editable="bottom">
                                         <field name="name"/>
-                                        <field name="product_id" context="{'shift_ok':1}" domain="[('shift_type_id','!=',False)]"/>
+                                        <field name="product_id" context="{'shift_ok':1}" domain="[('shift_type_id','!=',False)]" options="{'no_create': True}"/>
                                         <field name="seats_max"/>
                                         <field name="seats_reserved" readonly="1"/>
                                         <field name="seats_unconfirmed" readonly="1"/>
