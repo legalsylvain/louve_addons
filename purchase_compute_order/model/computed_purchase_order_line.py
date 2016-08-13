@@ -361,7 +361,7 @@ class ComputedPurchaseOrderLine(models.Model):
             product_tmpl_id = cpol.product_id.product_tmpl_id.id
             psi_ids = psi_obj.search([
                 ('name', '=', partner_id),
-                ('product_id', '=', product_tmpl_id)])
+                ('product_tmpl_id', '=', product_tmpl_id)])
             psi_ids.unlink()
             cpol.unlink()
 
