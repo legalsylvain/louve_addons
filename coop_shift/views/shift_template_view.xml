@@ -99,9 +99,9 @@
                                 <field name="updated_fields" invisible="1"/>
                                 <field name="address_id" context="{'show_address': 1}" options='{"always_reload": True}' invisible="1"/>
                                 <field name="company_id" groups="base.group_multi_company"/>
-                                <field name="user_id"/>
+                                <field name="user_id" options="{'no_create': True}"/>
                                 <field name="week_number"/>
-                                <field name="shift_type_id"/>
+                                <field name="shift_type_id" options="{'no_create': True}"/>
                             </group>
                             <group name="datetime">
                                 <field name="start_date"/>
@@ -128,7 +128,7 @@
                                 <field name="shift_ticket_ids" context="{'default_name': name}">
                                     <tree string="Tickets" editable="bottom">
                                         <field name="name"/>
-                                        <field name="product_id" context="{'shift_ok':1}" domain="[('shift_type_id','!=',False)]"/>
+                                        <field name="product_id" context="{'shift_ok':1}" domain="[('shift_type_id','!=',False)]" options="{'no_create': True}"/>
                                         <field name="seats_max"/>
                                         <field name="seats_reserved" readonly="1"/>
                                         <field name="seats_unconfirmed" readonly="1"/>

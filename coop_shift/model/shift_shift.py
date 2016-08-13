@@ -50,6 +50,10 @@ class ShiftShift(models.Model):
     week_number = fields.Selection(
         [(1, 'Week A'), (2, 'Week B'), (3, 'Week C'), (4, 'Week D')],
         string='Week', required=True)
+    week_list = fields.Selection([
+        ('MO', 'Monday'), ('TU', 'Tuesday'), ('WE', 'Wednesday'),
+        ('TH', 'Thursday'), ('FR', 'Friday'), ('SA', 'Saturday'),
+        ('SU', 'Sunday')], 'Weekday')
     registration_ids = fields.One2many(
         'shift.registration', 'shift_id', string='Attendees',
         readonly=False, states={'done': [('readonly', True)]})
@@ -67,7 +71,7 @@ class ShiftShift(models.Model):
         'shift.ticket', 'shift_id', string='Shift Ticket',
         default=lambda rec: rec._default_shift_tickets(), copy=True)
     date_tz = fields.Selection('_tz_get', string='Timezone', default=False)
-    date_without_time = fields.Datetime(
+    date_without_time = fields.Date(
         string='Date', compute='_get_date_without_time', store=True)
     begin_time = fields.Float(
         string='Start Time', compute='_get_begin_time', store=True)

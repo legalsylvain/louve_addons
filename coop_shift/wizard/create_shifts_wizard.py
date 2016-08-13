@@ -109,6 +109,7 @@ class CreateShifts(models.TransientModel):
                         'description': template.description,
                         'shift_type_id': template.shift_type_id.id,
                         'week_number': template.week_number,
+                        'week_list': template.week_list,
                         'shift_ticket_ids': None,
                     }
                     shift_id = self.env['shift.shift'].create(vals)
