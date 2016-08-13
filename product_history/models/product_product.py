@@ -29,6 +29,12 @@ from dateutil.relativedelta import relativedelta as rd
 
 old_date = date(2015, 1, 1)
 
+DAYS_IN_RANGE = {
+    'days': 1,
+    'weeks': 7,
+    'months': 30,
+}
+
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
@@ -40,11 +46,20 @@ class ProductProduct(models.Model):
     product_history_ids = fields.Many2many(
         comodel_name='product.history', inverse_name='product_id',
         string='History', compute="_compute_product_history_ids")
+    number_of_periods_real = fields.Integer(
+        'Number of History periods',
+        help="""Number of valid history periods used for the calculation""")
+    number_of_periods_target = fields.Integer(
+        related='product_tmpl_id.number_of_periods')
 
 # Private section
-    @api.onchange('history_range', 'product_history_ids')
+    @api.onchange(
+        'history_range', 'product_history_ids', 'number_of_periods_target')
     @api.multi
     def _average_consumption(self):
+        for product in self:
+            if product.consumption_calculation_method == 'history':
+                product._average_consumption_history()
         super(ProductProduct, self)._average_consumption()
 
     @api.depends('history_range')
@@ -96,6 +111,31 @@ class ProductProduct(models.Model):
                     res[field] -= sign * (move['product_qty'] or 0)
                     res['total_qty'] -= sign * (move['product_qty'] or 0)
             return res
+
+    @api.multi
+    def _average_consumption_history(self):
+        for product in self:
+            nb = product.number_of_periods_target
+            history_range = product.history_range
+            history_ids = self.env['product.history'].search([
+                ('product_id', '=', product.id),
+                ('history_range', '=', history_range),
+                ('ignored', '=', 0)]).sorted()
+            nb = min(len(history_ids), nb)
+            if nb == 0:
+                product.total_consumption = 0
+                product.average_consumption = 0
+                product.number_of_periods_real = 0
+            else:
+                ids = range(nb)
+                total_consumption = 0
+                for id in ids:
+                    total_consumption -= history_ids[id].sale_qty
+                product.total_consumption = total_consumption
+                product.average_consumption = total_consumption / nb /\
+                    DAYS_IN_RANGE[product.history_range]
+                product.number_of_periods_real = nb
+                self._displayed_average_consumption
 
 # Action section
     @api.model

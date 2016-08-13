@@ -32,6 +32,14 @@
                     </field>
                 </page>
             </page>
+            <group name="ConsumptionMove" position="after">
+                <group name="ConsumptionHistory" attrs="{'invisible': [('consumption_calculation_method','!=','history')]}">
+                    <field name="number_of_periods" />
+                    <field name="total_consumption"/>
+                    <field name="displayed_average_consumption"/>
+                    <field name="display_range"/>
+                </group>
+            </group>
         </field>
     </record>
     </data>

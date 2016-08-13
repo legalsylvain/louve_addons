@@ -6,16 +6,16 @@ from openerp import fields, models, api
 class PurchaseConfigSettings(models.TransientModel):
     _inherit = 'stock.config.settings'
 
-    default_consumption_calculation_method = fields.Selection([
-        ('moves', 'Calculate consumption based on Stock Moves'),
-        ('history', 'Calculate consumption based on the Product History'),
-        ], 'Consumption Calculation Method', default='moves',
+    def _get_consumption_calculation_method(self):
+        return [
+            ('moves', 'Moves (calculate consumption based on Stock Moves)'),
+            ('history', 'Calculate consumption based on the Product History'),
+        ]
+
+    default_consumption_calculation_method = fields.Selection(
+        _get_consumption_calculation_method,
+        'Consumption Calculation Method', default='moves',
         default_model='product.template')
-    default_number_of_periods = fields.Integer(
-        'Number of valid history periods used for the calculation', default=6,
-        default_model='product.template',
-        help="""This field is used if the selected method is based on"""
-        """ Product History""")
     default_calculation_range = fields.Integer(
         'Calculation Range in days', default=365,
         default_model='product.template', help="""This field is used if the"""
@@ -42,6 +42,30 @@ class PurchaseConfigSettings(models.TransientModel):
     def _onchange_module_product_history(self):
         if not self.module_product_history:
             self.default_consumption_calculation_method = 'moves'
+
+    @api.model
+    def create(self, vals):
+        if vals.get('default_display_range', False):
+            self.env.cr.execute("""
+                UPDATE product_template
+                SET display_range=%i""" % (
+                vals.get('default_display_range')))
+        if vals.get('default_calculation_range', False):
+            self.env.cr.execute("""
+                UPDATE product_template
+                SET calculation_range=%i""" % (
+                vals.get('default_calculation_range')))
+        if vals.get('default_number_of_periods', False):
+            self.env.cr.execute("""
+                UPDATE product_template
+                SET number_of_periods=%i""" % (
+                vals.get('default_number_of_periods')))
+        if vals.get('default_consumption_calculation_method', False):
+            self.env.cr.execute("""
+                UPDATE product_template
+                SET consumption_calculation_method='%s'""" % (
+                vals.get('default_consumption_calculation_method')))
+        return super(PurchaseConfigSettings, self).create(vals)
 
     @api.multi
     def write(self, vals):
