@@ -41,12 +41,19 @@ class ShiftTemplate(models.Model):
     _description = 'Shift Template'
     _order = 'shift_type_id,start_time'
 
+    @api.multi
+    def _compute_shifts_counts(self):
+        for template in self:
+            template.shifts_count = len(template.shift_ids)
+
     # Columns section
     name = fields.Char(
         string='Template Name', compute="_compute_template_name", store=True)
     active = fields.Boolean(default=True, track_visibility="onchange")
     shift_ids = fields.One2many(
         'shift.shift', 'shift_template_id', string='Shifts', readonly=True)
+    shifts_count = fields.Integer(
+        "Number of shifts", compute="_compute_shifts_counts")
     user_id = fields.Many2one(
         'res.users', string='Shift Leader', required=True,
         default=lambda self: self.env.user)
@@ -473,3 +480,19 @@ class ShiftTemplate(models.Model):
                     shift.date_begin for shift in template.shift_ids)
             else:
                 template.last_shift_date = False
+
+    @api.multi
+    def act_template_shift_from_template(self):
+        action = self.env.ref('coop_shift.action_shift_view')
+        result = action.read()[0]
+        shift_ids = sum([template.shift_ids.ids for template in self], [])
+        # choose the view_mode accordingly
+        if len(shift_ids) > 1:
+            result['domain'] = "[('id','in',[" + ','.join(
+                map(str, shift_ids)) + "])]"
+        elif len(shift_ids) == 1:
+            res = self.env.ref('coop_shift.view_shift_form', False)
+            result['views'] = [(res and res.id or False, 'form')]
+            result['res_id'] = shift_ids and shift_ids[0] or False
+        result['context'] = unicode({'search_default_upcoming': 1})
+        return result
