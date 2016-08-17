@@ -65,9 +65,11 @@ class ProductSupplierinfo(models.Model):
         'Price', required=True,
         digits_compute=dp.get_precision('Product Price'),
         help="The price to purchase a product")
-    price = fields.Float(compute="_compute_price", required=False)
+    price = fields.Float(
+        "Price per Unit", compute='_compute_price',
+        required=False, store=True, readonly=True)
 
-    @api.onchange('base_price', 'price_policy', 'package_qty')
+    @api.depends('base_price', 'price_policy', 'package_qty')
     @api.multi
     def _compute_price(self):
         for psi in self:
@@ -91,9 +93,12 @@ class ProductSupplierinfo(models.Model):
     def _init_package_qty(self, cr, uid, ids=None, context=None):
         psi_ids = self.search(cr, SUPERUSER_ID, [], context=context)
         for psi in self.browse(cr, SUPERUSER_ID, psi_ids, context=context):
-            package_qty = max(psi.min_qty, 1)
-            self.write(
-                cr, SUPERUSER_ID, psi.id, {
-                    'package_qty': package_qty, 'base_price': psi.price},
-                context=context)
+            vals = {}
+            if not psi.package_qty:
+                vals['package_qty'] = max(psi.min_qty, 1)
+            if not psi.base_price:
+                vals['base_price'] = psi.price
+            if vals:
+                self.write(
+                    cr, SUPERUSER_ID, psi.id, vals, context=context)
         return psi_ids

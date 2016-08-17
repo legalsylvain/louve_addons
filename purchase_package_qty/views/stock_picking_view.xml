@@ -18,8 +18,22 @@
 <!--You should have received a copy of the GNU Affero General Public License-->
 <!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
 <!-- ********************************************************************** -->
+
 <openerp>
-  <data noupdate="0">
-    <function model="product.supplierinfo" name="_init_package_qty"/>
-  </data>
+    <data>
+        <record id="stock_picking_form_view_package" model="ir.ui.view">
+            <field name="name">stock.picking.form.view.package</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='pack_operation_product_ids']/tree/field[@name='product_qty']" position="before">
+                    <field name="product_qty_package"/>
+                    <field name="package_qty"/>
+                </xpath>
+                <xpath expr="//field[@name='pack_operation_product_ids']/tree/field[@name='qty_done']" position="before">
+                    <field name="qty_done_package"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
 </openerp>

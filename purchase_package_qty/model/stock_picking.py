@@ -21,11 +21,25 @@
 #
 ##############################################################################
 
+from openerp import api, models
 
-from . import product_supplierinfo
-from . import purchase_order_line
-from . import stock_move
-from . import stock_picking
-from . import stock_pack_operation
-from . import account_invoice
-from . import account_invoice_line
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    @api.model
+    def _prepare_pack_ops(self, picking, quants, forced_qties):
+        vals = super(StockPicking, self)._prepare_pack_ops(
+            picking, quants, forced_qties)
+        for pack in vals:
+            picking = self.browse(pack['picking_id'])
+            product = self.env['product.product'].browse(pack['product_id'])
+            uom = self.env['product.uom'].browse(pack['product_uom_id'])
+            psi = self.env['product.product']._select_seller(
+                product, picking.partner_id, pack['product_qty'], uom_id=uom)
+            psi = psi and psi[0] or False
+            if psi:
+                pack['package_qty'] = psi.package_qty
+                pack['product_qty_package'] = pack['product_qty'] /\
+                    psi.package_qty
+        return vals

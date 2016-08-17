@@ -19,13 +19,13 @@
             <field name="name">shift.registration.tree</field>
             <field name="model">shift.registration</field>
             <field name="arch" type="xml">
-                <tree string="Registration" decoration-bf="message_needaction==True">
+                <tree string="Registration" decoration-bf="message_needaction==True" editable="top">
                     <field name="shit_begin_date"/>
-                    <field name="partner_id"/>
+                    <field name="partner_id" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="name"/>
                     <field name="email"/>
-                    <field name="shift_id"/>
-                    <field name="shift_ticket_id"/>
+                    <field name="shift_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="shift_ticket_id" domain="[('shift_id', '=', shift_id)]" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="state"/>
                     <field name="message_needaction" invisible="1"/>
                     <button name="confirm_registration" string="Confirm Registration" states="draft" type="object" icon="gtk-apply"/>

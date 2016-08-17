@@ -10,14 +10,14 @@
             <field name="name">shift.template.registration.tree</field>
             <field name="model">shift.template.registration</field>
             <field name="arch" type="xml">
-                <tree string="Registration" decoration-bf="message_needaction==True">
+                <tree string="Registration" decoration-bf="message_needaction==True" editable="top">
                     <field name="template_start_date"/>
                     <field name="template_start_time" widget="float_time"/>
-                    <field name="partner_id"/>
+                    <field name="partner_id" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="name"/>
                     <field name="email"/>
-                    <field name="shift_template_id" />
-                    <field name="shift_ticket_id"/>
+                    <field name="shift_template_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="shift_ticket_id" domain="[('shift_template_id', '=', shift_template_id)]" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="message_needaction" invisible="1"/>
                     <field name="state" invisible="1"/>
                 </tree>
