@@ -10,7 +10,7 @@
             <field name="name">shift.template.registration.tree</field>
             <field name="model">shift.template.registration</field>
             <field name="arch" type="xml">
-                <tree string="Registration" decoration-bf="message_needaction==True">
+                <tree string="Registration" decoration-bf="message_needaction==True" editable="top">
                     <field name="template_start_date"/>
                     <field name="template_start_time" widget="float_time"/>
                     <field name="partner_id"/>
