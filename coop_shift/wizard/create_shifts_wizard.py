@@ -23,7 +23,7 @@
 
 from openerp import models, fields, api, _
 from datetime import datetime, timedelta
-from openerp.exceptions import UserError
+from openerp.exceptions import ValidationError
 
 
 class CreateShifts(models.TransientModel):
@@ -76,7 +76,7 @@ class CreateShifts(models.TransientModel):
     def create_shifts(self):
         for wizard in self:
             if wizard.date_from <= wizard.last_shift_date:
-                raise UserError(_(
+                raise ValidationError(_(
                     "'From date' can't be before 'Last shift date'"))
             for template in wizard.template_ids:
                 rec_dates = template.get_recurrent_dates(
@@ -109,6 +109,7 @@ class CreateShifts(models.TransientModel):
                         'description': template.description,
                         'shift_type_id': template.shift_type_id.id,
                         'week_number': template.week_number,
+                        'week_list': template.week_list,
                         'shift_ticket_ids': None,
                     }
                     shift_id = self.env['shift.shift'].create(vals)

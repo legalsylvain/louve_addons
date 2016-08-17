@@ -99,3 +99,11 @@ class ShiftRegistration(models.Model):
         else:
             raise UserError(_("You must wait for the starting day of the shift\
                 to do this action."))
+
+    @api.multi
+    @api.onchange("shift_id")
+    def onchange_shift_id(self):
+        FTOP_product = self.env.ref("coop_shift.product_product_shift_ftop")
+        for reg in self:
+            reg.shift_ticket_id = reg.shift_id.shift_ticket_ids.filtered(
+                lambda t: t.product_id == FTOP_product)
