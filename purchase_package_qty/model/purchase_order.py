@@ -21,12 +21,26 @@
 #
 ##############################################################################
 
+from openerp import api, models
 
-from . import product_supplierinfo
-from . import purchase_order_line
-from . import purchase_order
-from . import stock_move
-from . import stock_picking
-from . import stock_pack_operation
-from . import account_invoice
-from . import account_invoice_line
+
+class PurchaseOrder(models.Model):
+    _inherit = 'purchase.order'
+
+    @api.multi
+    def _add_supplier_to_product(self):
+        # we have to override this method to modify the vals
+        # Do not add a contact as a supplier
+        partner = self.partner_id if not self.partner_id.parent_id\
+            else self.partner_id.parent_id
+        for line in self.order_line:
+            if partner not in line.product_id.seller_ids.mapped('name') and\
+                    len(line.product_id.seller_ids) <= 10:
+                supplierinfo = line._get_supplierinfovals(partner)
+                vals = {
+                    'seller_ids': [(0, 0, supplierinfo)],
+                }
+                try:
+                    line.product_id.write(vals)
+                except:  # no write access rights -> just ignore
+                    break
