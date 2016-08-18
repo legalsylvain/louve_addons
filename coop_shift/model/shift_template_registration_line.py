@@ -82,8 +82,26 @@ class ShiftTemplateRegistrationLine(models.Model):
         begin = vals.get('date_begin', False)
         end = vals.get('date_end', False)
 
-        st_reg = self.env['shift.template.registration'].browse(
-            vals['registration_id'])
+        st_reg_id = vals.get('registration_id', False)
+        if not st_reg_id:
+            shift_template_id = vals.get('shift_template_id', False)
+            partner_id = vals.get('partner_id', False)
+            reg_ids = self.env['shift.template'].browse(shift_template_id).\
+                registration_ids.filtered(
+                    lambda r: r.partner_id.id == partner_id)
+            st_reg_id = reg_ids and reg_ids[0].id or False
+            vals['registration_id'] = st_reg_id
+        if not st_reg_id:
+            st_reg_id = self.env['shift.template.registration'].with_context({
+                'no_default_line': True}).create({
+                    'shift_template_id': shift_template_id,
+                    'partner_id': partner_id,
+                    'shift_ticket_id': vals.get('shift_ticket_id', False),
+
+                }).id
+            vals['registration_id'] = st_reg_id
+
+        st_reg = self.env['shift.template.registration'].browse(st_reg_id)
         partner = st_reg.partner_id
 
         shifts = st_reg.shift_template_id.shift_ids.filtered(
