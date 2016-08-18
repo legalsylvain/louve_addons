@@ -169,6 +169,12 @@ class PurchaseOrderLine(models.Model):
         if self.product_qty_package == int(self.product_qty_package):
             self.product_qty = self.package_qty * self.product_qty_package
 
+    @api.onchange('package_qty')
+    def onchange_package_qty(self):
+        if not self.package_qty:
+            self.package_qty = 1
+        self.product_qty = self.package_qty * self.product_qty_package
+
     @api.multi
     def _create_stock_moves(self, picking):
         res = super(PurchaseOrderLine, self)._create_stock_moves(picking)
