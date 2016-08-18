@@ -46,12 +46,32 @@ class PurchaseOrderLine(models.Model):
                 'price_subtotal': taxes['total_excluded'],
             })
 
+    @api.model
+    def _get_package_qty(self):
+        if self.product_id and self.partner_id:
+            partner = self.partner_id.parent_id or self.partner_id
+            if partner in self.product_id.seller_ids.mapped('name'):
+                for supplier in self.product_id.seller_ids:
+                    if supplier.name == self.partner_id:
+                        return supplier.package_qty
+        return 1
+
+    @api.model
+    def _get_indicative_package(self):
+        if self.product_id and self.partner_id:
+            partner = self.partner_id.parent_id or self.partner_id
+            if partner in self.product_id.seller_ids.mapped('name'):
+                for supplier in self.product_id.seller_ids:
+                    if supplier.name == self.partner_id:
+                        return supplier.indicative_package
+        return False
+
     package_qty = fields.Float(
-        'Package Qty', compute='_compute_package_qty', multi='seller_info',
+        'Package Qty', default=lambda self: self._get_package_qty(),
         help="""The quantity of products in the supplier package.""")
     indicative_package = fields.Boolean(
-        'Indicative Package', compute='_compute_package_qty',
-        multi='seller_info',)
+        'Indicative Package',
+        default=lambda self: self._get_indicative_package())
     product_qty_package = fields.Float(
         'Number of packages', help="""The number of packages you'll buy.""")
     price_policy = fields.Selection(
@@ -106,18 +126,6 @@ class PurchaseOrderLine(models.Model):
         res = super(PurchaseOrderLine, self).write(vals)
         self._check_purchase_qty()
         return res
-
-    @api.multi
-    @api.depends('product_id')
-    def _compute_package_qty(self):
-        for pol in self:
-            if pol.product_id:
-                for supplier in pol.product_id.seller_ids:
-                    if pol.partner_id and (supplier.name == pol.partner_id):
-                        pol.package_qty = supplier.package_qty
-                        pol.indicative_package = supplier.indicative_package
-                    else:
-                        pol.package_qty = 1
 
     # Views section
     @api.onchange('product_id')
