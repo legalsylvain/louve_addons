@@ -56,17 +56,20 @@ class ShiftTemplateRegistrationLine(models.Model):
         related="registration_id.shift_template_id")
     shift_ticket_id = fields.Many2one(
         related="registration_id.shift_ticket_id")
-    is_current = fields.Boolean(compute="_compute_current")
 
     @api.one
     @api.model
     def _compute_current(self):
         now = fields.Datetime.now()
-        if (not(self.date_begin) or self.date_begin < now) and\
-                (not(self.date_end) or self.date_end > now):
-            self.is_current = True
+        self.is_current = False
+        self.is_past = False
+        self.is_future = False
+        if (self.date_begin and self.date_begin > now):
+            self.is_future = True
+        elif (self.date_end and self.date_end < now):
+            self.is_past = True
         else:
-            self.is_current = False
+            self.is_current = True
 
     @api.model
     def create(self, vals):
