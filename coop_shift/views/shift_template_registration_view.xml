@@ -10,16 +10,17 @@
             <field name="name">shift.template.registration.tree</field>
             <field name="model">shift.template.registration</field>
             <field name="arch" type="xml">
-                <tree string="Registration" decoration-bf="message_needaction==True" editable="top">
+                <tree string="Registration" decoration-danger="not is_current" editable="top">
+                    <field name="shift_template_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="shift_ticket_id" domain="[('shift_template_id', '=', shift_template_id)]" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="template_start_date"/>
                     <field name="template_start_time" widget="float_time"/>
                     <field name="partner_id" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="name"/>
                     <field name="email"/>
-                    <field name="shift_template_id" options="{'no_create_edit': True, 'no_create': True}"/>
-                    <field name="shift_ticket_id" domain="[('shift_template_id', '=', shift_template_id)]" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="message_needaction" invisible="1"/>
                     <field name="state" invisible="1"/>
+                    <field name="is_current" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -145,14 +146,6 @@
           <field name="view_mode">tree,form,calendar,pivot,graph</field>
           <field name="context">{}</field>
           <field name="search_view_id" ref="view_template_registration_search"/>
-        </record>
-
-        <record id="act_template_registration_from_partner" model="ir.actions.act_window">
-            <field name="res_model">shift.template.registration</field>
-            <field name="view_type">form</field>
-            <field name="name">Attendees</field>
-            <field name="view_mode">tree,form,calendar,graph</field>
-            <field name="context">{'search_default_partner_id': active_id, 'default_partner_id': active_id}</field>
         </record>
 
         <menuitem

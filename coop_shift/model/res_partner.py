@@ -35,13 +35,21 @@ class ResPartner(models.Model):
                 partner.registration_ids.filtered(
                     lambda r, d=d: r.date_begin >= d))
             partner.tmpl_registration_count = len(partner.tmpl_reg_line_ids)
+            partner.active_tmpl_reg_line_count = len(
+                partner.tmpl_reg_line_ids.filtered(
+                    lambda l: l.is_current is True))
 
     registration_ids = fields.One2many(
         'shift.registration', "partner_id", 'Registrations')
     upcoming_registration_count = fields.Integer(
         "Number of registrations", compute="_registration_counts")
+    tmpl_reg_ids = fields.One2many(
+        'shift.template.registration', "partner_id",
+        'Template Registrations')
     tmpl_reg_line_ids = fields.One2many(
         'shift.template.registration.line', "partner_id",
-        'Template Registrations')
+        'Template Registration Lines')
     tmpl_registration_count = fields.Integer(
         "Number of Template registrations", compute="_registration_counts")
+    active_tmpl_reg_line_count = fields.Integer(
+        "Number of active registration lines", compute="_registration_counts")

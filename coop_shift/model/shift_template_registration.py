@@ -52,6 +52,7 @@ class ShiftTemplateRegistration(models.Model):
     template_start_time = fields.Float(
         string="Template Start Time", related='shift_template_id.start_time',
         readonly=True)
+    is_current = fields.Boolean(compute="_compute_current")
 
     _sql_constraints = [(
         'template_registration_uniq',
@@ -59,8 +60,15 @@ class ShiftTemplateRegistration(models.Model):
         'This partner is already registered on this Shift Template !'),
     ]
 
+    @api.one
+    @api.model
+    def _compute_current(self):
+        self.is_current = any(line.is_current for line in self.line_ids)
+
     @api.model
     def _get_default_ticket(self):
+        if self.env.context.get('active_model', False) != "shift.template":
+            return False
         active_id = self.env.context.get('active_id', False)
         if active_id:
             return self.env['shift.template'].browse(
@@ -70,6 +78,8 @@ class ShiftTemplateRegistration(models.Model):
 
     @api.model
     def _default_lines(self):
+        if self.env.context.get('no_default_line', False):
+            return None
         return [
             {
                 'state': 'open',
