@@ -74,6 +74,7 @@ Copyright, Author and Licence :
         'views/res_partner_view.xml',
         'security/ir_model_access_data.yml',
         'security/ir_rule_data.yml',
+        'security/ir_rule_data.xml',
         'data/module_data.xml',
         'views/shift_report.xml',
         'views/report_timesheet.xml',
