@@ -20,6 +20,18 @@
                 <field name="product_name_inv" position="replace"/>
                 <field name="uom_po_id" position="replace"/>
                 <field name="consumption_range" position="replace"/>
+                <field name="package_qty_inv" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </field>
+                <field name="uom_id" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </field>
+                <field name="product_price_inv" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </field>
+                <field name="price_policy" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </field>
             </field>
         </record>
     </data>
