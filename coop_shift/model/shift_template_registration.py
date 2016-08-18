@@ -76,6 +76,8 @@ class ShiftTemplateRegistration(models.Model):
 
     @api.model
     def _default_lines(self):
+        if self.env.context.get('no_default_line', False):
+            return None
         return [
             {
                 'state': 'open',
