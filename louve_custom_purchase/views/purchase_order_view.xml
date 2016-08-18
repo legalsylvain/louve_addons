@@ -17,6 +17,7 @@
                 <field name="taxes_id" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
+                <field name="account_analytic_id" position="replace"/>
              </field>
         </record>
     </data>
