@@ -209,17 +209,6 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page name="shifts" string="Shifts" groups="base.group_no_one">
-                                <field name="shift_ids">
-                                    <tree string="Shifts">
-                                        <field name="date_begin"/>
-                                        <field name="date_end" />
-                                        <field name="state"/>
-                                        <field name="seats_reserved"/>
-                                        <field name="seats_unconfirmed"/>
-                                    </tree>
-                                </field>
-                            </page>
                         </notebook>
                     </sheet>
                 </form>
