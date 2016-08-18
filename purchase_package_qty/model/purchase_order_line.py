@@ -46,12 +46,52 @@ class PurchaseOrderLine(models.Model):
                 'price_subtotal': taxes['total_excluded'],
             })
 
+    @api.model
+    def _get_supplierinfovals(self, partner=False):
+        if not partner:
+            return False
+        currency = partner.property_purchase_currency_id or\
+            self.env.user.company_id.currency_id
+        return {
+            'name': partner.id,
+            'sequence': max(self.product_id.seller_ids.mapped('sequence')) + 1
+            if self.product_id.seller_ids else 1,
+            'product_uom': self.product_uom.id,
+            'min_qty': 0.0,
+            'base_price': self.order_id.currency_id.compute(
+                self.price_unit, currency),
+            'price_policy': self.price_policy,
+            'package_qty': self.package_qty or 1,
+            'currency_id': currency.id,
+            'delay': 0,
+        }
+
+    @api.model
+    def _get_package_qty(self):
+        if self.product_id and self.partner_id:
+            partner = self.partner_id.parent_id or self.partner_id
+            if partner in self.product_id.seller_ids.mapped('name'):
+                for supplier in self.product_id.seller_ids:
+                    if supplier.name == self.partner_id:
+                        return supplier.package_qty
+        return 1
+
+    @api.model
+    def _get_indicative_package(self):
+        if self.product_id and self.partner_id:
+            partner = self.partner_id.parent_id or self.partner_id
+            if partner in self.product_id.seller_ids.mapped('name'):
+                for supplier in self.product_id.seller_ids:
+                    if supplier.name == self.partner_id:
+                        return supplier.indicative_package
+        return False
+
     package_qty = fields.Float(
-        'Package Qty', compute='_compute_package_qty', multi='seller_info',
+        'Package Qty', default=lambda self: self._get_package_qty(),
         help="""The quantity of products in the supplier package.""")
     indicative_package = fields.Boolean(
-        'Indicative Package', compute='_compute_package_qty',
-        multi='seller_info',)
+        'Indicative Package',
+        default=lambda self: self._get_indicative_package())
     product_qty_package = fields.Float(
         'Number of packages', help="""The number of packages you'll buy.""")
     price_policy = fields.Selection(
@@ -107,18 +147,6 @@ class PurchaseOrderLine(models.Model):
         self._check_purchase_qty()
         return res
 
-    @api.multi
-    @api.depends('product_id')
-    def _compute_package_qty(self):
-        for pol in self:
-            if pol.product_id:
-                for supplier in pol.product_id.seller_ids:
-                    if pol.partner_id and (supplier.name == pol.partner_id):
-                        pol.package_qty = supplier.package_qty
-                        pol.indicative_package = supplier.indicative_package
-                    else:
-                        pol.package_qty = 1
-
     # Views section
     @api.onchange('product_id')
     def onchange_product_id(self):
@@ -158,8 +186,14 @@ class PurchaseOrderLine(models.Model):
 
     @api.onchange('product_qty_package')
     def onchange_product_qty_package(self):
-            if self.product_qty_package == int(self.product_qty_package):
-                self.product_qty = self.package_qty * self.product_qty_package
+        if self.product_qty_package == int(self.product_qty_package):
+            self.product_qty = self.package_qty * self.product_qty_package
+
+    @api.onchange('package_qty')
+    def onchange_package_qty(self):
+        if not self.package_qty:
+            self.package_qty = 1
+        self.product_qty = self.package_qty * self.product_qty_package
 
     @api.multi
     def _create_stock_moves(self, picking):
