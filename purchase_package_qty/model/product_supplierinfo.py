@@ -80,6 +80,25 @@ class ProductSupplierinfo(models.Model):
             else:
                 psi.price = psi.base_price
 
+    @api.model
+    def create(self, vals):
+        if not vals.get('base_price', False):
+            if vals.get('price', False):
+                vals['base_price'] = vals['price']
+                del vals['price']
+            else:
+                vals['base_price'] = 0
+        res = super(ProductSupplierinfo, self).create(vals)
+        return res
+
+    @api.multi
+    def write(self, vals):
+        if not vals.get('base_price', False):
+            if vals.get('price', False):
+                vals['base_price'] = vals['price']
+                del vals['price']
+        super(ProductSupplierinfo, self).write(vals)
+
     # Constraints section
     @api.multi
     @api.constrains('package_qty')
@@ -89,7 +108,6 @@ class ProductSupplierinfo(models.Model):
                 raise ValueError(_('The package quantity cannot be 0.'))
 
     # Init section
-#    TODO
     def _init_package_qty(self, cr, uid, ids=None, context=None):
         psi_ids = self.search(cr, SUPERUSER_ID, [], context=context)
         for psi in self.browse(cr, SUPERUSER_ID, psi_ids, context=context):
