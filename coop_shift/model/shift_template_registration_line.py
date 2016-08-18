@@ -56,6 +56,12 @@ class ShiftTemplateRegistrationLine(models.Model):
         related="registration_id.shift_template_id")
     shift_ticket_id = fields.Many2one(
         related="registration_id.shift_ticket_id")
+    is_current = fields.Boolean(
+        string="Current", compute="_compute_current", multi="current")
+    is_past = fields.Boolean(
+        string="Past", compute="_compute_current", multi="current")
+    is_future = fields.Boolean(
+        string="Future", compute="_compute_current", multi="current")
 
     @api.one
     @api.model

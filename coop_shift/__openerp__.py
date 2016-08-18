@@ -66,6 +66,7 @@ Copyright, Author and Licence :
         'views/shift_mail_view.xml',
         'views/shift_registration_view.xml',
         'views/shift_template_registration_view.xml',
+        'views/shift_template_registration_line_view.xml',
         'views/shift_shift_view.xml',
         'views/shift_template_view.xml',
         'wizard/create_shifts_wizard_view2.xml',
