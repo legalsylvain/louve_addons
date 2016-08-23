@@ -25,6 +25,7 @@ from math import ceil
 
 from openerp.osv.osv import except_osv
 from openerp import api, fields, models, _
+import openerp.addons.decimal_precision as dp
 
 
 class PurchaseOrderLine(models.Model):
@@ -97,6 +98,24 @@ class PurchaseOrderLine(models.Model):
     price_policy = fields.Selection(
         [('uom', 'per UOM'), ('package', 'per Package')], "Price Policy",
         default='uom', required=True)
+    unit_price = fields.Float(
+        string='Unit Price', compute="_compute_product_prices",
+        digits=dp.get_precision('Product Price'))
+    package_price = fields.Float(
+        string='Package Price', compute="_compute_product_prices",
+        digits=dp.get_precision('Product Price'))
+
+    @api.multi
+    @api.depends('package_qty', 'price_unit')
+    def _compute_product_prices(self):
+        for line in self:
+            if line.price_policy == 'package':
+                line.unit_price = line.package_qty and\
+                    line.price_unit / line.package_qty or 0
+                line.package_price = line.price_unit
+            else:
+                line.unit_price = line.price_unit
+                line.package_price = line.price_unit * line.package_qty
 
     # Constraints section
     # TODO: Rewrite me in _contraint, if the Orm V8 allows param in message.
