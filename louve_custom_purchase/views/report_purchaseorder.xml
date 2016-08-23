@@ -9,7 +9,7 @@
             <xpath expr="//table[@class='table table-condensed'][1]/thead/tr//th[3]" position="replace"/>
             <xpath expr="//table[@class='table table-condensed'][1]/thead/tr//th[2]" position="replace"/>
             <xpath expr="//table[@class='table table-condensed'][1]/thead/tr//th[1]" position="before">
-                <th class="text-right"><strong>Number of Packages</strong></th>
+                <th class="text-right"><strong>Nb of Packages</strong></th>
                 <th class="text-right"><strong>Package qty</strong></th>
                 <th class="text-right"><strong>Qty</strong></th>
                 <!-- <th class="text-right"><strong>Ref</strong></th> -->
