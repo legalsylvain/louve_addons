@@ -48,5 +48,6 @@ Copyright, Author and Licence :
         'views/purchase_order_view.xml',
         'views/product_supplierinfo_view.xml',
         'views/report_purchaseorder.xml',
+        'views/report_purchasequotation.xml',
     ],
 }
