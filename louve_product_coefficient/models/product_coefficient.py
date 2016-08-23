@@ -5,6 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, fields, api
+from openerp.addons import decimal_precision as dp
 
 
 class ProductCoefficient(models.Model):
@@ -27,7 +28,8 @@ class ProductCoefficient(models.Model):
     # Column Section
     name = fields.Char(string='Name', required=True)
 
-    value = fields.Float(string='Value')
+    value = fields.Float(
+        string='Value', digits=dp.get_precision('Product Price'))
 
     operation_type = fields.Selection(
         string='Operation Type', selection=_SELECT_OPERATION_TYPE,
