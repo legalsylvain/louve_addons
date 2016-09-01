@@ -115,6 +115,7 @@
                         <filter string="Template" name="group_template" domain="[]" context="{'group_by':'shift_template_id'}"/>
                         <filter string="Registration Day" domain="[]" context="{'group_by': 'create_date:day'}"/>
                         <filter string="Registration Month" domain="[]" context="{'group_by': 'create_date:month'}"/>
+                        <filter string="Ticket Type" domain="[]" context="{'group_by':'shift_ticket_product_id'}"/>
                    </group>
                 </search>
             </field>
