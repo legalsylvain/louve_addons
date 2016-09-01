@@ -28,10 +28,11 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th width="8.33%">Prior<br/>Shifts<br/>Due</th>
-                                <th width="8.34%">Work<br/>Status</th>
-                                <th width="25%">Member Name</th>
-                                <th width="8.33%" style="background:#DDDDDD">Cashier<br/>start<br/>time</th>
+                                <th width="7%">Prior<br/>Shifts<br/>Due</th>
+                                <th width="7%">Work<br/>Status</th>
+                                <th width="20%">Member Name</th>
+                                <th width="8%" style="background:#DDDDDD">Start<br/>signature</th>
+                                <th width="8%" style="background:#DDDDDD">End<br/>signature</th>
                                 <th width="8.34%">Member<br/>Number</th>
                                 <th width="33.33%">Member Working</th>
                                 <th width="8.33%" style="background:#DDDDDD"><small>Nb of<br/>MakeUps<br/>if absent</small></th>
@@ -43,6 +44,7 @@
                                 <td></td>
                                 <td><span t-esc="registration['registration'].name"/></td>
                                 <td style="background:#DDDDDD"></td>
+                                <td style="background:#DDDDDD"></td>
                                 <td></td>
                                 <td><span t-esc="registration['replacement'].name"/></td>
                                 <td style="background:#DDDDDD"></td>
@@ -53,6 +55,7 @@
                                 <td><font color="white">_</font></td>
                                 <td></td>
                                 <td></td>
+                                <td style="background:#DDDDDD"></td>
                                 <td style="background:#DDDDDD"></td>
                                 <td></td>
                                 <td></td>
@@ -81,6 +84,7 @@
                                 <td><font color="white">_</font></td>
                                 <td></td>
                                 <td></td>
+                                <td style="background:#DDDDDD"></td>
                                 <td style="background:#DDDDDD"></td>
                                 <td></td>
                                 <td></td>

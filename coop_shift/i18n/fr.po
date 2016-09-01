@@ -694,6 +694,11 @@ msgid "End date"
 msgstr "Date de fin"
 
 #. module: coop_shift
+#: model:ir.ui.view,arch_db:coop_shift.report_timesheet
+msgid "End<br/>signature"
+msgstr "Signature<br/>fin"
+
+#. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_mail_event_id
 #: model:ir.model.fields,field_description:coop_shift.field_shift_registration_event_id
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_registration_event_id
@@ -1995,6 +2000,11 @@ msgstr "Heure"
 #: model:ir.ui.view,arch_db:coop_shift.report_timesheet
 msgid "Start<br/>Time"
 msgstr "Heure<br/>de début"
+
+#. module: coop_shift
+#: model:ir.ui.view,arch_db:coop_shift.report_timesheet
+msgid "Start<br/>signature"
+msgstr "Signature<br/>début"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_add_template_registration_wizard_state
