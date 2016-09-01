@@ -26,6 +26,14 @@ from openerp.exceptions import UserError
 from datetime import datetime, timedelta
 
 
+WEEK_NUMBERS = [
+    (1, 'A'),
+    (2, 'B'),
+    (3, 'C'),
+    (4, 'D')
+]
+
+
 class ShiftShift(models.Model):
     _inherit = 'event.event'
     _name = 'shift.shift'
@@ -50,8 +58,8 @@ class ShiftShift(models.Model):
         'shift.type', string='Category', required=False,
         readonly=False, states={'done': [('readonly', True)]})
     week_number = fields.Selection(
-        [(1, 'Week A'), (2, 'Week B'), (3, 'Week C'), (4, 'Week D')],
-        string='Week', required=True)
+        WEEK_NUMBERS, string='Week', compute="_compute_week_number",
+        store=True)
     week_list = fields.Selection([
         ('MO', 'Monday'), ('TU', 'Tuesday'), ('WE', 'Wednesday'),
         ('TH', 'Thursday'), ('FR', 'Friday'), ('SA', 'Saturday'),
@@ -85,6 +93,16 @@ class ShiftShift(models.Model):
         'unique (shift_template_id, date_begin, company_id)',
         'The same template cannot be planned several time at the same date !'),
     ]
+
+    @api.depends('date_without_time')
+    def _compute_week_number(self):
+        if not self.date_without_time:
+            self.week_number = False
+        else:
+            weekA_date = fields.Date.from_string(
+                self.env.ref('coop_shift.config_parameter_weekA').value)
+            start_date = fields.Date.from_string(self.date_without_time)
+            self.week_number = 1 + (((start_date - weekA_date).days // 7) % 4)
 
     @api.model
     def _default_tickets(self):
