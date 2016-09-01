@@ -79,6 +79,7 @@ class ShiftShift(models.Model):
         string='Start Time', compute='_get_begin_time', store=True)
     end_time = fields.Float(
         string='Start Time', compute='_get_end_time', store=True)
+    user_id = fields.Many2one(default=False)
 
     _sql_constraints = [(
         'template_date_uniq',

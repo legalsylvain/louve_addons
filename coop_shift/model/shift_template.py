@@ -55,8 +55,7 @@ class ShiftTemplate(models.Model):
     shifts_count = fields.Integer(
         "Number of shifts", compute="_compute_shifts_counts")
     user_id = fields.Many2one(
-        'res.users', string='Shift Leader', required=True,
-        default=lambda self: self.env.user)
+        'res.users', string='Shift Leader', required=True)
     company_id = fields.Many2one(
         'res.company', string='Company', change_default=True,
         default=lambda self: self.env['res.company']._company_default_get(
