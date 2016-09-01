@@ -21,19 +21,19 @@
 #
 ##############################################################################
 
-from openerp import api, models, fields
+from openerp import api, models, fields, _
 from datetime import datetime, timedelta, date
 
 from .report_wallchart_common import rounding_limit
 
 WEEK_DAYS = {
-    'mo': 'Monday',
-    'tu': 'Tuesday',
-    'we': 'Wednesday',
-    'th': 'Thursday',
-    'fr': 'Friday',
-    'sa': 'Saturday',
-    'su': 'Sunday',
+    'mo': _('Monday'),
+    'tu': _('Tuesday'),
+    'we': _('Wednesday'),
+    'th': _('Thursday'),
+    'fr': _('Friday'),
+    'sa': _('Saturday'),
+    'su': _('Sunday'),
 }
 
 

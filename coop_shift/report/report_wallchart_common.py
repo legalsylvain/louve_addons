@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import api, models, fields
+from openerp import api, models, fields, _
 from datetime import date
 
 rounding_limit = 0.00000000001
@@ -62,6 +62,7 @@ class ReportWallchartCommon(models.AbstractModel):
             'data': data['form'],
             'docs': docs,
             'date': date,
+            '_': _,
         }
         return docargs
 
