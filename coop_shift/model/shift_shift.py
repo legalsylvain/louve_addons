@@ -24,6 +24,7 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import UserError
 from datetime import datetime, timedelta
+from openerp.osv import expression
 
 
 class ShiftShift(models.Model):
@@ -89,6 +90,20 @@ class ShiftShift(models.Model):
         'unique (shift_template_id, date_begin, company_id)',
         'The same template cannot be planned several time at the same date !'),
     ]
+
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
+        args = args or []
+        domain = []
+        if name:
+            domain = [
+                '|', ('begin_date_string', operator, name),
+                ('name', operator, name)
+            ]
+            if operator in expression.NEGATIVE_TERM_OPERATORS:
+                domain = ['&', '!'] + domain[1:]
+        shifts = self.search(domain + args, limit=limit)
+        return shifts.name_get()
 
     @api.model
     def _default_tickets(self):
