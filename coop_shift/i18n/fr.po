@@ -852,6 +852,12 @@ msgid "Fourth"
 msgstr "Quatrième"
 
 #. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:239
+#, python-format
+msgid "Fr"
+msgstr "Ve"
+
+#. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_report_wallchart_fr
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_fr
 msgid "Fri"
@@ -1215,16 +1221,22 @@ msgid "Minimum Attendees"
 msgstr "Minimum de participants"
 
 #. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:235
+#, python-format
+msgid "Mo"
+msgstr "Lu"
+
+#. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_report_wallchart_mo
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_mo
 msgid "Mon"
-msgstr "Mon"
+msgstr "Lun."
 
 #. module: coop_shift
 #: selection:shift.shift,week_list:0
 #: selection:shift.template,week_list:0
 msgid "Monday"
-msgstr "Monday"
+msgstr "Lundi"
 
 #. module: coop_shift
 #: selection:shift.mail,interval_unit:0
@@ -1708,6 +1720,12 @@ msgid "Sales End"
 msgstr "Fin des ventes"
 
 #. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:240
+#, python-format
+msgid "Sa"
+msgstr "Sa"
+
+#. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_report_wallchart_sa
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_sa
 msgid "Sat"
@@ -2020,6 +2038,12 @@ msgid "Subscribe"
 msgstr "S'inscrire"
 
 #. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:241
+#, python-format
+msgid "Su"
+msgstr "Di"
+
+#. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_report_wallchart_su
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_su
 msgid "Sun"
@@ -2182,6 +2206,12 @@ msgid "This partner is already registered on this Shift Template !"
 msgstr "Ce membre est déjà inscrit sur ce créneau !"
 
 #. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:238
+#, python-format
+msgid "Th"
+msgstr "Je"
+
+#. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_report_wallchart_th
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_th
 msgid "Thu"
@@ -2237,6 +2267,12 @@ msgstr "Fuseau horaire"
 #: model:ir.ui.view,arch_db:coop_shift.view_res_partner_shift_form
 msgid "Tmpl. Registr."
 msgstr "Créneau"
+
+#. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:236
+#, python-format
+msgid "Tu"
+msgstr "Ma"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_report_wallchart_tu
@@ -2410,6 +2446,12 @@ msgstr "Tableau des créneaux"
 #: model:ir.ui.menu,name:coop_shift.menu_wallchart_template
 msgid "WallChart"
 msgstr "Tableau"
+
+#. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:237
+#, python-format
+msgid "We"
+msgstr "Me"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_report_wallchart_we
