@@ -753,6 +753,12 @@ msgid "Expected attendees"
 msgstr "participants attendus"
 
 #. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:157
+#, python-format
+msgid "FR"
+msgstr "VE"
+
+#. module: coop_shift
 #: code:addons/coop_shift/model/shift_shift.py:99
 #: code:addons/coop_shift/model/shift_shift.py:103
 #: code:addons/coop_shift/model/shift_template.py:171
@@ -1120,6 +1126,12 @@ msgid "MEMBERS WORKING"
 msgstr "Coopérateurs travailleurs"
 
 #. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:156
+#, python-format
+msgid "MO"
+msgstr "LU"
+
+#. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_shift_event_mail_ids
 #: model:ir.model.fields,field_description:coop_shift.field_shift_shift_shift_mail_ids
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_shift_mail_ids
@@ -1150,6 +1162,12 @@ msgstr "ids d'enregistrement Mail"
 #: model:res.groups,name:coop_shift.group_shift_manager
 msgid "Manager"
 msgstr "Responsable"
+
+#. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:157
+#, python-format
+msgid "SA"
+msgstr "SA"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_shift_seats_availability
@@ -1224,7 +1242,7 @@ msgstr "Mon"
 #: selection:shift.shift,week_list:0
 #: selection:shift.template,week_list:0
 msgid "Monday"
-msgstr "Monday"
+msgstr "Lundi"
 
 #. module: coop_shift
 #: selection:shift.mail,interval_unit:0
@@ -1696,6 +1714,11 @@ msgid "SCHEDULED MEMBERS"
 msgstr "Membres inscrits"
 
 #. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:158
+msgid "SU"
+msgstr "DI"
+
+#. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_registration_sale_order_line_id
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_registration_sale_order_line_id
 msgid "Sale Order Line"
@@ -1858,6 +1881,18 @@ msgstr "Créneau"
 #: model:ir.model,name:coop_shift.model_shift_template_ticket
 msgid "Shift Template Ticket"
 msgstr "Place"
+
+#. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:157
+#, python-format
+msgid "TH"
+msgstr "JE"
+
+#. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:156
+#, python-format
+msgid "TU"
+msgstr "MA"
 
 #. module: coop_shift
 #: model:ir.actions.act_window,name:coop_shift.action_shift_template
@@ -2387,6 +2422,12 @@ msgstr "Voir les inscriptions"
 #: model:ir.ui.view,arch_db:coop_shift.view_res_partner_shift_form
 msgid "View partner Template Registrations"
 msgstr "Inscriptions à des créneaux"
+
+#. module: coop_shift
+#: code:addons/coop_shift/model/shift_template.py:156
+#, python-format
+msgid "WE"
+msgstr "ME"
 
 #. module: coop_shift
 #: selection:add.template.registration.wizard,state:0
