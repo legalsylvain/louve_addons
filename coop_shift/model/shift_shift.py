@@ -74,7 +74,11 @@ class ShiftShift(models.Model):
         default=lambda rec: rec._default_shift_tickets(), copy=True)
     date_tz = fields.Selection('_tz_get', string='Timezone', default=False)
     date_without_time = fields.Date(
-        string='Date', compute='_get_date_without_time', store=True)
+        string='Date', compute='_get_begin_date_fields', store=True,
+        multi="begin_date")
+    begin_date_string = fields.Char(
+        string='Begin Date', compute='_get_begin_date_fields', store=True,
+        multi="begin_date")
     begin_time = fields.Float(
         string='Start Time', compute='_get_begin_time', store=True)
     end_time = fields.Float(
@@ -203,10 +207,13 @@ class ShiftShift(models.Model):
 
     @api.multi
     @api.depends('date_begin')
-    def _get_date_without_time(self):
+    def _get_begin_date_fields(self):
         for shift in self:
             shift.date_without_time = datetime.strftime(datetime.strptime(
                 shift.date_begin, "%Y-%m-%d %H:%M:%S"), "%Y-%m-%d")
+            shift.begin_date_string = datetime.strftime(
+                datetime.strptime(shift.date_begin, "%Y-%m-%d %H:%M:%S") +
+                timedelta(hours=2), "%d/%m/%Y %H:%M:%S")
 
     @api.model
     def _convert_time_float(self, t):
