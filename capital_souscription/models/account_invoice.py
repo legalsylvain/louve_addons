@@ -9,6 +9,7 @@ from openerp import models, fields, api, exceptions, _
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
+    # Column Section
     is_capital_souscription = fields.Boolean(
         string='Is Capital Souscription Invoice')
 
@@ -16,11 +17,7 @@ class AccountInvoice(models.Model):
         comodel_name='capital.fundraising.category',
         string='Fundraising Category')
 
-    @api.model
-    def create(self, vals):
-        print vals
-        return super(AccountInvoice, self).create(vals)
-
+    # Constraint Section
     @api.one
     @api.constrains(
         'is_capital_souscription', 'fundraising_category_id',
@@ -47,20 +44,17 @@ class AccountInvoice(models.Model):
                     invoice.fundraising_category_id.name, ', '.join(
                         forbidden_products.mapped('name'))))
 
-            # check minimum qty
-            minimum_qty =\
-                invoice.fundraising_category_id.minimum_share_qty
-            if invoice.partner_id.fundraising_type_id:
-                for line in invoice.fundraising_category_id.line_ids:
-                    if line.fundraising_type_id.id ==\
-                            invoice.partner_id.fundraising_type_id.id:
-                        minimum_qty = line.minimum_share_qty
-            current_qty = sum(invoice.invoice_line_ids.mapped('quantity'))
-            if current_qty < minimum_qty:
-                raise exceptions.UserError(_(
-                    "This category requires at least %d shares.") % (
-                    minimum_qty))
+            ordered_qty = sum(invoice.invoice_line_ids.mapped('quantity'))
 
+            to_order_qty = invoice.fundraising_category_id.check_minimum_qty(
+                invoice.partner_id)
+
+            if ordered_qty < to_order_qty:
+                raise exceptions.UserError(_(
+                    "This category and (previous orders) requires at least"
+                    " %d shares.") % (to_order_qty))
+
+    # OnChange Section
     @api.onchange('fundraising_category_id')
     def onchange_fundraising_category_id(self):
         if self.fundraising_category_id:

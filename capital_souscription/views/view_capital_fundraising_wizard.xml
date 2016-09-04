@@ -16,8 +16,9 @@
                     <field name="partner_id"/>
                     <field name="category_id"/>
                     <field name="share_qty"/>
-                    <field name="payment_journal_id"/>
                     <field name="payment_term_id"/>
+                    <field name="payment_journal_id"/>
+                    <field name="confirm_payment" attrs="{'invisible': [('payment_journal_id', '=', False)]}"/>
                 </group>
                 <footer>
                     <button string="Confirm" name="button_confirm" type="object" default_focus="1" class="btn-primary"/>

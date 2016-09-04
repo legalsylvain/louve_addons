@@ -3,12 +3,13 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields
+from openerp import models, fields, api
 
 
 class CapitalFundraisingCategory(models.Model):
     _name = 'capital.fundraising.category'
 
+    # Column Section
     name = fields.Char(string='Name')
 
     fundraising_id = fields.Many2one(
@@ -47,3 +48,30 @@ class CapitalFundraisingCategory(models.Model):
     line_ids = fields.One2many(
         comodel_name='capital.fundraising.category.line', string='Lines',
         inverse_name='fundraising_category_id')
+
+    # Custom Section
+    @api.multi
+    def check_minimum_qty(self, partner):
+        assert len(self) == 1, "Incorrect call"
+        invoice_obj = self.env['account.invoice']
+        category = self[0]
+        # check minimum qty
+        minimum_qty = category.minimum_share_qty
+
+        # Compute just invoiced qty
+        if partner.fundraising_type_id:
+            for line in category.line_ids:
+                if line.fundraising_type_id.id ==\
+                        partner.fundraising_type_id.id:
+                    minimum_qty = line.minimum_share_qty
+
+        # Compute previously computed qty
+        category_ids = category.fundraising_id.category_ids.ids
+        previous_invoices = invoice_obj.search([
+            ('partner_id', '=', partner.id),
+            ('state', 'in', ['open', 'paid']),
+            ('fundraising_category_id', 'in', category_ids)])
+        previous_qty = sum(
+            previous_invoices.mapped('invoice_line_ids.quantity'))
+
+        return minimum_qty - previous_qty

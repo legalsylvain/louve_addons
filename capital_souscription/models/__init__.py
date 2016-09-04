@@ -1,8 +1,11 @@
 ## -*- coding: utf-8 -*-
-from . import res_partner
-from . import product_template
-from . import account_payment
+from . import account_full_reconcile
 from . import account_invoice
+from . import account_journal
+from . import account_payment_term
+from . import product_template
+from . import res_partner
+
 
 from . import capital_fundraising_wizard
 from . import capital_fundraising
