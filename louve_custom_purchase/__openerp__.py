@@ -42,9 +42,12 @@ Copyright, Author and Licence :
     'depends': [
         'purchase',
         'product',
+        'purchase_package_qty',
     ],
     'data': [
         'views/purchase_order_view.xml',
         'views/product_supplierinfo_view.xml',
+        'views/report_purchaseorder.xml',
+        'views/report_purchasequotation.xml',
     ],
 }
