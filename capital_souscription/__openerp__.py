@@ -13,6 +13,7 @@
     'website': 'http://www.lalouve.net',
     'depends': [
         'account',
+        'account_full_reconcile',
     ],
     'data': [
         'views/view_capital_fundraising_wizard.xml',
