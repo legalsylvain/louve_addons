@@ -56,31 +56,32 @@ class ProductTemplate(models.Model):
 
     coeff1_inter = fields.Float(
         string='With Supplier Discount Coefficient',
-        compute='_compute_coeff1_inter', store=True)
+        compute='_compute_coeff1_inter', store=True,
+        digits=dp.get_precision('Product Coefficient'))
     coeff2_inter = fields.Float(
         string='With Shipping Coefficient', compute='_compute_coeff2_inter',
-        store=True)
+        store=True, digits=dp.get_precision('Product Coefficient'))
     coeff3_inter = fields.Float(
         string='With Loss Coefficient', compute='_compute_coeff3_inter',
-        store=True)
+        store=True, digits=dp.get_precision('Product Coefficient'))
     coeff4_inter = fields.Float(
         string='With Coefficient 4', compute='_compute_coeff4_inter',
-        store=True)
+        store=True, digits=dp.get_precision('Product Coefficient'))
     coeff5_inter = fields.Float(
         string='With Coefficient 5', compute='_compute_coeff5_inter',
-        store=True)
+        store=True, digits=dp.get_precision('Product Coefficient'))
     coeff6_inter = fields.Float(
         string='With Coefficient 6', compute='_compute_coeff6_inter',
-        store=True)
+        store=True, digits=dp.get_precision('Product Coefficient'))
     coeff7_inter = fields.Float(
         string='With Coefficient 7', compute='_compute_coeff7_inter',
-        store=True)
+        store=True, digits=dp.get_precision('Product Coefficient'))
     coeff8_inter = fields.Float(
         string='With Coefficient 8', compute='_compute_coeff8_inter',
-        store=True)
+        store=True, digits=dp.get_precision('Product Coefficient'))
     coeff9_inter = fields.Float(
         string='With Margin Coefficient', compute='_compute_coeff9_inter',
-        store=True)
+        store=True, digits=dp.get_precision('Product Coefficient'))
 
     theoritical_price = fields.Float(
         string='Theoritical Price VAT Incl.',
