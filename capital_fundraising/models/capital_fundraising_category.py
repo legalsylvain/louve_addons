@@ -26,16 +26,18 @@ class CapitalFundraisingCategory(models.Model):
 
     partner_account_id = fields.Many2one(
         comodel_name='account.account', string='Partner Account',
-        domain="[('user_type_id.id', '=',"
-        "self.env.ref('account.data_account_type_payable')),"
-        "('deprecated', '=', False)]", help="This account will be used"
+        domain=lambda self: [
+            ('user_type_id.id', '=', self.env.ref(
+                'account.data_account_type_payable').id),
+        ('deprecated', '=', False)], help="This account will be used"
         " instead of the default partner one, if defined.")
 
     capital_account_id = fields.Many2one(
         comodel_name='account.account', string='Final Capital Account',
-        domain="[('user_type_id.id', '=',"
-        "self.env.ref('account.data_account_type_equity')),"
-        "('deprecated', '=', False)]", help="This account will be used"
+        domain=lambda self: [
+            ('user_type_id.id', '=', self.env.ref(
+                'account.data_account_type_equity').id),
+        ('deprecated', '=', False)], help="This account will be used"
         " to write a move between default product account and capital account"
         " when the payment is done.")
 
