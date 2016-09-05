@@ -39,15 +39,15 @@ class AccountFullReconcile(models.Model):
                     'name': _("Payment of Capital")
                     if is_payment else _("Return of Capital"),
                     'partner_id': partner.id,
-                    'account_id': category.capital_account_id.id,
+                    'account_id':
+                    category.product_id.property_account_income_id.id,
                     'debit': total if is_payment else 0,
                     'credit': 0 if is_payment else total,
                 }), (0, 0, {
                     'name': _("Payment of Capital")
                     if is_payment else _("Return of Capital"),
                     'partner_id': partner.id,
-                    'account_id':
-                    category.product_id.property_account_income_id.id,
+                    'account_id': category.capital_account_id.id,
                     'debit': 0 if is_payment else total,
                     'credit': total if is_payment else 0,
                 })]
