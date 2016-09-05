@@ -9,7 +9,7 @@
 
     <record model="account.account" id="partner_account_category_A">
         <field name="name">Demo Account Payable (Fundraising Category A)</field>
-        <field name="user_type_id" ref="account.data_account_type_recevable" />
+        <field name="user_type_id" ref="account.data_account_type_receivable" />
         <field name="reconcile">True</field>
         <field name="company_id" ref="base.main_company" />
         <field name="code">1111A</field>
@@ -17,7 +17,7 @@
 
     <record model="account.account" id="partner_account_category_B">
         <field name="name">Demo Account Payable (Fundraising Category B)</field>
-        <field name="user_type_id" ref="account.data_account_type_recevable" />
+        <field name="user_type_id" ref="account.data_account_type_receivable" />
         <field name="reconcile">True</field>
         <field name="company_id" ref="base.main_company" />
         <field name="code">1111B</field>
