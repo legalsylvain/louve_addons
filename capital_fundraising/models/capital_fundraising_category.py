@@ -10,7 +10,7 @@ class CapitalFundraisingCategory(models.Model):
     _name = 'capital.fundraising.category'
 
     # Column Section
-    name = fields.Char(string='Name')
+    name = fields.Char(string='Name', required=True)
 
     fundraising_id = fields.Many2one(
         comodel_name='capital.fundraising', string='Fundraising',
