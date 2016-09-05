@@ -28,7 +28,7 @@ class CapitalFundraisingCategory(models.Model):
         comodel_name='account.account', string='Partner Account',
         domain=lambda self: [
             ('user_type_id.id', '=', self.env.ref(
-                'account.data_account_type_payable').id),
+                'account.data_account_type_recevable').id),
         ('deprecated', '=', False)], help="This account will be used"
         " instead of the default partner one, if defined.")
 
