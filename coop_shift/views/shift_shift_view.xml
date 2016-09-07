@@ -123,7 +123,7 @@
             <field name="name">shift.shift.kanban</field>
             <field name="model">shift.shift</field>
             <field name="arch" type="xml">
-                <kanban class="o_shift_kanban_view">
+                <kanban class="o_event_kanban_view">
                     <field name="user_id"/>
                     <field name="date_begin"/>
                     <field name="date_end"/>
@@ -132,6 +132,7 @@
                     <field name="seats_used"/>
                     <field name="seats_expected"/>
                     <field name="color"/>
+                    <field name="state" invisible="1"/>
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click">
@@ -147,10 +148,10 @@
                                         <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
                                     </ul>
                                 </div>
-                                <div class="o_shift_left">
+                                <div class="o_event_left">
                                     <h4><field name="name"/></h4>
                                 </div>
-                                <div class="o_shift_right">
+                                <div class="o_event_right">
                                     <div>
                                         <i class="fa fa-clock-o"/>
                                         <b>From</b> <t t-esc="moment(record.date_begin.raw_value).format('lll')"/>
