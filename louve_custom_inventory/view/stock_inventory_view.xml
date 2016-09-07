@@ -21,6 +21,7 @@
             <xpath expr="//field[@name='product_qty'][1]" position="attributes">
                 <attribute name="readonly" eval="True"/>
             </xpath>
+            <xpath expr="//field[@name='line_ids']//field[@name='package_id']" position="replace"/>
         </field>
     </record>
 </odoo>
