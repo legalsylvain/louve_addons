@@ -1,7 +1,7 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Purchase - Computed Purchase Order Module for Odoo
+#    Product - Average Consumption Module for Odoo
 #    Copyright (C) 2013-Today GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
@@ -21,32 +21,4 @@
 #
 ##############################################################################
 
-{
-    'name': 'Louve Custom Inventory',
-    'version': '9.0.O0.2',
-    'category': 'Custom',
-    'description': """
-Custom Inventory for La Louve Paris
-=======================================================
-
-Functionnality :
-    custom stock.inventory report and view
-
-Copyright, Author and Licence :
--------------------------------
-    * Copyright : 2016-Today, La Louve;
-    * Author :
-        * Julien WESTE;
-    * Licence : AGPL-3 (http://www.gnu.org/licenses/)
-    """,
-    'author': 'La Louve',
-    'website': 'http://www.lalouve.net',
-    'license': 'AGPL-3',
-    'depends': [
-        'stock',
-    ],
-    'data': [
-        'view/report_stockinventory.xml',
-        'view/stock_inventory_view.xml'
-    ],
-}
+from . import stock_inventory_line
