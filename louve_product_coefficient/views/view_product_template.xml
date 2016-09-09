@@ -14,15 +14,25 @@
                 <field name="name" readonly="1"/>
                 <field name="base_price" />
                 <field name="alternative_base_price_sale" />
+                <field name="alternative_base_price_standard" />
                 <field name="coeff1_id" />
+                <field name="incl_in_standard_price_1" />
                 <field name="coeff2_id" />
+                <field name="incl_in_standard_price_2" />
                 <field name="coeff3_id" />
+                <field name="incl_in_standard_price_3" />
                 <field name="coeff4_id" />
+                <field name="incl_in_standard_price_4" />
                 <field name="coeff5_id" />
+                <field name="incl_in_standard_price_5" />
                 <field name="coeff6_id" />
+                <field name="incl_in_standard_price_6" />
                 <field name="coeff7_id" />
+                <field name="incl_in_standard_price_7" />
                 <field name="coeff8_id" />
+                <field name="incl_in_standard_price_8" />
                 <field name="coeff9_id" />
+                <field name="incl_in_standard_price_9" />
                 <field name="theoritical_price" />
                 <field name="list_price" />
                 <field name="has_theoritical_price_different" invisible="1" />
