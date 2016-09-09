@@ -13,7 +13,7 @@
             <tree editable="bottom">
                 <field name="name" readonly="1"/>
                 <field name="base_price" />
-                <field name="alternative_base_price" />
+                <field name="alternative_base_price_sale" />
                 <field name="coeff1_id" />
                 <field name="coeff2_id" />
                 <field name="coeff3_id" />
@@ -64,40 +64,62 @@
             </div>
             <xpath expr="//notebook" position="inside">
                 <page name="coefficient" string="Coefficients" groups="base.group_sale_manager">
-                    <group cols="4">
-                        <group colspan="4">
+                    <group>
+                        <group>
                             <group>
                                 <field name="base_price" />
-                                <field name="alternative_base_price" />
+                                <field name="alternative_base_price_sale" />
+                                <field name="alternative_base_price_standard" />
                             </group>
                             <group />
                         </group>
-                        <group colspan="4" string="Coefficients">
-                            <group>
-                                <field name="coeff1_inter" style="background-color:#DDFFFF" />
-                                <field name="coeff2_inter" style="background-color:#DDFFFF" />
-                                <field name="coeff3_inter" style="background-color:#DDFFFF" />
-                                <field name="coeff4_inter" style="background-color:#DDFFFF" />
-                                <field name="coeff5_inter" style="background-color:#DDFFFF" />
-                                <field name="coeff6_inter" style="background-color:#DDFFFF" />
-                                <field name="coeff7_inter" style="background-color:#DDFFFF" />
-                                <field name="coeff8_inter" style="background-color:#DDFFFF" />
-                                <field name="coeff9_inter" style="background-color:#DDFFFF" />
-
+                        <group colspan="4" col="6">
+                            <group string="Coefficients">
+                                <field name="coeff1_id" style="height:27px"/>
+                                <field name="coeff2_id" style="height:27px"/>
+                                <field name="coeff3_id" style="height:27px"/>
+                                <field name="coeff4_id" style="height:27px"/>
+                                <field name="coeff5_id" style="height:27px"/>
+                                <field name="coeff6_id" style="height:27px"/>
+                                <field name="coeff7_id" style="height:27px"/>
+                                <field name="coeff8_id" style="height:27px"/>
+                                <field name="coeff9_id" style="height:27px"/>
                             </group>
-                            <group>
-                                <field name="coeff1_id"/>
-                                <field name="coeff2_id"/>
-                                <field name="coeff3_id"/>
-                                <field name="coeff4_id"/>
-                                <field name="coeff5_id"/>
-                                <field name="coeff6_id"/>
-                                <field name="coeff7_id"/>
-                                <field name="coeff8_id"/>
-                                <field name="coeff9_id"/>
+                            <group string="Sale Price" col="1">
+                                <field name="coeff1_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
+                                <field name="coeff2_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
+                                <field name="coeff3_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
+                                <field name="coeff4_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
+                                <field name="coeff5_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
+                                <field name="coeff6_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
+                                <field name="coeff7_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
+                                <field name="coeff8_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
+                                <field name="coeff9_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
+                            </group>
+                            <group string="Incl. in Standard Price" col="1">
+                                <field name="incl_in_standard_price_1" nolabel="1" style="height:30px"/>
+                                <field name="incl_in_standard_price_2" nolabel="1" style="height:30px"/>
+                                <field name="incl_in_standard_price_3" nolabel="1" style="height:30px"/>
+                                <field name="incl_in_standard_price_4" nolabel="1" style="height:30px"/>
+                                <field name="incl_in_standard_price_5" nolabel="1" style="height:30px"/>
+                                <field name="incl_in_standard_price_6" nolabel="1" style="height:30px"/>
+                                <field name="incl_in_standard_price_7" nolabel="1" style="height:30px"/>
+                                <field name="incl_in_standard_price_8" nolabel="1" style="height:30px"/>
+                                <field name="incl_in_standard_price_9" nolabel="1" style="height:30px"/>
+                            </group>
+                            <group string="Standard Price" col="1">
+                                <field name="coeff1_inter_sp" style="background-color:#DDFFFF;height:30px"  nolabel="1"/>
+                                <field name="coeff2_inter_sp" style="background-color:#DDFFFF;height:30px"  nolabel="1"/>
+                                <field name="coeff3_inter_sp" style="background-color:#DDFFFF;height:30px"  nolabel="1"/>
+                                <field name="coeff4_inter_sp" style="background-color:#DDFFFF;height:30px"  nolabel="1"/>
+                                <field name="coeff5_inter_sp" style="background-color:#DDFFFF;height:30px"  nolabel="1"/>
+                                <field name="coeff6_inter_sp" style="background-color:#DDFFFF;height:30px"  nolabel="1"/>
+                                <field name="coeff7_inter_sp" style="background-color:#DDFFFF;height:30px"  nolabel="1"/>
+                                <field name="coeff8_inter_sp" style="background-color:#DDFFFF;height:30px"  nolabel="1"/>
+                                <field name="coeff9_inter_sp" style="background-color:#DDFFFF;height:30px"  nolabel="1"/>
                             </group>
                         </group>
-                        <group colspan="4">
+                        <group col="4">
                             <group>
                                 <field name="theoritical_price" style="background-color: #D0EED0"/>
                                 <field name="has_theoritical_price_different"/>
