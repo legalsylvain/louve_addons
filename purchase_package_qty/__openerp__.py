@@ -23,7 +23,7 @@
 
 {
     'name': 'Purchase - Package Quantity',
-    'version': '9.1.2',
+    'version': '9.1.3.0.0',
     'category': 'Purchase',
     'description': """
 Allow user to define the package of products the supplier sells
