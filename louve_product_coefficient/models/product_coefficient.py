@@ -5,7 +5,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, fields, api
-from openerp.addons import decimal_precision as dp
 
 
 class ProductCoefficient(models.Model):
@@ -17,27 +16,20 @@ class ProductCoefficient(models.Model):
         ('fixed', 'Fixed Amount'),
     ]
 
-    _SELECT_COEFFICIENT_TYPE = [
-        ('supplier', 'Supplier Coefficient'),
-        ('shipping', 'Shipping Coefficient'),
-        ('loss', 'Loss Coefficient'),
-        ('custom', 'Custom Coefficient'),
-        ('margin', 'Margin Coefficient'),
-    ]
-
     # Column Section
     name = fields.Char(string='Name', required=True)
 
-    value = fields.Float(
-        string='Value', digits=dp.get_precision('Product Price'))
+    value = fields.Float(string='Value')
 
     operation_type = fields.Selection(
         string='Operation Type', selection=_SELECT_OPERATION_TYPE,
         required=True, default='multiplier')
 
-    coefficient_type = fields.Selection(
-        string='Coefficient Type', selection=_SELECT_COEFFICIENT_TYPE,
-        required=True, default='custom')
+    active = fields.Boolean(
+        string='Active', help="If unchecked, it will allow you to hide"
+        " the coefficient without removing it.")
+
+    note = fields.Char(string='Note')
 
     # Compute Section
     @api.model

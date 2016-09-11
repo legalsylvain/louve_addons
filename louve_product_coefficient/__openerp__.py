@@ -24,7 +24,6 @@
         'views/action.xml',
         'views/menu.xml',
         'data/ir_cron.xml',
-        'data/product_coefficient_data.xml',
     ],
     'demo': [
         'demo/res_groups.xml',

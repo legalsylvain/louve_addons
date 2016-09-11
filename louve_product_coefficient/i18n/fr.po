@@ -77,11 +77,6 @@ msgid "Coefficient 8"
 msgstr "Coefficient 8"
 
 #. module: louve_product_coefficient
-#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_coefficient_coefficient_type
-msgid "Coefficient Type"
-msgstr "Type de Coéfficient"
-
-#. module: louve_product_coefficient
 #: model:ir.ui.view,arch_db:louve_product_coefficient.view_product_template_form
 msgid "Coefficients"
 msgstr "Coefficients"
@@ -97,11 +92,6 @@ msgstr "Créé par"
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_wizard_use_theoritical_price_create_date
 msgid "Created on"
 msgstr "Créé le"
-
-#. module: louve_product_coefficient
-#: selection:product.coefficient,coefficient_type:0
-msgid "Custom Coefficient"
-msgstr "Coefficient personnalisé"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_coefficient_display_name
@@ -143,18 +133,6 @@ msgstr "Mis à jour par"
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_wizard_use_theoritical_price_write_date
 msgid "Last Updated on"
 msgstr "Mis à jour le"
-
-#. module: louve_product_coefficient
-#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff3_id
-#: selection:product.coefficient,coefficient_type:0
-msgid "Loss Coefficient"
-msgstr "Coefficient de perte"
-
-#. module: louve_product_coefficient
-#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff9_id
-#: selection:product.coefficient,coefficient_type:0
-msgid "Margin Coefficient"
-msgstr "Coefficient de marge"
 
 #. module: louve_product_coefficient
 #: selection:product.coefficient,operation_type:0
@@ -202,18 +180,6 @@ msgstr "Recalculer le Prix de Base"
 #: model:ir.ui.view,arch_db:louve_product_coefficient.view_product_coefficient_form
 msgid "Settings"
 msgstr "Configuration"
-
-#. module: louve_product_coefficient
-#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff2_id
-#: selection:product.coefficient,coefficient_type:0
-msgid "Shipping Coefficient"
-msgstr "Coefficient de transport"
-
-#. module: louve_product_coefficient
-#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff1_id
-#: selection:product.coefficient,coefficient_type:0
-msgid "Supplier Coefficient"
-msgstr "Coefficient fournisseur"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_theoritical_price

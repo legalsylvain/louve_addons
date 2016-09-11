@@ -74,17 +74,6 @@
                         </group>
                         <group colspan="4" string="Coefficients">
                             <group>
-                                <field name="coeff1_id"/>
-                                <field name="coeff2_id"/>
-                                <field name="coeff3_id"/>
-                                <field name="coeff4_id"/>
-                                <field name="coeff5_id"/>
-                                <field name="coeff6_id"/>
-                                <field name="coeff7_id"/>
-                                <field name="coeff8_id"/>
-                                <field name="coeff9_id"/>
-                            </group>
-                            <group>
                                 <field name="coeff1_inter" style="background-color:#DDFFFF" />
                                 <field name="coeff2_inter" style="background-color:#DDFFFF" />
                                 <field name="coeff3_inter" style="background-color:#DDFFFF" />
@@ -94,6 +83,18 @@
                                 <field name="coeff7_inter" style="background-color:#DDFFFF" />
                                 <field name="coeff8_inter" style="background-color:#DDFFFF" />
                                 <field name="coeff9_inter" style="background-color:#DDFFFF" />
+
+                            </group>
+                            <group>
+                                <field name="coeff1_id"/>
+                                <field name="coeff2_id"/>
+                                <field name="coeff3_id"/>
+                                <field name="coeff4_id"/>
+                                <field name="coeff5_id"/>
+                                <field name="coeff6_id"/>
+                                <field name="coeff7_id"/>
+                                <field name="coeff8_id"/>
+                                <field name="coeff9_id"/>
                             </group>
                         </group>
                         <group colspan="4">

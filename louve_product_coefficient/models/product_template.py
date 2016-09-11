@@ -13,32 +13,23 @@ class ProductTemplate(models.Model):
 
     # Column Section
     coeff1_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Supplier Coefficient',
-        domain="[('coefficient_type', '=', 'supplier')]")
+        comodel_name='product.coefficient', string='Coefficient 1')
     coeff2_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Shipping Coefficient',
-        domain="[('coefficient_type', '=', 'shipping')]")
+        comodel_name='product.coefficient', string='Coefficient 2')
     coeff3_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Loss Coefficient',
-        domain="[('coefficient_type', '=', 'loss')]")
+        comodel_name='product.coefficient', string='Coefficient 3')
     coeff4_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 4',
-        domain="[('coefficient_type', '=', 'custom')]")
+        comodel_name='product.coefficient', string='Coefficient 4')
     coeff5_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 5',
-        domain="[('coefficient_type', '=', 'custom')]")
+        comodel_name='product.coefficient', string='Coefficient 5')
     coeff6_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 6',
-        domain="[('coefficient_type', '=', 'custom')]")
+        comodel_name='product.coefficient', string='Coefficient 6')
     coeff7_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 7',
-        domain="[('coefficient_type', '=', 'custom')]")
+        comodel_name='product.coefficient', string='Coefficient 7')
     coeff8_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 8',
-        domain="[('coefficient_type', '=', 'custom')]")
+        comodel_name='product.coefficient', string='Coefficient 8')
     coeff9_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Margin Coefficient',
-        domain="[('coefficient_type', '=', 'margin')]")
+        comodel_name='product.coefficient', string='Coefficient 9')
 
     base_price = fields.Float(
         string='Base Price', compute='_compute_base_price', store=True,
@@ -55,33 +46,32 @@ class ProductTemplate(models.Model):
         " Price, if defined.")
 
     coeff1_inter = fields.Float(
-        string='With Supplier Discount Coefficient',
-        compute='_compute_coeff1_inter', store=True,
-        digits=dp.get_precision('Product Coefficient'))
+        string='With Coefficient 1',
+        compute='_compute_coeff1_inter', store=True)
     coeff2_inter = fields.Float(
-        string='With Shipping Coefficient', compute='_compute_coeff2_inter',
-        store=True, digits=dp.get_precision('Product Coefficient'))
+        string='With Coefficient 2', compute='_compute_coeff2_inter',
+        store=True)
     coeff3_inter = fields.Float(
-        string='With Loss Coefficient', compute='_compute_coeff3_inter',
-        store=True, digits=dp.get_precision('Product Coefficient'))
+        string='With Coefficient 3', compute='_compute_coeff3_inter',
+        store=True)
     coeff4_inter = fields.Float(
         string='With Coefficient 4', compute='_compute_coeff4_inter',
-        store=True, digits=dp.get_precision('Product Coefficient'))
+        store=True)
     coeff5_inter = fields.Float(
         string='With Coefficient 5', compute='_compute_coeff5_inter',
-        store=True, digits=dp.get_precision('Product Coefficient'))
+        store=True)
     coeff6_inter = fields.Float(
         string='With Coefficient 6', compute='_compute_coeff6_inter',
-        store=True, digits=dp.get_precision('Product Coefficient'))
+        store=True)
     coeff7_inter = fields.Float(
         string='With Coefficient 7', compute='_compute_coeff7_inter',
-        store=True, digits=dp.get_precision('Product Coefficient'))
+        store=True)
     coeff8_inter = fields.Float(
         string='With Coefficient 8', compute='_compute_coeff8_inter',
-        store=True, digits=dp.get_precision('Product Coefficient'))
+        store=True)
     coeff9_inter = fields.Float(
-        string='With Margin Coefficient', compute='_compute_coeff9_inter',
-        store=True, digits=dp.get_precision('Product Coefficient'))
+        string='With Coefficient 9', compute='_compute_coeff9_inter',
+        store=True)
 
     theoritical_price = fields.Float(
         string='Theoritical Price VAT Incl.',
@@ -120,8 +110,9 @@ class ProductTemplate(models.Model):
         for template in self:
             base_price = 0.0
             if template.product_variant_ids:
+                # We set a high quantity to avoid to skip
                 seller = product_obj._select_seller(
-                    template.product_variant_ids[0])
+                    template.product_variant_ids[0], quantity=10000.0)
                 if seller:
                     if seller.product_uom.id == template.uom_id.id:
                         base_price = seller.price
