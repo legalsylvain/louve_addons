@@ -29,7 +29,7 @@ class ProductCoefficient(models.Model):
         string='Active', help="If unchecked, it will allow you to hide"
         " the coefficient without removing it.")
 
-    note = fields.Char(string='Note')
+    note = fields.Text(string='Note')
 
     # Compute Section
     @api.model
