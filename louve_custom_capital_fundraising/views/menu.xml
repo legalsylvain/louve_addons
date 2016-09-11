@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+    Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+
+    <record model="ir.ui.menu" id="capital_fundraising.menu_capital_fundraising_wizard">
+        <field name="group_ids" eval="[(4, ref('louve_custom_capital_fundraising.subscriptions_creator'))]" />
+    </record>
+
+</odoo>
