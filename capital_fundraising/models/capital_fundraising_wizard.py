@@ -9,13 +9,19 @@ from openerp import models, fields, api
 class CapitalFundraisingWizard(models.TransientModel):
     _name = 'capital.fundraising.wizard'
 
+    def default_partner_id(self):
+        if self._context.get('active_model', False) == 'res.partner':
+            return self._context.get('active_id', False)
+
     # Column Section
     date_invoice = fields.Date(
         string='Invoice Date', required=True,
         default=fields.Date.context_today)
 
     partner_id = fields.Many2one(
-        comodel_name='res.partner', string='Partner', required=True)
+        comodel_name='res.partner', string='Partner', required=True,
+        default=default_partner_id)
+
 
     share_qty = fields.Integer(string='Shares Quantity')
 

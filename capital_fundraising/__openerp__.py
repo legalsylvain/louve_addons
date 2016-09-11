@@ -19,6 +19,7 @@
     'data': [
         'security/res_groups.xml',
         'security/ir.model.access.csv',
+        'views/action.xml',
         'views/view_capital_fundraising_wizard.xml',
         'views/view_product_template.xml',
         'views/view_res_partner.xml',
@@ -28,7 +29,6 @@
         'views/view_capital_fundraising_category.xml',
         'views/view_capital_fundraising.xml',
         'views/view_account_payment_term.xml',
-        'views/action.xml',
         'views/menu.xml',
     ],
     'demo': [

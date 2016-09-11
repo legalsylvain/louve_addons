@@ -11,11 +11,16 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
-            <group name="accounting_entries" position="before">
-                <group name="capital_fundraising" string="Capital Fundraising" groups="capital_fundraising.manage_fundraising_partner_type">
-                    <field name="fundraising_partner_type_ids" widget="many2many_tags"/>
-                </group>
-            </group>
+            <notebook position="inside">
+                <page name="page_capital_fundraising" string="Capital Subscriptions">
+                    <group cols="4">
+                        <field name="fundraising_partner_type_ids" widget="many2many_tags" colspan="2"/>
+                        <button id="new_subscription" name="%(action_capital_fundraising_wizard)d" type="action"
+                            string="New Capital Subscription" colspan="2"/>
+                        <newline />
+                    </group>
+                </page>
+            </notebook>
         </field>
     </record>
 
