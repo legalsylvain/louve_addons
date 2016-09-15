@@ -24,5 +24,9 @@
         <field name="implied_ids" eval="[(4, ref('louve_membership.subscriptions_creator'))]" />
     </record>
 
+    <record model="res.groups" id="subscriptions_can_change_fundraising_category">
+        <field name="name">Can Change Fundraising Category in Wizard</field>
+        <field name="category_id" ref="base.module_category_extra" />
+    </record>
 
 </odoo>

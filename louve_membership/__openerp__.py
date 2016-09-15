@@ -20,6 +20,7 @@
         'security/ir_module_category.xml',
         'security/res_groups.xml',
         'views/view_res_partner.xml',
+        'views/view_capital_fundraising_wizard.xml',
         'views/menu.xml',
 
         # Custom Data
