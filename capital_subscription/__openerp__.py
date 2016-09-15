@@ -5,10 +5,10 @@
 
 
 {
-    'name': 'Capital Fundraising',
+    'name': 'Capital Subscription',
     'version': '9.0.0.0.0',
     'category': 'Accounting',
-    'summary': 'Provide extra accounting features for capital fundraising',
+    'summary': 'Provide extra accounting features for Capital Subscription',
     'author': 'La Louve',
     'website': 'http://www.lalouve.net',
     'depends': [

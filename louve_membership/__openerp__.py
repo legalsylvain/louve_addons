@@ -5,14 +5,15 @@
 
 
 {
-    'name': 'Louve Custom - Capital Fundraising',
+    'name': 'Louve Custom - Membership',
     'version': '9.0.0.0.0',
     'category': 'Custom',
-    'summary': 'Custom settings for capital fundraising deployment',
+    'summary': 'Custom settings for membership in La Louve',
     'author': 'La Louve',
     'website': 'http://www.lalouve.net',
     'depends': [
-        'capital_fundraising',
+        'capital_subscription',
+        'coop_shift',
     ],
     'data': [
         'security/ir_module_category.xml',
