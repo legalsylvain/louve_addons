@@ -15,12 +15,12 @@
                     <field name="date_invoice"/>
                     <field name="partner_id"/>
                     <field name="fundraising_partner_type_ids" readonly="1" widget="many2many_tags" colspan="2"/>
-                    <field name="category_id"/>
+                    <field name="category_id" widget="selection"/>
                     <field name="share_qty"/>
-                    <field name="payment_journal_id"/>
+                    <field name="payment_journal_id" widget="selection"/>
                     <field name="confirm_fundraising_payment" invisible="1"/>
-                    <field name="confirm_payment" attrs="{'invisible': [('payment_journal_id', '=', False)], 'readonly': [('fundraising_payment_setting', 'in', ['allways', 'never'])]}"/>
-                    <field name="payment_term_id"/>
+                    <field name="confirm_payment" attrs="{'invisible': [('payment_journal_id', '=', False)], 'readonly': [('confirm_fundraising_payment', 'in', ['allways', 'never'])]}"/>
+                    <field name="payment_term_id" widget="selection"/>
                 </group>
                 <footer>
                     <button string="Confirm" name="button_confirm" type="object" default_focus="1" class="btn-primary"/>

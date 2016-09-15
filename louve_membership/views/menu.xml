@@ -7,8 +7,8 @@
 
 <odoo>
 
-    <record model="ir.ui.menu" id="capital_fundraising.menu_capital_fundraising_wizard">
-        <field name="group_ids" eval="[(4, ref('louve_custom_capital_fundraising.subscriptions_creator'))]" />
+    <record model="ir.ui.menu" id="capital_subscription.menu_capital_fundraising_wizard">
+        <field name="groups_id" eval="[(4, ref('louve_membership.subscriptions_creator'))]" />
     </record>
 
 </odoo>

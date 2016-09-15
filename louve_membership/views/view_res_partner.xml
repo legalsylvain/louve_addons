@@ -9,13 +9,13 @@
 
     <record model="ir.ui.view" id="view_res_partner_form">
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="capital_fundraising.view_res_partner_form"/>
+        <field name="inherit_id" ref="capital_subscription.view_res_partner_form"/>
         <field name="arch" type="xml">
             <page name="page_capital_fundraising" position="attributes">
-                <attribute name="groups" ref="louve_custom_capital_fundraising.subscriptions_reader" />
+                <attribute name="groups" ref="louve_membership.subscriptions_reader" />
             </page>
             <xpath expr="//button[@id='new_subscription']" position="attributes">
-                <attribute name="groups" ref="louve_custom_capital_fundraising.subscriptions_creator" />
+                <attribute name="groups" ref="louve_membership.subscriptions_creator" />
             </xpath>
         </field>
     </record>
