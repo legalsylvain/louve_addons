@@ -29,7 +29,7 @@ class CapitalFundraisingCategory(models.Model):
         domain=lambda self: [
             ('user_type_id.id', '=', self.env.ref(
                 'account.data_account_type_receivable').id),
-        ('deprecated', '=', False)], help="This account will be used"
+            ('deprecated', '=', False)], help="This account will be used"
         " instead of the default partner one, if defined.")
 
     capital_account_id = fields.Many2one(
@@ -37,7 +37,7 @@ class CapitalFundraisingCategory(models.Model):
         domain=lambda self: [
             ('user_type_id.id', '=', self.env.ref(
                 'account.data_account_type_equity').id),
-        ('deprecated', '=', False)], help="This account will be used"
+            ('deprecated', '=', False)], help="This account will be used"
         " to write a move between default product account and capital account"
         " when the payment is done.")
 

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-05 20:49+0000\n"
-"PO-Revision-Date: 2016-09-05 20:49+0000\n"
+"POT-Creation-Date: 2016-09-15 14:29+0000\n"
+"PO-Revision-Date: 2016-09-15 14:29+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,17 +16,17 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: capital_subscription
-#: model:ir.model.fields,help:capital_subscription.field_product_template_is_capital_subscription
+#: model:ir.model.fields,help:capital_subscription.field_product_template_is_capital_fundraising
 msgid " Check this box if you want to use this product for capital fundraising.\n"
 " If yes, please check accounting and fiscal settings."
-msgstr "Cochez cette case si vous voulez utilisez ce produit pour des levées de fonds.\n"
-" Si oui, veuillez paramétrer correctement le produit d'un point de vue comptable et fiscal."
+msgstr " Cochez cette case si vous voulez utiliser le produit pour des levées de fonds.\n"
+" Dans ce cas, veuillez paramétrer le produit comptablement et fiscalement."
 
 #. module: capital_subscription
 #: code:addons/capital_subscription/models/account_invoice.py:42
 #, python-format
 msgid "%s category do not allow %s products"
-msgstr "La catégorie '%s' n'autorise pas le produit '%s'"
+msgstr "La catégorie de titre '%s' n'autorise pas le produit '%s'"
 
 #. module: capital_subscription
 #: code:addons/capital_subscription/models/account_invoice.py:30
@@ -35,7 +35,12 @@ msgid "A Capital fundraising must have a capital category defined"
 msgstr "Une levée de fonds doit avoir une catégorie définie"
 
 #. module: capital_subscription
-#: model:ir.ui.view,arch_db:capital_subscription.view_capital_subscription_wizard_form
+#: selection:account.journal,confirm_fundraising_payment:0
+msgid "Allways"
+msgstr "Toujours"
+
+#. module: capital_subscription
+#: model:ir.ui.view,arch_db:capital_subscription.view_capital_fundraising_wizard_form
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -46,76 +51,82 @@ msgstr "Capital"
 
 #. module: capital_subscription
 #: model:ir.ui.view,arch_db:capital_subscription.view_res_partner_form
-msgid "Capital Fundraising"
-msgstr "Levé de fonds"
+msgid "Capital Subscriptions"
+msgstr "Souscriptions de capital"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_ids
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_ids
 msgid "Categories"
 msgstr "Catégories"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_line_fundraising_category_id
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_category_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line_fundraising_category_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_category_id
 msgid "Category"
 msgstr "Catégorie"
 
 #. module: capital_subscription
-#: model:ir.model.fields,help:capital_subscription.field_capital_subscription_wizard_confirm_payment
+#: model:ir.model.fields,help:capital_subscription.field_capital_fundraising_wizard_confirm_payment
 msgid "Check this box to confirm the payment(s). In that case, the second account move will be written to transfer amount from unpaid account to paid account"
-msgstr "Cochez cette case pour confirmer le(s) paiement(s). Dans ce cas la deuxième écriture comptable sera saisie pour transférer le montant du capital d'un compte de capital non versé à un compte de capital versé"
+msgstr "Cochez cette case pour confirmer le(s) paiement(s). Dans ce cas, une seconde écriture comptable sera passé pour transférer le montant du capital du compte de capital non versé au compte de capital versé."
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_company_id
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_company_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_company_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_company_id
 msgid "Company"
 msgstr "Société"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_account_invoice_is_capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_product_template_is_capital_subscription
+#: model:ir.model.fields,field_description:capital_subscription.field_account_invoice_is_capital_fundraising
+#: model:ir.model.fields,field_description:capital_subscription.field_product_template_is_capital_fundraising
 msgid "Concerns Capital Fundraising"
-msgstr "Concerne une levée de fond"
+msgstr "utilisé pour les levées de fonds"
 
 #. module: capital_subscription
-#: model:ir.ui.view,arch_db:capital_subscription.view_capital_subscription_wizard_form
+#: model:ir.ui.view,arch_db:capital_subscription.view_capital_fundraising_wizard_form
 msgid "Confirm"
 msgstr "Confirmer"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_confirm_payment
+#: model:ir.model.fields,field_description:capital_subscription.field_account_journal_confirm_fundraising_payment
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_confirm_fundraising_payment
+msgid "Confirm Fundraising Payments"
+msgstr "Confirmer les paiements pour les levées de fonds"
+
+#. module: capital_subscription
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_confirm_payment
 msgid "Confirm Payment"
 msgstr "Confirmer le paiement"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_create_uid
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_line_create_uid
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_create_uid
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_partner_type_create_uid
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_create_uid
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_create_uid
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line_create_uid
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_create_uid
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_partner_type_create_uid
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_create_uid
 msgid "Created by"
 msgstr "Créé par"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_create_date
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_line_create_date
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_create_date
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_partner_type_create_date
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_create_date
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_create_date
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line_create_date
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_create_date
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_partner_type_create_date
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_create_date
 msgid "Created on"
 msgstr "Créé le"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_display_name
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_line_display_name
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_display_name
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_partner_type_display_name
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_display_name
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_display_name
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line_display_name
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_display_name
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_partner_type_display_name
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_display_name
 msgid "Display Name"
 msgstr "Nom affiché"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_capital_account_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_capital_account_id
 msgid "Final Capital Account"
 msgstr "Compte de capital final"
 
@@ -125,13 +136,13 @@ msgid "Full Reconcile"
 msgstr "Lettrage complet"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_fundraising_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_fundraising_id
 msgid "Fundraising"
-msgstr "Levée de fond"
+msgstr "Levée de fonds"
 
 #. module: capital_subscription
-#: model:ir.actions.act_window,name:capital_subscription.action_capital_subscription_category
-#: model:ir.ui.menu,name:capital_subscription.menu_capital_subscription_category
+#: model:ir.actions.act_window,name:capital_subscription.action_capital_fundraising_category
+#: model:ir.ui.menu,name:capital_subscription.menu_capital_fundraising_category
 msgid "Fundraising Categories"
 msgstr "Catégories de titres"
 
@@ -141,29 +152,30 @@ msgid "Fundraising Category"
 msgstr "Catégorie de titres"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_line_fundraising_partner_type_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line_fundraising_partner_type_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_fundraising_partner_type_ids
 #: model:ir.model.fields,field_description:capital_subscription.field_res_partner_fundraising_partner_type_ids
 msgid "Fundraising Partner Type"
-msgstr "Type de partenaire pour les levées de fond"
+msgstr "Type de partenaire pour les levées de fonds"
 
 #. module: capital_subscription
-#: model:ir.actions.act_window,name:capital_subscription.action_capital_subscription_partner_type
-#: model:ir.ui.menu,name:capital_subscription.menu_capital_subscription_partner_type
+#: model:ir.actions.act_window,name:capital_subscription.action_capital_fundraising_partner_type
+#: model:ir.ui.menu,name:capital_subscription.menu_capital_fundraising_partner_type
 msgid "Fundraising Partner Types"
-msgstr "Types de partenaire pour les levées de fond"
+msgstr "Types de partenaire pour les levées de fonds"
 
 #. module: capital_subscription
-#: model:ir.actions.act_window,name:capital_subscription.action_capital_subscription
-#: model:ir.ui.menu,name:capital_subscription.menu_capital_subscription
+#: model:ir.actions.act_window,name:capital_subscription.action_capital_fundraising
+#: model:ir.ui.menu,name:capital_subscription.menu_capital_fundraising
 msgid "Fundraisings"
 msgstr "Levées de fonds"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_id
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_line_id
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_id
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_partner_type_id
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_partner_type_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_id
 msgid "ID"
 msgstr "ID"
 
@@ -173,45 +185,45 @@ msgid "Invoice"
 msgstr "Facture"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_date_invoice
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_date_invoice
 msgid "Invoice Date"
 msgstr "Date de facturation"
 
 #. module: capital_subscription
 #: model:ir.model,name:capital_subscription.model_account_journal
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_journal_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_journal_id
 msgid "Journal"
 msgstr "Journal"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription___last_update
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category___last_update
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_line___last_update
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_partner_type___last_update
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard___last_update
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising___last_update
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category___last_update
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line___last_update
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_partner_type___last_update
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard___last_update
 msgid "Last Modified on"
 msgstr "Dernière modification le"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_line_write_uid
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_write_uid
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_partner_type_write_uid
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_write_uid
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_write_uid
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line_write_uid
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_write_uid
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_partner_type_write_uid
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_write_uid
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_write_uid
 msgid "Last Updated by"
 msgstr "Mis à jour par"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_line_write_date
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_write_date
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_partner_type_write_date
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_write_date
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_write_date
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line_write_date
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_write_date
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_partner_type_write_date
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_write_date
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_write_date
 msgid "Last Updated on"
 msgstr "Mis à jour le"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_line_ids
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line_ids
 msgid "Lines"
 msgstr "Lignes"
 
@@ -221,17 +233,32 @@ msgid "Manage Fundraising Partner Type"
 msgstr "Gérer les types de partenaires pour les levées de fonds"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_line_minimum_share_qty
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_minimum_share_qty
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line_minimum_share_qty
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_minimum_share_qty
 msgid "Minimum Share Quantity"
 msgstr "Nombre de parts minimum"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_name
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_name
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_partner_type_name
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_name
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_name
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_partner_type_name
 msgid "Name"
 msgstr "Nom"
+
+#. module: capital_subscription
+#: selection:account.journal,confirm_fundraising_payment:0
+msgid "Never"
+msgstr "Jamais"
+
+#. module: capital_subscription
+#: model:ir.ui.view,arch_db:capital_subscription.view_res_partner_form
+msgid "New Capital Subscription"
+msgstr "Nouvelle souscription de capital"
+
+#. module: capital_subscription
+#: selection:account.journal,confirm_fundraising_payment:0
+msgid "No by Default"
+msgstr "Non par défaut"
 
 #. module: capital_subscription
 #: code:addons/capital_subscription/models/account_full_reconcile.py:62
@@ -241,23 +268,23 @@ msgstr "Capital versé"
 
 #. module: capital_subscription
 #: model:ir.model,name:capital_subscription.model_res_partner
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_partner_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_partner_id
 msgid "Partner"
 msgstr "Partenaire"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_partner_account_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_partner_account_id
 msgid "Partner Account"
 msgstr "Compte comptable partenaire"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_payment_journal_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_payment_journal_id
 msgid "Payment Method"
 msgstr "Méthode de paiement"
 
 #. module: capital_subscription
 #: model:ir.model,name:capital_subscription.model_account_payment_term
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_payment_term_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_payment_term_id
 msgid "Payment Term"
 msgstr "Conditions de paiement"
 
@@ -274,7 +301,7 @@ msgid "Product Template"
 msgstr "Modèle d'article"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_category_product_id
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_product_id
 msgid "Products"
 msgstr "Articles"
 
@@ -286,9 +313,23 @@ msgid "Return of Capital"
 msgstr "Remboursement de capital"
 
 #. module: capital_subscription
+#: model:ir.model.fields,help:capital_subscription.field_account_journal_confirm_fundraising_payment
+#: model:ir.model.fields,help:capital_subscription.field_capital_fundraising_wizard_confirm_fundraising_payment
+msgid "Setting for the payment in the wizard that create Subscriptions.\n"
+" * Allways : Payment is allways confirmed\n"
+" * Yes : Payment confirmed by default\n"
+" * No : Payment not confirmed by default\n"
+" * Never : Payment is never confirmed"
+msgstr "Paramétrage pour le paiement dans l'assistant de création de souscriptions.\n"
+" * Toujours : Le paiement est toujours confirmé\n"
+" * Oui : Le paiement est confirmé par défaut\n"
+" * Non : Le paiement n'est pas confirmé par défaut\n"
+" * Jamais : Le paiement n'est jamais confirmé"
+
+#. module: capital_subscription
 #: model:product.category,name:capital_subscription.product_category_fundraising
 msgid "Share Fundraising"
-msgstr "Levée de fond"
+msgstr "Levée de fonds"
 
 #. module: capital_subscription
 #: model:product.product,name:capital_subscription.product_fundraising_category_A
@@ -303,22 +344,22 @@ msgid "Share Fundraising Product (Category B)"
 msgstr "Produit Levée de fonds (Catégorie B)"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_share_value
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_share_value
 msgid "Share Value"
 msgstr "Valeur de la part"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_subscription_wizard_share_qty
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard_share_qty
 msgid "Shares Quantity"
 msgstr "Nombre de parts"
 
 #. module: capital_subscription
-#: model:ir.model.fields,help:capital_subscription.field_capital_subscription_category_partner_account_id
+#: model:ir.model.fields,help:capital_subscription.field_capital_fundraising_category_partner_account_id
 msgid "This account will be used instead of the default partner one, if defined."
 msgstr "S'il est défini, ce compte sera utilisé à la place du compte comptable client du partenaire."
 
 #. module: capital_subscription
-#: model:ir.model.fields,help:capital_subscription.field_capital_subscription_category_capital_account_id
+#: model:ir.model.fields,help:capital_subscription.field_capital_fundraising_category_capital_account_id
 msgid "This account will be used to write a move between default product account and capital account when the payment is done."
 msgstr "Ce compte comptable sera utilisé pour saisir une écriture comptable entre le compte comptable du produit (capital non versé) et le compte comptable utilisé quand le capital est versé."
 
@@ -335,16 +376,21 @@ msgid "Unpaid Capital"
 msgstr "Capital non versé"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_account_journal_is_capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_account_payment_term_is_capital_subscription
+#: model:ir.model.fields,field_description:capital_subscription.field_account_journal_is_capital_fundraising
+#: model:ir.model.fields,field_description:capital_subscription.field_account_payment_term_is_capital_fundraising
 msgid "Used for Capital Fundraising"
-msgstr "Utilisé pour les levées de fond"
+msgstr "Utilisé pour les levées de fonds"
 
 #. module: capital_subscription
-#: model:ir.actions.act_window,name:capital_subscription.action_capital_subscription_wizard
-#: model:ir.ui.menu,name:capital_subscription.menu_capital_subscription_wizard
+#: model:ir.actions.act_window,name:capital_subscription.action_capital_fundraising_wizard
+#: model:ir.ui.menu,name:capital_subscription.menu_capital_fundraising_wizard
 msgid "Wizard"
 msgstr "Assistant"
+
+#. module: capital_subscription
+#: selection:account.journal,confirm_fundraising_payment:0
+msgid "Yes by Default"
+msgstr "Oui par défaut"
 
 #. module: capital_subscription
 #: code:addons/capital_subscription/models/account_full_reconcile.py:24
@@ -353,27 +399,27 @@ msgid "You can not reconcile Capital Invoices for many Categories: %s"
 msgstr "Vous ne pouvez pas réconcilier des factures de levées de fonds qui concernent plusieurs catégories de titres : %s"
 
 #. module: capital_subscription
-#: model:ir.model,name:capital_subscription.model_capital_subscription
+#: model:ir.model,name:capital_subscription.model_capital_fundraising
 msgid "capital.fundraising"
 msgstr "capital.fundraising"
 
 #. module: capital_subscription
-#: model:ir.model,name:capital_subscription.model_capital_subscription_category
+#: model:ir.model,name:capital_subscription.model_capital_fundraising_category
 msgid "capital.fundraising.category"
 msgstr "capital.fundraising.category"
 
 #. module: capital_subscription
-#: model:ir.model,name:capital_subscription.model_capital_subscription_category_line
+#: model:ir.model,name:capital_subscription.model_capital_fundraising_category_line
 msgid "capital.fundraising.category.line"
 msgstr "capital.fundraising.category.line"
 
 #. module: capital_subscription
-#: model:ir.model,name:capital_subscription.model_capital_subscription_partner_type
+#: model:ir.model,name:capital_subscription.model_capital_fundraising_partner_type
 msgid "capital.fundraising.partner.type"
 msgstr "capital.fundraising.partner.type"
 
 #. module: capital_subscription
-#: model:ir.model,name:capital_subscription.model_capital_subscription_wizard
+#: model:ir.model,name:capital_subscription.model_capital_fundraising_wizard
 msgid "capital.fundraising.wizard"
 msgstr "capital.fundraising.wizard"
 

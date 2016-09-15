@@ -16,7 +16,7 @@
                     <group cols="4">
                         <field name="fundraising_partner_type_ids" widget="many2many_tags" colspan="2"/>
                         <button id="new_subscription" name="%(action_capital_fundraising_wizard)d" type="action"
-                            string="New Capital Subscription" colspan="2"/>
+                            string="New Capital Subscription" colspan="2" class="oe_highlight"/>
                         <newline />
                     </group>
                 </page>

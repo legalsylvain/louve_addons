@@ -11,4 +11,4 @@ class AccountPaymentTerm(models.Model):
 
     # Column Section
     is_capital_fundraising = fields.Boolean(
-        string='Used for Capital Fundraising')
+        string='Used for Capital Fundraising', default=True)

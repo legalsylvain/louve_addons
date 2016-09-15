@@ -22,6 +22,10 @@ class CapitalFundraisingWizard(models.TransientModel):
         comodel_name='res.partner', string='Partner', required=True,
         default=default_partner_id)
 
+    fundraising_partner_type_ids = fields.Many2many(
+        comodel_name='capital.fundraising.partner.type',
+        string='Fundraising Partner Type',
+        related='partner_id.fundraising_partner_type_ids')
 
     share_qty = fields.Integer(string='Shares Quantity')
 
@@ -29,18 +33,21 @@ class CapitalFundraisingWizard(models.TransientModel):
         comodel_name='capital.fundraising.category', string='Category',
         required=True)
 
-    payment_term_id = fields.Many2one(
-        comodel_name='account.payment.term', string='Payment Term',
-        domain="[('is_capital_fundraising', '=', True)]", required=True)
-
     payment_journal_id = fields.Many2one(
         comodel_name='account.journal', string='Payment Method',
         domain="[('is_capital_fundraising', '=', True)]")
+
+    confirm_fundraising_payment = fields.Selection(
+        related='payment_journal_id.confirm_fundraising_payment')
 
     confirm_payment = fields.Boolean(
         string='Confirm Payment', help="Check this box to confirm the"
         " payment(s). In that case, the second account move will be"
         " written to transfer amount from unpaid account to paid account")
+
+    payment_term_id = fields.Many2one(
+        comodel_name='account.payment.term', string='Payment Term',
+        domain="[('is_capital_fundraising', '=', True)]", required=True)
 
     # On change section
     @api.onchange('partner_id', 'category_id')
@@ -48,6 +55,14 @@ class CapitalFundraisingWizard(models.TransientModel):
         if self.partner_id and self.category_id:
             to_order_qty = self.category_id.check_minimum_qty(self.partner_id)
             self.share_qty = max(1, to_order_qty)
+
+    @api.onchange('payment_journal_id')
+    def onchange_payment_journal_id(self):
+        if self.payment_journal_id:
+            self.confirm_payment =\
+                self.confirm_fundraising_payment in ['allways', 'yes']
+        else:
+            self.confirm_payment = False
 
     # Action Section
     @api.multi
