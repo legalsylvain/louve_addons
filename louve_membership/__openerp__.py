@@ -16,10 +16,19 @@
         'coop_shift',
     ],
     'data': [
+        # Classical Data
         'security/ir_module_category.xml',
         'security/res_groups.xml',
         'views/view_res_partner.xml',
         'views/menu.xml',
+
+        # Custom Data
+        'data/account_journal.xml',
+        'data/product_category.xml',
+        'data/account_account.xml',
+        'data/product_product.xml',
+        'data/capital_fundraising.xml',
+        'data/capital_fundraising_category.xml',
     ],
     'demo': [
         'demo/res_groups.xml',

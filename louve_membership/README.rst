@@ -5,8 +5,10 @@ Louve Membership
 ================
 
 Manage custom behaviour for membership in la Louve
-Issues / Roadmap
-================
+
+* Create data for subscription
+* Add default value to 'immediat payment' for the subscription wizard;
+* Add default value to 'Part A' for the subscription wizard
 
 Credits
 =======
