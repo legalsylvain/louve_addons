@@ -24,6 +24,14 @@ class ResPartner(models.Model):
     is_underclass_population = fields.Boolean(
         'is Underclass Population', compute=_compute_is_underclass_population)
 
+    # Overload Section
+    @api.model
+    def create(self, vals):
+        if vals.get('is_louve_member', False):
+            xml_id = self.env.ref('louve_membership.default_member_type').id
+            vals.get('fundraising_partner_type_ids', []).append((4, xml_id))
+        return super(ResPartner, self).create(vals)
+
     # View section
     @api.multi
     def set_underclass_population(self):
