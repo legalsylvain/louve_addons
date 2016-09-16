@@ -8,7 +8,7 @@
 <odoo>
 
     <record model="ir.module.category" id="category_subscriptions">
-        <field name="name">Souscriptions</field>
+        <field name="name">Subscriptions</field>
     </record>
 
 </odoo>
