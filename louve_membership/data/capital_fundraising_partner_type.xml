@@ -7,7 +7,7 @@
 
 <odoo>
 
-    <record model="capital.fundraising.partner.type" id="underclass_population_fundraising_partner_type">
+    <record model="capital.fundraising.partner.type" id="underclass_population_type">
         <field name="name">Minima Sociaux</field>
     </record>
 

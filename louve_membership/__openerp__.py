@@ -19,8 +19,10 @@
         # Classical Data
         'security/ir_module_category.xml',
         'security/res_groups.xml',
+        'security/ir.model.access.csv',
         'views/view_res_partner.xml',
         'views/view_capital_fundraising_wizard.xml',
+        'views/action.xml',
         'views/menu.xml',
 
         # Custom Data
@@ -30,6 +32,7 @@
         'data/product_product.xml',
         'data/capital_fundraising.xml',
         'data/capital_fundraising_category.xml',
+        'data/capital_fundraising_partner_type.xml',
     ],
     'demo': [
         'demo/res_groups.xml',

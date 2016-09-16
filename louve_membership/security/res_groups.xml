@@ -18,8 +18,8 @@
         <field name="implied_ids" eval="[(4, ref('louve_membership.subscriptions_reader'))]" />
     </record>
 
-    <record model="res.groups" id="subscriptions_manager">
-        <field name="name">Manage Subscriptions Settings</field>
+    <record model="res.groups" id="subscriptions_creator_payment">
+        <field name="name">Create Subscriptions and payment</field>
         <field name="category_id" ref="category_subscriptions" />
         <field name="implied_ids" eval="[(4, ref('louve_membership.subscriptions_creator'))]" />
     </record>
