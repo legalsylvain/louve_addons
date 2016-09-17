@@ -785,7 +785,7 @@ msgstr "Cinquième"
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_form
 msgid "Finish Shift"
-msgstr "Services terminés"
+msgstr "Clôturer le service"
 
 #. module: coop_shift
 #: selection:shift.template,byday:0
