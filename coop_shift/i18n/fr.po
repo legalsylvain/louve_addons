@@ -248,7 +248,7 @@ msgstr "Nom du coopérateur"
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_form
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_template_form
 msgid "Attendees"
-msgstr "Inscriptions"
+msgstr "Programmation"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_ticket_seats_availability
@@ -331,7 +331,7 @@ msgstr "Annuler l'inscription"
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_form
 msgid "Cancel Shift"
-msgstr "Annuler le shift"
+msgstr "Annuler le service"
 
 #. module: coop_shift
 #: selection:add.template.registration.wizard,state:0
@@ -412,7 +412,7 @@ msgstr "Confirmer l'inscription"
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_form
 msgid "Confirm Shift"
-msgstr "Confirmer le Shift"
+msgstr "Confirmer le service"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_shift_auto_confirm
@@ -438,7 +438,7 @@ msgstr "Participants confirmés"
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_search
 msgid "Confirmed shifts"
-msgstr "Shifts confirmés"
+msgstr "Services confirmés"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_registration_partner_id
@@ -462,12 +462,12 @@ msgstr "Courant"
 #: model:ir.actions.act_window,name:coop_shift.action_create_shift_shifts
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_template_wizard_form
 msgid "Create Shifts"
-msgstr "Créer les shifts"
+msgstr "Créer les services"
 
 #. module: coop_shift
 #: model:ir.model,name:coop_shift.model_create_shifts_wizard
 msgid "Create Shifts Wizard"
-msgstr "Créer les shifts"
+msgstr "Créer les services"
 
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_template_form
@@ -785,7 +785,7 @@ msgstr "Cinquième"
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_form
 msgid "Finish Shift"
-msgstr "Shifts terminés"
+msgstr "Services terminés"
 
 #. module: coop_shift
 #: selection:shift.template,byday:0
@@ -890,7 +890,7 @@ msgstr "Récurrence"
 #. module: coop_shift
 #: model:ir.module.category,description:coop_shift.module_category_shift_management
 msgid "Helps you manage your Shifts."
-msgstr "Permet de catégoriser les shifts."
+msgstr "Permet de catégoriser les services."
 
 #. module: coop_shift
 #: selection:shift.mail,interval_unit:0
@@ -1034,7 +1034,7 @@ msgstr "Dernière modification"
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_last_shift_date
 msgid "Last Scheduled Shift"
-msgstr "Dernier shift programmé"
+msgstr "Dernier service programmé"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_add_template_registration_wizard_write_uid
@@ -1236,7 +1236,7 @@ msgstr "Moi(s)"
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_search
 msgid "My Shifts"
-msgstr "Mes Shifts"
+msgstr "Mes Services"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_replace_registration_wizard_name
@@ -1342,7 +1342,7 @@ msgstr "Odoo vous permet de programmer et d'organiser efficacement le travail de
 #. module: coop_shift
 #: model:ir.actions.client,name:coop_shift.action_client_shift_menu
 msgid "Open Shift Menu"
-msgstr "Ouvrir le shift"
+msgstr "Ouvrir le service"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_month_by
@@ -1469,7 +1469,7 @@ msgstr "Recurrent ID date"
 #. module: coop_shift
 #: model:ir.model.fields,help:coop_shift.field_shift_template_recurrency
 msgid "Recurrent Meeting"
-msgstr "Shift"
+msgstr "Service"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_rrule
@@ -1778,24 +1778,24 @@ msgstr "Marquer comme non confirmé"
 #: model:ir.model.fields,field_description:coop_shift.field_shift_ticket_shift_id
 #: model:ir.ui.view,arch_db:coop_shift.view_registration_search
 msgid "Shift"
-msgstr "Shift"
+msgstr "Service"
 
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_registration_form
 msgid "Shift Information"
-msgstr "Information du shift "
+msgstr "Information du service"
 
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.report_wallchart_ftop
 msgid "Shift Inscriptions:"
-msgstr "Inscriptions au shift :"
+msgstr "Inscriptions au service:"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_registration_user_id
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_user_id
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_template_search
 msgid "Shift Leader"
-msgstr "Responsable du shift"
+msgstr "Responsable du service"
 
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_mail_form
@@ -1816,7 +1816,7 @@ msgstr "Nom"
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_calendar
 msgid "Shift Organization"
-msgstr "Organisation du shift"
+msgstr "Organisation du service"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_update_shifts_wizard_line_shift_id
@@ -1828,12 +1828,12 @@ msgstr "Référence"
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_registration_calendar
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_registration_form
 msgid "Shift Registration"
-msgstr "Inscription aux shift"
+msgstr "Inscription aux services"
 
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_res_partner_shift_form
 msgid "Shift Registrations"
-msgstr "Inscription aux shift"
+msgstr "Inscription aux services"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_registration_shit_begin_date
@@ -1888,7 +1888,7 @@ msgstr "Type"
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_type_form
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_type_tree
 msgid "Shift Type"
-msgstr "Type de shift"
+msgstr "Type de service"
 
 #. module: coop_shift
 #: model:ir.actions.act_window,name:coop_shift.action_shift_view
@@ -1904,7 +1904,7 @@ msgstr "Type de shift"
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_template_form
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_tree
 msgid "Shifts"
-msgstr "Shifts"
+msgstr "Services"
 
 #. module: coop_shift
 #: model:ir.actions.act_window,name:coop_shift.action_shift_mail
@@ -1915,12 +1915,12 @@ msgstr "Shifts Mail Schedulers"
 #: model:ir.actions.act_window,name:coop_shift.action_shift_type
 #: model:ir.ui.menu,name:coop_shift.menu_shift_type
 msgid "Shifts Types"
-msgstr "Types de shifts"
+msgstr "Types de services"
 
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_search
 msgid "Shifts in New state"
-msgstr "Nouveaux shifts"
+msgstr "Nouveaux services"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_registration_origin
@@ -2045,7 +2045,7 @@ msgstr "Créneaux"
 #. module: coop_shift
 #: model:ir.ui.menu,name:coop_shift.menu_action_template_registration
 msgid "Template Attendees"
-msgstr "Présences"
+msgstr "Inscriptions"
 
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_template_registration_form
@@ -2174,7 +2174,7 @@ msgstr "This field contains the template of the mail that will be\n"
 #. module: coop_shift
 #: sql_constraint:shift.registration:0
 msgid "This partner is already registered on this Shift !"
-msgstr "Ce membre est déjà inscrit sur ce shift !"
+msgstr "Ce membre est déjà inscrit sur ce service!"
 
 #. module: coop_shift
 #: sql_constraint:shift.template.registration:0
@@ -2254,7 +2254,7 @@ msgstr "Mardi"
 #: model:ir.model.fields,field_description:coop_shift.field_product_product_shift_type_id
 #: model:ir.model.fields,field_description:coop_shift.field_product_template_shift_type_id
 msgid "Type of Shift"
-msgstr "Type de shift"
+msgstr "Type de service"
 
 #. module: coop_shift
 #: selection:add.template.registration.wizard,state:0
@@ -2330,18 +2330,18 @@ msgstr "Inscriptions à venir"
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_search
 msgid "Upcoming shifts from today"
-msgstr "Shifts à venir"
+msgstr "Services à venir"
 
 #. module: coop_shift
 #: model:ir.actions.act_window,name:coop_shift.action_update_shifts
 #: model:ir.ui.view,arch_db:coop_shift.view_update_shifts_form
 msgid "Update Shifts"
-msgstr "Mettre à jour les shifts"
+msgstr "Mettre à jour les services"
 
 #. module: coop_shift
 #: model:ir.model,name:coop_shift.model_update_shifts_wizard
 msgid "Update Shifts Wizard"
-msgstr "Mettre à jour les shifts"
+msgstr "Mettre à jour les services"
 
 #. module: coop_shift
 #: model:ir.model,name:coop_shift.model_update_shifts_wizard_line
@@ -2376,7 +2376,7 @@ msgstr "Utilisateur"
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_template_form
 msgid "View Shifts"
-msgstr "Voir les Shifts"
+msgstr "Voir les Services"
 
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_res_partner_shift_form
