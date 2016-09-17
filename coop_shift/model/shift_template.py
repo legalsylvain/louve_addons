@@ -499,9 +499,17 @@ class ShiftTemplate(models.Model):
         result['context'] = unicode({'search_default_upcoming': 1})
         return result
 
+    @api.model
+    def _get_default_before_date(self):
+        return fields.Datetime.to_string(
+            datetime.today() + timedelta(days=90))
+
     @api.multi
     def create_shifts_from_template(self, after=False, before=False):
+        if not before:
+            before = self._get_default_before_date()
         for template in self:
+            after = template.last_shift_date
             rec_dates = template.get_recurrent_dates(
                 after=after, before=before)
             for rec_date in rec_dates:
@@ -564,3 +572,11 @@ class ShiftTemplate(models.Model):
                                 'template_created': True,
                             }
                             self.env['shift.registration'].create(vals)
+
+    @api.model
+    def run_shift_creation(self):
+        # This method is called by the cron task
+        templates = self.env['shift.template'].search([])
+        templates.create_shifts_from_template(
+            before=fields.Datetime.to_string(
+                datetime.today() + timedelta(days=90)))
