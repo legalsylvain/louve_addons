@@ -23,6 +23,7 @@
 
 from openerp import models, fields, api, _
 from openerp.exceptions import UserError
+from datetime import datetime, timedelta
 
 
 class ShiftTicket(models.Model):
@@ -39,6 +40,19 @@ class ShiftTicket(models.Model):
         domain=[("shift_type_id", "!=", False)],)
     registration_ids = fields.One2many(
         'shift.registration', 'shift_ticket_id', 'Registrations')
+    date_begin = fields.Datetime(related="shift_id.date_begin")
+    begin_date_string = fields.Char(
+        string='Begin Date', compute='_compute_begin_date_fields', store=True,)
+    user_id = fields.Many2one(
+        'res.users', related="shift_id.user_id", store=True)
+
+    @api.multi
+    @api.depends('date_begin')
+    def _compute_begin_date_fields(self):
+        for ticket in self:
+            ticket.begin_date_string = ticket.date_begin and datetime.strftime(
+                datetime.strptime(ticket.date_begin, "%Y-%m-%d %H:%M:%S") +
+                timedelta(hours=2), "%d/%m/%Y %H:%M:%S") or False
 
     @api.model
     def _default_product_id(self):
