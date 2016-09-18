@@ -30,10 +30,10 @@
                     <field name="message_needaction" invisible="1"/>
                     <button name="confirm_registration" string="Confirm Registration" states="draft" type="object" icon="gtk-apply"/>
                     <button name="button_reg_close" string="Attended the Shift" states="open" type="object" icon="fa-thumbs-o-up"/>
-                    <button name="button_reg_cancel" string="Cancel Registration" states="draft,open" type="object" icon="gtk-cancel"/>
-                    <button name="button_reg_absent" string="Absent" states="draft,open" type="object" icon="fa-user-secret"/>
-                    <button name="button_reg_excused" string="Excused" states="draft,open" type="object" icon="fa-hand-o-right"/>
-                    <button name="%(coop_shift.action_replace_registration)d" type="action" icon="fa-users" string="Replace Member" states="draft,open"/>
+                    <button name="button_reg_cancel" string="Cancel Registration" states="draft" type="object" icon="gtk-cancel"/>
+                    <button name="button_reg_absent" string="Absent" states="open" type="object" icon="fa-user-secret"/>
+                    <button name="button_reg_excused" string="Excused" states="open" type="object" icon="fa-hand-o-right"/>
+                    <button name="%(coop_shift.action_replace_registration)d" type="action" icon="fa-users" string="Replace Member" states="open"/>
                 </tree>
             </field>
         </record>
