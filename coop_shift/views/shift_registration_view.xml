@@ -20,7 +20,7 @@
             <field name="model">shift.registration</field>
             <field name="arch" type="xml">
                 <tree string="Registration" decoration-bf="message_needaction==True" editable="top">
-                    <field name="shift_begin_date"/>
+                    <field name="date_begin"/>
                     <field name="partner_id" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="name"/>
                     <field name="email"/>
@@ -40,7 +40,7 @@
             <field name="model">shift.registration</field>
             <field name="arch" type="xml">
                 <tree string="Registration" decoration-bf="message_needaction==True" editable="top">
-                    <field name="shift_begin_date"/>
+                    <field name="date_begin"/>
                     <field name="partner_id" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="shift_id" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="shift_ticket_id" domain="[('shift_id', '=', shift_id)]" options="{'no_create_edit': True, 'no_create': True}"/>
