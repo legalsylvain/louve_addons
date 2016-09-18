@@ -15,8 +15,8 @@
         </record>
 
         <!-- SHIFT.REGISTRATION VIEWS -->
-        <record model="ir.ui.view" id="view_shift_registration_tree">
-            <field name="name">shift.registration.tree</field>
+        <record model="ir.ui.view" id="view_shift_registration_tree_program">
+            <field name="name">shift.registration.tree.program</field>
             <field name="model">shift.registration</field>
             <field name="arch" type="xml">
                 <tree string="Registration" decoration-bf="message_needaction==True" editable="top">
@@ -28,12 +28,30 @@
                     <field name="shift_ticket_id" domain="[('shift_id', '=', shift_id)]" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="state"/>
                     <field name="message_needaction" invisible="1"/>
-                    <button name="button_reg_close" string="Attended the Shift" states="open" type="object" icon="fa-thumbs-o-up"/>
                     <button name="confirm_registration" string="Confirm Registration" states="draft" type="object" icon="gtk-apply"/>
-                    <button name="button_reg_absent" string="Absent" states="open" type="object" icon="fa-user-secret"/>
                     <button name="button_reg_cancel" string="Cancel Registration" states="draft" type="object" icon="gtk-cancel"/>
+                    <button name="do_draft" string="Set To Unconfirmed" states="cancel,done,absent,excused,replaced,replacing,open" type="object" icon="fa-backward" groups="coop_shift.group_shift_manager"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_shift_registration_tree_confirm">
+            <field name="name">shift.registration.tree.confirm</field>
+            <field name="model">shift.registration</field>
+            <field name="arch" type="xml">
+                <tree string="Registration" decoration-bf="message_needaction==True" editable="top">
+                    <field name="shift_begin_date"/>
+                    <field name="partner_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="shift_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="shift_ticket_id" domain="[('shift_id', '=', shift_id)]" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="state"/>
+                    <field name="message_needaction" invisible="1"/>
+                    <button name="button_reg_close" string="Attended the Shift" states="open" type="object" icon="fa-thumbs-o-up"/>
+                    <button name="confirm_registration" string="Confirm Registration" states="draft" type="object" icon="gtk-apply" groups="coop_shift.group_shift_manager"/>
+                    <button name="button_reg_absent" string="Absent" states="open" type="object" icon="fa-user-secret"/>
+                    <button name="button_reg_cancel" string="Cancel Registration" states="draft" type="object" icon="gtk-cancel" groups="coop_shift.group_shift_manager"/>
                     <button name="button_reg_excused" string="Excused" states="open" type="object" icon="fa-hand-o-right"/>
-                    <button name="do_draft" string="Set To Unconfirmed" states="cancel,done,absent,excused,replaced,replacing" type="object" icon="fa-backward" groups="coop_shift.group_shift_manager"/>
+                    <button name="do_draft" string="Set To Unconfirmed" states="cancel,done,absent,excused,replaced,replacing,open" type="object" icon="fa-backward" groups="coop_shift.group_shift_manager"/>
                     <button name="%(coop_shift.action_replace_registration)d" type="action" icon="fa-users" string="Replace Member" states="open"/>
                 </tree>
             </field>
