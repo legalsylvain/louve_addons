@@ -38,7 +38,7 @@
     name: shift_shift user
     perm_create: false
     perm_read: true
-    perm_write: false
+    perm_write: true
     perm_unlink: false
 -
   !record {model: ir.model.access, id: ir_model_access_shift_shift_manager}:
