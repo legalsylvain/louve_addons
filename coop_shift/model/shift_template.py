@@ -239,7 +239,7 @@ class ShiftTemplate(models.Model):
         name += _("Fr") if self.fr else ""
         name += _("Sa") if self.sa else ""
         name += _("Su") if self.su else ""
-        name += "%02d%02d" % (
+        name += "%02d:%02d" % (
             int(self.start_time),
             int(round((self.start_time - int(self.start_time)) * 60)))
         self.name = name
