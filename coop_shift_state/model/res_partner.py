@@ -1,10 +1,9 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Computed Purchase Order Module for Odoo
 #    Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
-#    @author Cyril Gaspard
-from dateutil.relativedelta import relativedelta
+#    @author Cyril Gaspard & Julien Weste
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -26,10 +25,17 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 
-STATES = [('up_to_day', 'Up to day'), ('alert', 'In alert'), ('suspended', 'Suspended'), ('delay', 'Delay'), 
-          ('unsubscribed', 'Unsubscribed'), ('unpayed', 'Unpayed'), ('blocked', 'Blocked')]
+STATES = [
+    ('up_to_day', 'Up to day'),
+    ('alert', 'In alert'),
+    ('suspended', 'Suspended'),
+    ('delay', 'Delay'),
+    ('unsubscribed', 'Unsubscribed'),
+    ('unpayed', 'Unpayed'),
+    ('blocked', 'Blocked')]
 
 SHIFT_TYPE = [('standard', 'Standard'), ('ftop', 'FTOP')]
+
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
@@ -39,7 +45,7 @@ class ResPartner(models.Model):
     point_standard = fields.Integer('Classic points')
     point_ftop = fields.Integer('FTOP points')
     shift_delay = fields.Integer('Delay')
-    date_alert_end  = fields.Date('End date alert')
+    date_alert_end = fields.Date('End date alert')
     date_delay_end = fields.Date('End date delay')
     is_unpayed = fields.Boolean('Unpayed')
     is_blocked = fields.Boolean('Blocked')
@@ -54,13 +60,14 @@ class ResPartner(models.Model):
         state = vals.get('state')
         if 'point_standard' in vals:
             point_standard = vals['point_standard']
-            if point_standard >= 0 and state != 'up_to_day' and state not in ['unpayed', 'blocked']:
+            if point_standard >= 0 and state != 'up_to_day' and\
+                    state not in ['unpayed', 'blocked']:
                 vals.update({'date_alert_end': False, 'state': 'up_to_day'})
             elif point_standard < 0 and state == 'up_to_day':
                 date_alert_end = datetime.date.today() + relativedelta(days=27)
-                vals.update({'state': 'alert', 'date_alert_end': date_alert_end})
+                vals.update(
+                    {'state': 'alert', 'date_alert_end': date_alert_end})
         return super(ResPartner, self).create(vals)
-        
 
     @api.multi
     def write(self, vals):
@@ -79,8 +86,11 @@ class ResPartner(models.Model):
                         vals['state'] = 'up_to_day'
                 elif point_standard < 0:
                     if state == 'up_to_day':
-                        date_alert_end = datetime.date.today() + relativedelta(days=28)
-                        vals.update({'state': 'alert', 'date_alert_end': date_alert_end})
+                        date_alert_end = datetime.date.today() +\
+                            relativedelta(days=28)
+                        vals.update({
+                            'state': 'alert', 'date_alert_end': date_alert_end}
+                        )
                     elif state == 'unsubscribed':
                         # TODO
                         print 'todo'
