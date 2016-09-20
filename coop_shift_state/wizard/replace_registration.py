@@ -33,26 +33,29 @@ class ReplaceRegistration(models.TransientModel):
     # override function in module coop_shift
     @api.one
     def replace_member(self):
+        # J'assigne une valeur à 'point', mais il faudra revoir ça
+        point = 1
         registration = self.registration_id
         partner = self.partner_id
-        new_partner = self.new_partner_id
+        new_partner_id = self.new_partner_id
         product_id = self.shift_ticket_id.product_id.id
         state = self.state
-        vals = {'partner_id': new_partner_id.id,
                 'state': 'replacing',
                 'replaced_reg_id': registration.id,
                 'tmpl_reg_line_id': False,
                 'product_temp_id': product_id,
                 'shift_point': 1,
                 'is_substitution': True}
+        vals = {
+            'partner_id': new_partner_id.id,
         new_reg_id = registration.copy(vals)
         if product_id == self.env.ref('coop_shift.product_product_shift_standard'):
             partner.point_standard = partner.point_standard - 1
-            new_partner.point_standard = new_partner.point_standard + 1
         elif product_id == self.env.ref('coop_shift.product_product_shift_ftop'):
+            new_partner_id.point_standard += 1
             partner.point_ftop = partner.point_ftop - 1
-            new_partner.point_ftop = new_partner.point_ftop + 1
         registration.write({'state': 'replaced', 'product_temp_id': product_id, 'shift_point': point})
+            new_partner_id.point_ftop += 1
         self.replacing_reg_id = new_reg_id.id
         return {
             'type': 'ir.actions.client',
