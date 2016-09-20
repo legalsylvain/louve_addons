@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Computed Purchase Order Module for Odoo
@@ -20,6 +20,6 @@
 #
 ##############################################################################
 
-import res_partner
-import shift_registration
+from . import res_partner
+from . import shift_registration
 

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Computed Purchase Order Module for Odoo
@@ -36,9 +36,11 @@ class ShiftRegistration(models.Model):
         product_id = self.shift_ticket_id.product_id.id
         point = self._context.get('point', 0)
         self.write({'product_temp_id': product_id, 'shift_point': point})
-        if product_id == self.env.ref('coop_shift.product_product_shift_standard'):
+        if product_id == self.env.ref(
+                'coop_shift.product_product_shift_standard'):
             partner.point_standard = partner.point_standard + point
-        elif product_id == self.env.ref('coop_shift.product_product_shift_ftop'):
+        elif product_id == self.env.ref(
+                'coop_shift.product_product_shift_ftop'):
             partner.point_ftop = partner.point_ftop + point
 
     @api.one
@@ -63,11 +65,12 @@ class ShiftRegistration(models.Model):
     def _reset_point(self):
         product_temp_id = self.product_temp_id.id
         point = self.shift_point
-        if point and product_temp_id == self.env.ref('coop_shift.product_product_shift_standard'):
-            partner.point_standard = partner.point_standard - point
-            
-        elif point and product_temp_id == self.env.ref('coop_shift.product_product_shift_ftop'):
-            partner.point_ftop = partner.point_ftop - point
+        if point and product_temp_id == self.env.ref(
+                'coop_shift.product_product_shift_standard'):
+            self.partner_id.point_standard -= point
+        elif point and product_temp_id == self.env.ref(
+                'coop_shift.product_product_shift_ftop'):
+            self.partner_id.point_ftop -= point
         self.write({'product_temp_id': False, 'shift_point': 0})
 
     @api.one

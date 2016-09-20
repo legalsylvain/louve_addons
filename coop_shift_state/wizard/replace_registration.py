@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Computed Purchase Order Module for Odoo
@@ -27,8 +27,10 @@ from openerp import models, fields, api
 class ReplaceRegistration(models.TransientModel):
     _inherit = 'replace.registration.wizard'
 
-    
-    state = fields.Selection([('absent', 'Absent'), ('excused', 'Excused'), ('waiting', 'Waiting')], required=True)
+    state = fields.Selection([
+        ('absent', 'Absent'),
+        ('excused', 'Excused'),
+        ('waiting', 'Waiting')], required=True)
 
     # override function in module coop_shift
     @api.one
@@ -39,23 +41,28 @@ class ReplaceRegistration(models.TransientModel):
         partner = self.partner_id
         new_partner_id = self.new_partner_id
         product_id = self.shift_ticket_id.product_id.id
-        state = self.state
-                'state': 'replacing',
-                'replaced_reg_id': registration.id,
-                'tmpl_reg_line_id': False,
-                'product_temp_id': product_id,
-                'shift_point': 1,
-                'is_substitution': True}
+        # state = self.state
         vals = {
             'partner_id': new_partner_id.id,
+            'state': 'replacing',
+            'replaced_reg_id': registration.id,
+            'tmpl_reg_line_id': False,
+            'product_temp_id': product_id,
+            'shift_point': 1,
+            'is_substitution': True}
         new_reg_id = registration.copy(vals)
-        if product_id == self.env.ref('coop_shift.product_product_shift_standard'):
+        if product_id == self.env.ref(
+                'coop_shift.product_product_shift_standard'):
             partner.point_standard = partner.point_standard - 1
-        elif product_id == self.env.ref('coop_shift.product_product_shift_ftop'):
             new_partner_id.point_standard += 1
+        elif product_id == self.env.ref(
+                'coop_shift.product_product_shift_ftop'):
             partner.point_ftop = partner.point_ftop - 1
-        registration.write({'state': 'replaced', 'product_temp_id': product_id, 'shift_point': point})
             new_partner_id.point_ftop += 1
+        registration.write({
+            'state': 'replaced',
+            'product_temp_id': product_id,
+            'shift_point': point})
         self.replacing_reg_id = new_reg_id.id
         return {
             'type': 'ir.actions.client',
