@@ -27,13 +27,15 @@
     'description': """
 This module add state to partners depending of its attendees
     """,
-    'author': 'Cyril Gaspard',
+    'author': 'Cyril Gaspard,'
+              'Julien Weste',
     'website': '',
     'license': 'AGPL-3',
     'depends': [
         'coop_shift',
     ],
     'data': [
+        'views/res_partner_view.xml',
     ],
     'demo': [
     ],
