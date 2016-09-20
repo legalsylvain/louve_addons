@@ -46,7 +46,7 @@ class ResPartner(models.Model):
     shift_type = fields.Selection(SHIFT_TYPE, 'Shift type')
 
     @api.model
-    def create(vals):
+    def create(self, vals):
         if vals.get('is_blocked'):
             vals['state'] = 'blocked'
         elif vals.get('is_unpayed'):
