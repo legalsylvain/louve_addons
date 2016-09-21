@@ -105,6 +105,16 @@ class ShiftShift(models.Model):
         shifts = self.search(domain + args, limit=limit)
         return shifts.name_get()
 
+    @api.multi
+    @api.depends('name', 'date_begin')
+    def name_get(self):
+        result = []
+        for shift in self:
+            name = shift.name + (shift.begin_date_string and
+                                 (' ' + shift.begin_date_string) or '')
+            result.append((shift.id, name))
+        return result
+
     @api.model
     def _default_tickets(self):
         return None
