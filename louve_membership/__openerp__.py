@@ -23,16 +23,11 @@
         'views/view_res_partner.xml',
         'views/view_account_invoice.xml',
         'views/view_capital_fundraising_wizard.xml',
+        'views/view_capital_fundraising_category.xml',
         'views/action.xml',
         'views/menu.xml',
 
         # Custom Data
-        'data/account_journal.xml',
-        'data/product_category.xml',
-        'data/account_account.xml',
-        'data/product_product.xml',
-        'data/capital_fundraising.xml',
-        'data/capital_fundraising_category.xml',
         'data/capital_fundraising_partner_type.xml',
     ],
     'demo': [

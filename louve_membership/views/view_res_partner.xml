@@ -12,7 +12,13 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <field name="user_id" position="before">
-                <field name="is_louve_member" invisible="1"/>
+                <field name="is_louve_member" attrs="{'readonly': True}"/>
+                <button name="set_louve_member" type="object"
+                    groups="louve_membership.louve_membership_manager"
+                    string="Set Louve Membership" colspan="2" class="oe_highlight" attrs="{'invisible': [('is_louve_member', '=', True)]}"/>
+                <button name="remove_louve_member" type="object"
+                    groups="louve_membership.louve_membership_manager"
+                    string="Remove Louve Membership" colspan="2" class="oe_highlight" attrs="{'invisible': [('is_louve_member', '=', False)]}"/>
             </field>
         </field>
     </record>

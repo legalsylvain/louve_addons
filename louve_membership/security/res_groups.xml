@@ -29,4 +29,9 @@
         <field name="category_id" ref="base.module_category_extra" />
     </record>
 
+    <record model="res.groups" id="louve_membership_manager">
+        <field name="name">Manage Louve Membership</field>
+        <field name="category_id" ref="base.module_category_extra" />
+    </record>
+
 </odoo>

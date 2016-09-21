@@ -17,8 +17,9 @@ class CapitalFundraisingWizard(models.TransientModel):
         return self.env.ref('account.account_payment_term_immediate').id
 
     def default_category_id(self):
-        return self.env.ref(
-            'louve_membership.capital_fundraising_category_A').id
+        categories = self.env['capital.fundraising.category'].search(
+            [('is_default', '=', True)])
+        return categories and categories[0].id or False
 
     # Column Section
     payment_term_id = fields.Many2one(

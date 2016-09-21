@@ -44,3 +44,11 @@ class ResPartner(models.Model):
         xml_id = self.env.ref('louve_membership.underclass_population_type').id
         for partner in self:
             partner.fundraising_partner_type_ids = [(3, xml_id)]
+
+    @api.multi
+    def set_louve_member(self):
+        self.write({'is_louve_member': True})
+
+    @api.multi
+    def remove_louve_member(self):
+        self.write({'is_louve_member': False})
