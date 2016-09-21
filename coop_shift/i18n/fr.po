@@ -1751,7 +1751,7 @@ msgstr "Heure prévue"
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_ticket_seats_used
 #: model:ir.model.fields,field_description:coop_shift.field_shift_ticket_seats_used
 msgid "Seats used"
-msgstr "Places occupéess"
+msgstr "Places occupées"
 
 #. module: coop_shift
 #: selection:shift.template,byday:0

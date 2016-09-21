@@ -36,12 +36,6 @@
             <field name="view_type">form</field>
         </record>
 
-        <record model="ir.actions.act_window" id="action_shift_type">
-            <field name="name">Shifts Types</field>
-            <field name="res_model">shift.type</field>
-            <field name="view_type">form</field>
-        </record>
-
         <menuitem
             name="Shifts Types"
             id="menu_shift_type"

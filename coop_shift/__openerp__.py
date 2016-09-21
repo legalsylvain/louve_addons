@@ -72,6 +72,7 @@ Copyright, Author and Licence :
         'views/shift_template_view.xml',
         'wizard/create_shifts_wizard_view2.xml',
         'views/shift_type_view.xml',
+        'views/shift_ticket_view.xml',
         'views/res_partner_view.xml',
         'security/ir_model_access_data.yml',
         'security/ir_rule_data.yml',
