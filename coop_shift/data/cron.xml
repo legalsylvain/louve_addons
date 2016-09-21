@@ -19,7 +19,7 @@
       <field name="user_id" ref="base.user_root" />
       <field name="interval_number">1</field>
       <field name="interval_type">days</field>
-      <field name="nextcall" eval="DateTime(2016,9,11,0,0,1)"/>
+      <field name="nextcall" eval="DateTime(2016,9,11,16,0,1)"/>
       <field name="numbercall">-1</field>
       <field name="doall" eval="False"/>
       <field name="model" eval="'shift.shift'"/>
