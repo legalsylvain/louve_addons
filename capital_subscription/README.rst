@@ -1,6 +1,7 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
+===================
 Capital Fundraising
 ===================
 
@@ -11,7 +12,7 @@ A fundraising is defined by
 - a share value. (10 € in the sample below)
 - category or categories of fundraising. (many categories is optional)
 
-.. image:: /capital_fundraising/static/description/capital_fundraising.png
+.. image:: /capital_subscription/static/description/capital_fundraising.png
 
 A category is defined by
 - a minimum quantity of shares to buy
@@ -19,15 +20,15 @@ A category is defined by
 - a partner account that will be used instead of the default customer receivable account (optional settings)
 - an account for the subscribed and paid capital that will be used to when the payment is reconciled (optional settings)
 
-.. image:: /capital_fundraising/static/description/capital_fundraising_category.png
+.. image:: /capital_subscription/static/description/capital_fundraising_category.png
 
 A capital subscription is done with a classical customer invoices, with some extra options.
 
-.. image:: /capital_fundraising/static/description/account_invoice.png
+.. image:: /capital_subscription/static/description/account_invoice.png
 
 The account of unpaid capital should be set on product form.
 
-.. image:: /capital_fundraising/static/description/product_product.png
+.. image:: /capital_subscription/static/description/product_product.png
 
 Issues / Roadmap
 ================
