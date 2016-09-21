@@ -28,7 +28,7 @@ A capital subscription is done with a classical customer invoices, with some ext
 
 The account of unpaid capital should be set on product form.
 
-.. image:: /capital_subscription/static/description/product_product.png
+.. image:: /capital_subscription/static/description/product_template.png
 
 Issues / Roadmap
 ================
