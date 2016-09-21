@@ -21,19 +21,19 @@
 #
 ##############################################################################
 
-from openerp import api, models, fields
+from openerp import api, models, fields, _
 from datetime import timedelta, date, datetime
 
 from .report_wallchart_common import rounding_limit
 
 WEEK_DAYS = {
-    'mo': 'Monday',
-    'tu': 'Tuesday',
-    'we': 'Wednesday',
-    'th': 'Thursday',
-    'fr': 'Friday',
-    'sa': 'Saturday',
-    'su': 'Sunday',
+    'mo': _('Monday'),
+    'tu': _('Tuesday'),
+    'we': _('Wednesday'),
+    'th': _('Thursday'),
+    'fr': _('Friday'),
+    'sa': _('Saturday'),
+    'su': _('Sunday'),
 }
 
 weekday_list = ["mo", "tu", "we", "th", "fr", "sa", "su", ]
@@ -144,9 +144,10 @@ class ReportWallchartTemplate(models.AbstractModel):
         for i in range(4):
             delta = (i + 1 - week_number[0]) % 4
             result["week" + ["A", "B", "C", "D"][i]] = "(%s, %s, ...)" % (
-                datetime.strftime(next_date + timedelta(weeks=delta), "%x"),
                 datetime.strftime(
-                    next_date + timedelta(weeks=delta + 4), "%x"),)
+                    next_date + timedelta(weeks=delta), "%d/%m/%Y"),
+                datetime.strftime(
+                    next_date + timedelta(weeks=delta + 4), "%d/%m/%Y"),)
         return result
 
     @api.multi

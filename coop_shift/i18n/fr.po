@@ -869,6 +869,8 @@ msgid "Fri"
 msgstr "Ven."
 
 #. module: coop_shift
+#: code:addons/coop_shift/report/report_wallchart_ftop.py:34
+#: code:addons/coop_shift/report/report_wallchart_template.py:34
 #: selection:shift.shift,week_list:0
 #: selection:shift.template,week_list:0
 msgid "Friday"
@@ -1238,6 +1240,8 @@ msgid "Mon"
 msgstr "Lun."
 
 #. module: coop_shift
+#: code:addons/coop_shift/report/report_wallchart_ftop.py:30
+#: code:addons/coop_shift/report/report_wallchart_template.py:30
 #: selection:shift.shift,week_list:0
 #: selection:shift.template,week_list:0
 msgid "Monday"
@@ -1248,7 +1252,7 @@ msgstr "Lundi"
 #: selection:shift.template,rrule_type:0
 #: selection:shift.template.mail,interval_unit:0
 msgid "Month(s)"
-msgstr "Moi(s)"
+msgstr "Mois"
 
 #. module: coop_shift
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_search
@@ -1737,6 +1741,8 @@ msgid "Sat"
 msgstr "Sam."
 
 #. module: coop_shift
+#: code:addons/coop_shift/report/report_wallchart_ftop.py:35
+#: code:addons/coop_shift/report/report_wallchart_template.py:35
 #: selection:shift.shift,week_list:0
 #: selection:shift.template,week_list:0
 msgid "Saturday"
@@ -2064,6 +2070,8 @@ msgid "Sun"
 msgstr "Dim."
 
 #. module: coop_shift
+#: code:addons/coop_shift/report/report_wallchart_ftop.py:36
+#: code:addons/coop_shift/report/report_wallchart_template.py:36
 #: selection:shift.shift,week_list:0
 #: selection:shift.template,week_list:0
 msgid "Sunday"
@@ -2232,6 +2240,8 @@ msgid "Thu"
 msgstr "Jeu."
 
 #. module: coop_shift
+#: code:addons/coop_shift/report/report_wallchart_ftop.py:33
+#: code:addons/coop_shift/report/report_wallchart_template.py:33
 #: selection:shift.shift,week_list:0
 #: selection:shift.template,week_list:0
 msgid "Thursday"
@@ -2295,6 +2305,8 @@ msgid "Tue"
 msgstr "Mar."
 
 #. module: coop_shift
+#: code:addons/coop_shift/report/report_wallchart_ftop.py:31
+#: code:addons/coop_shift/report/report_wallchart_template.py:31
 #: selection:shift.shift,week_list:0
 #: selection:shift.template,week_list:0
 msgid "Tuesday"
@@ -2474,6 +2486,8 @@ msgid "Wed"
 msgstr "Mer."
 
 #. module: coop_shift
+#: code:addons/coop_shift/report/report_wallchart_ftop.py:32
+#: code:addons/coop_shift/report/report_wallchart_template.py:32
 #: selection:shift.shift,week_list:0
 #: selection:shift.template,week_list:0
 msgid "Wednesday"
