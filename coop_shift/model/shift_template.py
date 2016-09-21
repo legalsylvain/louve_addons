@@ -35,6 +35,10 @@ WEEK_NUMBERS = [
     (4, 'Week D')
 ]
 
+# this variable is used for shift creation. It tells until when we want to
+# create the shifts
+SHIFT_CREATION_DAYS = 90
+
 
 class ShiftTemplate(models.Model):
     _name = 'shift.template'
@@ -579,4 +583,4 @@ class ShiftTemplate(models.Model):
         templates = self.env['shift.template'].search([])
         templates.create_shifts_from_template(
             before=fields.Datetime.to_string(
-                datetime.today() + timedelta(days=90)))
+                datetime.today() + timedelta(days=SHIFT_CREATION_DAYS)))
