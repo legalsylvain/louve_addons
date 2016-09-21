@@ -29,10 +29,10 @@ from openerp.exceptions import UserError
 
 
 WEEK_NUMBERS = [
-    (1, 'Week A'),
-    (2, 'Week B'),
-    (3, 'Week C'),
-    (4, 'Week D')
+    (1, 'A'),
+    (2, 'B'),
+    (3, 'C'),
+    (4, 'D')
 ]
 
 # this variable is used for shift creation. It tells until when we want to
@@ -235,15 +235,15 @@ class ShiftTemplate(models.Model):
     def _compute_template_name(self):
         name = self.shift_type_id.name + "-" if self.shift_type_id else ""
         name += self.week_number and (
-            WEEK_NUMBERS[self.week_number - 1][1] + "-") or ""
-        name += "Mon-" if self.mo else ""
-        name += "Tue-" if self.tu else ""
-        name += "Wed-" if self.we else ""
-        name += "Thu-" if self.th else ""
-        name += "Fri-" if self.fr else ""
-        name += "Sat-" if self.sa else ""
-        name += "Sun-" if self.su else ""
-        name += "%s:%s" % (
+            WEEK_NUMBERS[self.week_number - 1][1]) or ""
+        name += _("Mo") if self.mo else ""
+        name += _("Tu") if self.tu else ""
+        name += _("We") if self.we else ""
+        name += _("Th") if self.th else ""
+        name += _("Fr") if self.fr else ""
+        name += _("Sa") if self.sa else ""
+        name += _("Su") if self.su else ""
+        name += "%02d:%02d" % (
             int(self.start_time),
             int(round((self.start_time - int(self.start_time)) * 60)))
         self.name = name
