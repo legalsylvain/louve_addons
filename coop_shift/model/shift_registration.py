@@ -58,6 +58,9 @@ class ShiftRegistration(models.Model):
     user_id = fields.Many2one(related="shift_id.user_id")
     shift_ticket_id = fields.Many2one(
         'shift.ticket', 'Shift Ticket', required=True, ondelete="cascade")
+    shift_ticket_product_id = fields.Many2one(
+        'product.product', 'Ticket Product',
+        related='shift_ticket_id.product_id', store=True)
     state = fields.Selection(STATES)
     tmpl_reg_line_id = fields.Many2one(
         'shift.template.registration.line', "Template Registration Line")
