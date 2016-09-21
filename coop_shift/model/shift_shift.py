@@ -25,6 +25,10 @@ from openerp import models, fields, api, _
 from openerp.exceptions import UserError
 from datetime import datetime, timedelta
 
+# this variable is used for shift confirmation. It tells how many days before
+# its date_begin a shift is confirmed
+SHIFT_CONFIRMATION_DAYS = 5
+
 
 class ShiftShift(models.Model):
     _inherit = 'event.event'
@@ -227,3 +231,21 @@ class ShiftShift(models.Model):
         for shift in self:
             shift.end_time = self._convert_time_float(datetime.strptime(
                 shift.date_end, "%Y-%m-%d %H:%M:%S").time())
+
+    @api.multi
+    def confirm_registrations(self):
+        for shift in self:
+            for ticket in shift.shift_ticket_ids:
+                ticket.registration_ids.write(
+                    {'state': 'open'})
+
+    @api.model
+    def run_shift_confirmation(self):
+        # This method is called by the cron task
+        compare_date = fields.Date.to_string(
+            datetime.today() + timedelta(days=SHIFT_CONFIRMATION_DAYS))
+        shifts = self.env['shift.shift'].search([
+            ('state', '=', 'draft'),
+            ('date_begin', '<=', compare_date)])
+        shifts.confirm_registrations()
+        shifts.write({'state': 'confirm'})
