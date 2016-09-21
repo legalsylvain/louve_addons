@@ -75,15 +75,15 @@ class ShiftShift(models.Model):
         default=lambda rec: rec._default_shift_tickets(), copy=True)
     date_tz = fields.Selection('_tz_get', string='Timezone', default=False)
     date_without_time = fields.Date(
-        string='Date', compute='_get_begin_date_fields', store=True,
+        string='Date', compute='_compute_begin_date_fields', store=True,
         multi="begin_date")
     begin_date_string = fields.Char(
-        string='Begin Date', compute='_get_begin_date_fields', store=True,
+        string='Begin Date', compute='_compute_begin_date_fields', store=True,
         multi="begin_date")
     begin_time = fields.Float(
-        string='Start Time', compute='_get_begin_time', store=True)
+        string='Start Time', compute='_compute_begin_time', store=True)
     end_time = fields.Float(
-        string='Start Time', compute='_get_end_time', store=True)
+        string='Start Time', compute='_compute_end_time', store=True)
 
     _sql_constraints = [(
         'template_date_uniq',
@@ -222,7 +222,7 @@ class ShiftShift(models.Model):
 
     @api.multi
     @api.depends('date_begin')
-    def _get_begin_date_fields(self):
+    def _compute_begin_date_fields(self):
         for shift in self:
             shift.date_without_time = datetime.strftime(datetime.strptime(
                 shift.date_begin, "%Y-%m-%d %H:%M:%S"), "%Y-%m-%d")
@@ -238,14 +238,14 @@ class ShiftShift(models.Model):
 
     @api.multi
     @api.depends('date_begin')
-    def _get_begin_time(self):
+    def _compute_begin_time(self):
         for shift in self:
             shift.begin_time = self._convert_time_float(datetime.strptime(
                 shift.date_begin, "%Y-%m-%d %H:%M:%S").time())
 
     @api.multi
     @api.depends('date_end')
-    def _get_end_time(self):
+    def _compute_end_time(self):
         for shift in self:
             shift.end_time = self._convert_time_float(datetime.strptime(
                 shift.date_end, "%Y-%m-%d %H:%M:%S").time())
