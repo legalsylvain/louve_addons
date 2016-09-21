@@ -50,6 +50,7 @@ Copyright, Author and Licence :
         'event',
         'event_sale',
         'mail',
+        'association',
     ],
     'data': [
         'wizard/create_shifts_wizard_view.xml',
