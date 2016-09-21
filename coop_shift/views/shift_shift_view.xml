@@ -193,7 +193,7 @@
             <field name="model">shift.shift</field>
             <field name="arch" type="xml">
                 <search string="Shifts">
-                    <field name="name" string="Shifts"/>
+                    <field name="name" filter_domain="['|', ('name','ilike',self), ('date_begin','ilike',self)]" string="Shifts"/>
                     <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
                     <separator/>
                     <filter string="Unconfirmed" name="draft" domain="[('state','=','draft')]" help="Shifts in New state"/>

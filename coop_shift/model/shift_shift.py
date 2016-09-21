@@ -21,6 +21,7 @@
 #
 ##############################################################################
 
+from openerp.osv import expression
 from openerp import models, fields, api, _
 from openerp.exceptions import UserError
 from datetime import datetime, timedelta
@@ -90,6 +91,28 @@ class ShiftShift(models.Model):
         'unique (shift_template_id, date_begin, company_id)',
         'The same template cannot be planned several time at the same date !'),
     ]
+
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
+        args = args or []
+        domain = []
+        if name:
+            domain = [
+                '|', ('date_begin', operator, name + '%'),
+                ('name', operator, name)]
+            if operator in expression.NEGATIVE_TERM_OPERATORS:
+                domain = ['&', '!'] + domain[1:]
+        shifts = self.search(domain + args, limit=limit)
+        return shifts.name_get()
+
+    @api.multi
+    @api.depends('name', 'date_begin')
+    def name_get(self):
+        result = []
+        for shift in self:
+            name = shift.name + ' ' + shift.date_begin
+            result.append((shift.id, name))
+        return result
 
     @api.model
     def _default_tickets(self):
