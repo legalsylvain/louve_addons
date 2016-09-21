@@ -24,6 +24,7 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import UserError
 from datetime import datetime, timedelta
+from openerp.osv import expression
 
 # this variable is used for shift confirmation. It tells how many days before
 # its date_begin a shift is confirmed
@@ -79,17 +80,45 @@ class ShiftShift(models.Model):
         default=lambda rec: rec._default_shift_tickets(), copy=True)
     date_tz = fields.Selection('_tz_get', string='Timezone', default=False)
     date_without_time = fields.Date(
-        string='Date', compute='_get_date_without_time', store=True)
+        string='Date', compute='_compute_begin_date_fields', store=True,
+        multi="begin_date")
+    begin_date_string = fields.Char(
+        string='Begin Date', compute='_compute_begin_date_fields', store=True,
+        multi="begin_date")
     begin_time = fields.Float(
-        string='Start Time', compute='_get_begin_time', store=True)
+        string='Start Time', compute='_compute_begin_time', store=True)
     end_time = fields.Float(
-        string='Start Time', compute='_get_end_time', store=True)
+        string='Start Time', compute='_compute_end_time', store=True)
 
     _sql_constraints = [(
         'template_date_uniq',
         'unique (shift_template_id, date_begin, company_id)',
         'The same template cannot be planned several time at the same date !'),
     ]
+
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
+        args = args or []
+        domain = []
+        if name:
+            domain = [
+                '|', ('begin_date_string', operator, name),
+                ('name', operator, name)
+            ]
+            if operator in expression.NEGATIVE_TERM_OPERATORS:
+                domain = ['&', '!'] + domain[1:]
+        shifts = self.search(domain + args, limit=limit)
+        return shifts.name_get()
+
+    @api.multi
+    @api.depends('name', 'date_begin')
+    def name_get(self):
+        result = []
+        for shift in self:
+            name = shift.name + (shift.begin_date_string and
+                                 (' ' + shift.begin_date_string) or '')
+            result.append((shift.id, name))
+        return result
 
     @api.model
     def _default_tickets(self):
@@ -208,10 +237,13 @@ class ShiftShift(models.Model):
 
     @api.multi
     @api.depends('date_begin')
-    def _get_date_without_time(self):
+    def _compute_begin_date_fields(self):
         for shift in self:
             shift.date_without_time = datetime.strftime(datetime.strptime(
                 shift.date_begin, "%Y-%m-%d %H:%M:%S"), "%Y-%m-%d")
+            shift.begin_date_string = datetime.strftime(
+                datetime.strptime(shift.date_begin, "%Y-%m-%d %H:%M:%S") +
+                timedelta(hours=2), "%d/%m/%Y %H:%M:%S")
 
     @api.model
     def _convert_time_float(self, t):
@@ -221,14 +253,14 @@ class ShiftShift(models.Model):
 
     @api.multi
     @api.depends('date_begin')
-    def _get_begin_time(self):
+    def _compute_begin_time(self):
         for shift in self:
             shift.begin_time = self._convert_time_float(datetime.strptime(
                 shift.date_begin, "%Y-%m-%d %H:%M:%S").time())
 
     @api.multi
     @api.depends('date_end')
-    def _get_end_time(self):
+    def _compute_end_time(self):
         for shift in self:
             shift.end_time = self._convert_time_float(datetime.strptime(
                 shift.date_end, "%Y-%m-%d %H:%M:%S").time())
