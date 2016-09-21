@@ -63,7 +63,8 @@ class ShiftShift(models.Model):
     registration_ids = fields.One2many(
         'shift.registration', 'shift_id', string='Attendees',
         readonly=False, states={'done': [('readonly', True)]})
-    shift_template_id = fields.Many2one('shift.template', string='Template')
+    shift_template_id = fields.Many2one(
+        'shift.template', string='Template', ondelete='restrict')
     seats_reserved = fields.Integer(compute='_compute_seats_shift')
     seats_available = fields.Integer(compute='_compute_seats_shift')
     seats_unconfirmed = fields.Integer(compute='_compute_seats_shift')
