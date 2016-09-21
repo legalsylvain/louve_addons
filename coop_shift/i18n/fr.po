@@ -1909,12 +1909,16 @@ msgid "Shift Type"
 msgstr "Type de service"
 
 #. module: coop_shift
+#: model:ir.ui.menu,name:coop_shift.shift_main_menu
+msgid "Members"
+msgstr "Membres"
+
+#. module: coop_shift
 #: model:ir.actions.act_window,name:coop_shift.action_shift_view
 #: model:ir.model.fields,field_description:coop_shift.field_report_timesheet_shift_ids
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_shift_ids
 #: model:ir.module.category,name:coop_shift.module_category_shift_management
 #: model:ir.ui.menu,name:coop_shift.menu_shift_shift
-#: model:ir.ui.menu,name:coop_shift.shift_main_menu
 #: model:ir.ui.menu,name:coop_shift.shift_menu
 #: model:ir.ui.view,arch_db:coop_shift.view_res_partner_shift_form
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_form
