@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Purchase - Package Quantity Module for Odoo
-#    Copyright (C) 2016-Today Akretion (https://www.akretion.com)
+#    Product - Average Consumption Module for Odoo
+#    Copyright (C) 2013-Today GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
@@ -21,13 +21,4 @@
 #
 ##############################################################################
 
-
-from . import product_supplierinfo
-from . import purchase_order_line
-from . import purchase_order
-from . import stock_move
-from . import stock_picking
-from . import stock_pack_operation
-from . import account_invoice
-from . import account_invoice_line
-from . import stock_inventory
+from . import stock_inventory_line
