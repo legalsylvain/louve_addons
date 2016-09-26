@@ -1,0 +1,78 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * louve_custom_product_ethiquette
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-09 18:57+0000\n"
+"PO-Revision-Date: 2016-09-09 18:57+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.model.fields,field_description:louve_custom_product_ethiquette.field_product_template_farming_method
+msgid "Farming Method"
+msgstr "Mode de culture"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.model.fields,help:louve_custom_product_ethiquette.field_product_template_rack_instruction
+msgid "For example, the number of packages that\n"
+"        should be stored on the rack"
+msgstr "Par exemple, le nombre de colis qui\n"
+"        devraient être en rayon"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.model.fields,field_description:louve_custom_product_ethiquette.field_product_template_rack_number_of_packages
+msgid "Number of packages on the rack"
+msgstr "Nombre de colis en rayon"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.model.fields,help:louve_custom_product_ethiquette.field_product_template_farming_method
+msgid "Organic Label"
+msgstr "Label bio"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.model.fields,field_description:louve_custom_product_ethiquette.field_product_template_origin
+msgid "Origin"
+msgstr "Origine"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.model.fields,help:louve_custom_product_ethiquette.field_product_template_origin
+msgid "Origin and/or producer"
+msgstr "Origine et/ou producteur"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.model.fields,field_description:louve_custom_product_ethiquette.field_product_template_other_information
+msgid "Other Information"
+msgstr "Autres Informations"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.model,name:louve_custom_product_ethiquette.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.model.fields,field_description:louve_custom_product_ethiquette.field_product_template_rack_instruction
+msgid "Rack Instruction"
+msgstr "Instruction Rayon"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.model.fields,field_description:louve_custom_product_ethiquette.field_product_template_rack_location
+msgid "Rack Location"
+msgstr "Emplacement stock"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.ui.view,arch_db:louve_custom_product_ethiquette.view_product_template_form_sticker
+msgid "Sticker Information"
+msgstr "Information sur étiquette"
+
+#. module: louve_custom_product_ethiquette
+#: model:ir.model.fields,help:louve_custom_product_ethiquette.field_product_template_rack_location
+msgid "The name or place of the rack"
+msgstr "Le nom ou l'endroit de l'emplacement de stock"
