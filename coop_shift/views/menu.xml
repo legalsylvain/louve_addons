@@ -1,26 +1,42 @@
 <?xml version="1.0"?>
 <odoo>
     <data>
-        <menuitem 
-            name="Shifts"
+        <record id="action_shift_members" model="ir.actions.act_window">
+            <field name="name">Members</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+        </record>
+        <menuitem
+            name="Members"
             id="shift_main_menu"
             sequence="66"
             groups="coop_shift.group_shift_user"
             web_icon="coop_shift,static/description/icon.png"/>
+        <menuitem
+            name="Members"
+            parent="shift_main_menu"
+            id="members_menu"
+            sequence="10"
+            groups="coop_shift.group_shift_user"
+            action="action_shift_members"/>
         <menuitem 
             name="Shifts"
-            parent="shift_main_menu"
+            parent="base.menu_association"
             id="shift_menu"
             sequence="11"
             groups="coop_shift.group_shift_user"/>
-        <menuitem 
+        <menuitem
             name="Templates"
-            parent="shift_main_menu"
+            parent="base.menu_association"
             id="template_menu"
             sequence="22"
             groups="coop_shift.group_shift_manager"/>
         <menuitem
-            parent="shift_main_menu"
+            parent="base.menu_association"
             id="menu_reporting_shifts"
             sequence="99"
             groups="coop_shift.group_shift_manager"
@@ -28,7 +44,7 @@
         <menuitem
             id="menu_shift_configuration"
             name="Configuration"
-            parent="shift_main_menu"
+            parent="base.menu_association"
             sequence="100"
             groups="base.group_configuration"/>
     </data>

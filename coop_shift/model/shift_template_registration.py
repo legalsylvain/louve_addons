@@ -36,12 +36,14 @@ class ShiftTemplateRegistration(models.Model):
     email = fields.Char(readonly=True, related='partner_id.email')
     phone = fields.Char(readonly=True, related='partner_id.phone')
     name = fields.Char(readonly=True, related='partner_id.name', store=True)
-    partner_id = fields.Many2one(
-        required=True, default=lambda self: self.env.user.partner_id)
+    partner_id = fields.Many2one(required=True)
     user_id = fields.Many2one(related="shift_template_id.user_id")
     shift_ticket_id = fields.Many2one(
         'shift.template.ticket', 'Shift Ticket', required=True,
         default=lambda rec: rec._get_default_ticket(), copy=True)
+    shift_ticket_product_id = fields.Many2one(
+        'product.product', 'Ticket Product',
+        related='shift_ticket_id.product_id', store=True)
     line_ids = fields.One2many(
         'shift.template.registration.line', 'registration_id', string='Lines',
         default=lambda rec: rec._default_lines(), copy=True)

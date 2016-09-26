@@ -24,6 +24,19 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import UserError
 from datetime import datetime, timedelta
+from openerp.osv import expression
+
+# this variable is used for shift confirmation. It tells how many days before
+# its date_begin a shift is confirmed
+SHIFT_CONFIRMATION_DAYS = 5
+
+
+WEEK_NUMBERS = [
+    (1, 'A'),
+    (2, 'B'),
+    (3, 'C'),
+    (4, 'D')
+]
 
 
 class ShiftShift(models.Model):
@@ -50,8 +63,8 @@ class ShiftShift(models.Model):
         'shift.type', string='Category', required=False,
         readonly=False, states={'done': [('readonly', True)]})
     week_number = fields.Selection(
-        [(1, 'Week A'), (2, 'Week B'), (3, 'Week C'), (4, 'Week D')],
-        string='Week', required=True)
+        WEEK_NUMBERS, string='Week', compute="_compute_week_number",
+        store=True)
     week_list = fields.Selection([
         ('MO', 'Monday'), ('TU', 'Tuesday'), ('WE', 'Wednesday'),
         ('TH', 'Thursday'), ('FR', 'Friday'), ('SA', 'Saturday'),
@@ -59,7 +72,8 @@ class ShiftShift(models.Model):
     registration_ids = fields.One2many(
         'shift.registration', 'shift_id', string='Attendees',
         readonly=False, states={'done': [('readonly', True)]})
-    shift_template_id = fields.Many2one('shift.template', string='Template')
+    shift_template_id = fields.Many2one(
+        'shift.template', string='Template', ondelete='restrict')
     seats_reserved = fields.Integer(compute='_compute_seats_shift')
     seats_available = fields.Integer(compute='_compute_seats_shift')
     seats_unconfirmed = fields.Integer(compute='_compute_seats_shift')
@@ -74,17 +88,56 @@ class ShiftShift(models.Model):
         default=lambda rec: rec._default_shift_tickets(), copy=True)
     date_tz = fields.Selection('_tz_get', string='Timezone', default=False)
     date_without_time = fields.Date(
-        string='Date', compute='_get_date_without_time', store=True)
+        string='Date', compute='_compute_begin_date_fields', store=True,
+        multi="begin_date")
+    begin_date_string = fields.Char(
+        string='Begin Date', compute='_compute_begin_date_fields', store=True,
+        multi="begin_date")
     begin_time = fields.Float(
-        string='Start Time', compute='_get_begin_time', store=True)
+        string='Start Time', compute='_compute_begin_time', store=True)
     end_time = fields.Float(
-        string='Start Time', compute='_get_end_time', store=True)
+        string='Start Time', compute='_compute_end_time', store=True)
+    user_id = fields.Many2one(default=False)
 
     _sql_constraints = [(
         'template_date_uniq',
         'unique (shift_template_id, date_begin, company_id)',
         'The same template cannot be planned several time at the same date !'),
     ]
+
+    @api.depends('date_without_time')
+    def _compute_week_number(self):
+        if not self.date_without_time:
+            self.week_number = False
+        else:
+            weekA_date = fields.Date.from_string(
+                self.env.ref('coop_shift.config_parameter_weekA').value)
+            start_date = fields.Date.from_string(self.date_without_time)
+            self.week_number = 1 + (((start_date - weekA_date).days // 7) % 4)
+
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
+        args = args or []
+        domain = []
+        if name:
+            domain = [
+                '|', ('begin_date_string', operator, name),
+                ('name', operator, name)
+            ]
+            if operator in expression.NEGATIVE_TERM_OPERATORS:
+                domain = ['&', '!'] + domain[1:]
+        shifts = self.search(domain + args, limit=limit)
+        return shifts.name_get()
+
+    @api.multi
+    @api.depends('name', 'date_begin')
+    def name_get(self):
+        result = []
+        for shift in self:
+            name = shift.name + (shift.begin_date_string and
+                                 (' ' + shift.begin_date_string) or '')
+            result.append((shift.id, name))
+        return result
 
     @api.model
     def _default_tickets(self):
@@ -203,10 +256,13 @@ class ShiftShift(models.Model):
 
     @api.multi
     @api.depends('date_begin')
-    def _get_date_without_time(self):
+    def _compute_begin_date_fields(self):
         for shift in self:
             shift.date_without_time = datetime.strftime(datetime.strptime(
                 shift.date_begin, "%Y-%m-%d %H:%M:%S"), "%Y-%m-%d")
+            shift.begin_date_string = datetime.strftime(
+                datetime.strptime(shift.date_begin, "%Y-%m-%d %H:%M:%S") +
+                timedelta(hours=2), "%d/%m/%Y %H:%M:%S")
 
     @api.model
     def _convert_time_float(self, t):
@@ -216,14 +272,32 @@ class ShiftShift(models.Model):
 
     @api.multi
     @api.depends('date_begin')
-    def _get_begin_time(self):
+    def _compute_begin_time(self):
         for shift in self:
             shift.begin_time = self._convert_time_float(datetime.strptime(
                 shift.date_begin, "%Y-%m-%d %H:%M:%S").time())
 
     @api.multi
     @api.depends('date_end')
-    def _get_end_time(self):
+    def _compute_end_time(self):
         for shift in self:
             shift.end_time = self._convert_time_float(datetime.strptime(
                 shift.date_end, "%Y-%m-%d %H:%M:%S").time())
+
+    @api.multi
+    def confirm_registrations(self):
+        for shift in self:
+            for ticket in shift.shift_ticket_ids:
+                ticket.registration_ids.write(
+                    {'state': 'open'})
+
+    @api.model
+    def run_shift_confirmation(self):
+        # This method is called by the cron task
+        compare_date = fields.Date.to_string(
+            datetime.today() + timedelta(days=SHIFT_CONFIRMATION_DAYS))
+        shifts = self.env['shift.shift'].search([
+            ('state', '=', 'draft'),
+            ('date_begin', '<=', compare_date)])
+        shifts.confirm_registrations()
+        shifts.write({'state': 'confirm'})

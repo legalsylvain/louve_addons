@@ -15,12 +15,12 @@
         </record>
 
         <!-- SHIFT.REGISTRATION VIEWS -->
-        <record model="ir.ui.view" id="view_shift_registration_tree">
-            <field name="name">shift.registration.tree</field>
+        <record model="ir.ui.view" id="view_shift_registration_tree_program">
+            <field name="name">shift.registration.tree.program</field>
             <field name="model">shift.registration</field>
             <field name="arch" type="xml">
                 <tree string="Registration" decoration-bf="message_needaction==True" editable="top">
-                    <field name="shit_begin_date"/>
+                    <field name="date_begin"/>
                     <field name="partner_id" options="{'no_create_edit': True, 'no_create': True}"/>
                     <field name="name"/>
                     <field name="email"/>
@@ -29,11 +29,30 @@
                     <field name="state"/>
                     <field name="message_needaction" invisible="1"/>
                     <button name="confirm_registration" string="Confirm Registration" states="draft" type="object" icon="gtk-apply"/>
+                    <button name="button_reg_cancel" string="Cancel Registration" states="draft" type="object" icon="gtk-cancel"/>
+                    <button name="do_draft" string="Set To Unconfirmed" states="cancel,done,absent,excused,replaced,replacing,open" type="object" icon="fa-backward" groups="coop_shift.group_shift_manager"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_shift_registration_tree_confirm">
+            <field name="name">shift.registration.tree.confirm</field>
+            <field name="model">shift.registration</field>
+            <field name="arch" type="xml">
+                <tree string="Registration" decoration-bf="message_needaction==True" editable="top">
+                    <field name="date_begin"/>
+                    <field name="partner_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="shift_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="shift_ticket_id" domain="[('shift_id', '=', shift_id)]" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="state"/>
+                    <field name="message_needaction" invisible="1"/>
                     <button name="button_reg_close" string="Attended the Shift" states="open" type="object" icon="fa-thumbs-o-up"/>
-                    <button name="button_reg_cancel" string="Cancel Registration" states="draft,open" type="object" icon="gtk-cancel"/>
-                    <button name="button_reg_absent" string="Absent" states="draft,open" type="object" icon="fa-user-secret"/>
-                    <button name="button_reg_excused" string="Excused" states="draft,open" type="object" icon="fa-hand-o-right"/>
-                    <button name="%(coop_shift.action_replace_registration)d" type="action" icon="fa-users" string="Replace Member" states="draft,open"/>
+                    <button name="confirm_registration" string="Confirm Registration" states="draft" type="object" icon="gtk-apply" groups="coop_shift.group_shift_manager"/>
+                    <button name="button_reg_absent" string="Absent" states="open" type="object" icon="fa-user-secret"/>
+                    <button name="button_reg_cancel" string="Cancel Registration" states="draft" type="object" icon="gtk-cancel" groups="coop_shift.group_shift_manager"/>
+                    <button name="button_reg_excused" string="Excused" states="open" type="object" icon="fa-hand-o-right"/>
+                    <button name="do_draft" string="Set To Unconfirmed" states="cancel,done,absent,excused,replaced,replacing,open" type="object" icon="fa-backward" groups="coop_shift.group_shift_manager"/>
+                    <button name="%(coop_shift.action_replace_registration)d" type="action" icon="fa-users" string="Replace Member" states="open"/>
                 </tree>
             </field>
         </record>
@@ -49,9 +68,9 @@
                         <button name="button_reg_close" string="Attended" states="open" type="object" class="oe_highlight" icon="fa-thumbs-o-up"/>
                         <button string="Set To Unconfirmed" name="do_draft" states="cancel,done,absent,excused,replaced,replacing" type="object" />
                         <button name="button_reg_cancel" string="Cancel Registration" states="draft,open" type="object" icon="gtk-cancel"/>
-                        <button name="button_reg_absent" string="Absent" states="draft,open" type="object" icon="fa-user-secret"/>
-                        <button name="button_reg_excused" string="Excused" states="draft,open" type="object" icon="fa-hand-o-right"/>
-                        <button name="%(coop_shift.action_replace_registration)d" type="action" icon="fa-users" string="Replace Member" states="draft,open"/>
+                        <button name="button_reg_absent" string="Absent" states="open" type="object" icon="fa-user-secret"/>
+                        <button name="button_reg_excused" string="Excused" states="open" type="object" icon="fa-hand-o-right"/>
+                        <button name="%(coop_shift.action_replace_registration)d" type="action" icon="fa-users" string="Replace Member" states="open"/>
                         <field name="state" nolabel="1" colspan="2" widget="statusbar" statusbar_visible="draft,open,done" attrs="{'invisible':[('state', 'in', ['absent','excused','replaced','replacing'])]}"/>
                         <field name="state" nolabel="1" colspan="2" widget="statusbar" statusbar_visible="draft,open,excused,absent,done" attrs="{'invisible':[('state', 'not in', ['absent','excused','replaced','replacing'])]}"/>
                     </header>
@@ -131,7 +150,7 @@
                         <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
                         <filter string="Registration Day" domain="[]" context="{'group_by': 'create_date:day'}"/>
                         <filter string="Registration Month" domain="[]" context="{'group_by': 'create_date:month'}"/>
-                        <filter string="Ticket Type" domain="[]" context="{'group_by':'shift_ticket_id'}"/>
+                        <filter string="Ticket Type" domain="[]" context="{'group_by':'shift_ticket_product_id'}"/>
                    </group>
                 </search>
             </field>
@@ -143,7 +162,8 @@
             <field name="view_type">form</field>
             <field name="name">Attendees</field>
             <field name="view_mode">tree,form,calendar,graph</field>
-            <field name="context">{'search_default_shift_id': active_id, 'default_shift_id': active_id, 'search_default_expected': True}</field>
+            <field name="view_id" ref="view_shift_registration_tree_confirm"/>
+            <field name="context">{'search_default_shift_id': active_id, 'default_shift_id': active_id}</field>
         </record>
 
         <record id="act_shift_registration_from_partner" model="ir.actions.act_window">
@@ -151,17 +171,19 @@
             <field name="view_type">form</field>
             <field name="name">Attendees</field>
             <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="view_id" ref="view_shift_registration_tree_program"/>
             <field name="context">{'search_default_partner_id': active_id, 'default_partner_id': active_id, 'search_default_upcoming': True}</field>
         </record>
 
         <record model="ir.actions.act_window" id="action_registration">
-          <field name="name">Attendees</field>
-          <field name="res_model">shift.registration</field>
-          <field name="view_type">form</field>
-          <field name="domain"></field>
-          <field name="view_mode">tree,form,calendar,pivot,graph</field>
-          <field name="context">{}</field>
-          <field name="search_view_id" ref="view_registration_search"/>
+            <field name="name">Attendees</field>
+            <field name="res_model">shift.registration</field>
+            <field name="view_type">form</field>
+            <field name="domain"></field>
+            <field name="view_mode">tree,form,calendar,pivot,graph</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="view_shift_registration_tree_program"/>
+            <field name="search_view_id" ref="view_registration_search"/>
         </record>
 
         <act_window

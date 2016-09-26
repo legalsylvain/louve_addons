@@ -23,17 +23,21 @@
 
 import re
 from openerp import models, fields, api, _
-from datetime import timedelta
+from datetime import datetime, timedelta
 from dateutil import rrule
 from openerp.exceptions import UserError
 
 
 WEEK_NUMBERS = [
-    (1, 'Week A'),
-    (2, 'Week B'),
-    (3, 'Week C'),
-    (4, 'Week D')
+    (1, 'A'),
+    (2, 'B'),
+    (3, 'C'),
+    (4, 'D')
 ]
+
+# this variable is used for shift creation. It tells until when we want to
+# create the shifts
+SHIFT_CREATION_DAYS = 90
 
 
 class ShiftTemplate(models.Model):
@@ -55,8 +59,7 @@ class ShiftTemplate(models.Model):
     shifts_count = fields.Integer(
         "Number of shifts", compute="_compute_shifts_counts")
     user_id = fields.Many2one(
-        'res.users', string='Shift Leader', required=True,
-        default=lambda self: self.env.user)
+        'res.users', string='Shift Leader', required=True)
     company_id = fields.Many2one(
         'res.company', string='Company', change_default=True,
         default=lambda self: self.env['res.company']._company_default_get(
@@ -231,15 +234,15 @@ class ShiftTemplate(models.Model):
     def _compute_template_name(self):
         name = self.shift_type_id.name + "-" if self.shift_type_id else ""
         name += self.week_number and (
-            WEEK_NUMBERS[self.week_number - 1][1] + "-") or ""
-        name += "Mon-" if self.mo else ""
-        name += "Tue-" if self.tu else ""
-        name += "Wed-" if self.we else ""
-        name += "Thu-" if self.th else ""
-        name += "Fri-" if self.fr else ""
-        name += "Sat-" if self.sa else ""
-        name += "Sun-" if self.su else ""
-        name += "%s:%s" % (
+            WEEK_NUMBERS[self.week_number - 1][1]) or ""
+        name += _("Mo") if self.mo else ""
+        name += _("Tu") if self.tu else ""
+        name += _("We") if self.we else ""
+        name += _("Th") if self.th else ""
+        name += _("Fr") if self.fr else ""
+        name += _("Sa") if self.sa else ""
+        name += _("Su") if self.su else ""
+        name += "%02d:%02d" % (
             int(self.start_time),
             int(round((self.start_time - int(self.start_time)) * 60)))
         self.name = name
@@ -498,3 +501,85 @@ class ShiftTemplate(models.Model):
             result['res_id'] = shift_ids and shift_ids[0] or False
         result['context'] = unicode({'search_default_upcoming': 1})
         return result
+
+    @api.model
+    def _get_default_before_date(self):
+        return fields.Datetime.to_string(
+            datetime.today() + timedelta(days=90))
+
+    @api.multi
+    def create_shifts_from_template(self, after=False, before=False):
+        if not before:
+            before = self._get_default_before_date()
+        for template in self:
+            after = template.last_shift_date
+            rec_dates = template.get_recurrent_dates(
+                after=after, before=before)
+            for rec_date in rec_dates:
+                rec_date = datetime(
+                    rec_date.year, rec_date.month, rec_date.day)
+                date_begin = datetime.strftime(
+                    rec_date + timedelta(hours=(template.start_time - 2)),
+                    "%Y-%m-%d %H:%M:%S")
+                if date_begin.split(" ")[0] <= template.last_shift_date:
+                    continue
+                date_end = datetime.strftime(
+                    rec_date + timedelta(hours=(template.end_time - 2)),
+                    "%Y-%m-%d %H:%M:%S")
+                rec_date = datetime.strftime(rec_date, "%Y-%m-%d")
+                vals = {
+                    'shift_template_id': template.id,
+                    'name': template.name,
+                    'user_id': template.user_id.id,
+                    'company_id': template.company_id.id,
+                    'seats_max': template.seats_max,
+                    'seats_availability': template.seats_availability,
+                    'seats_min': template.seats_min,
+                    'date_begin': date_begin,
+                    'date_end': date_end,
+                    'state': 'draft',
+                    'reply_to': template.reply_to,
+                    'address_id': template.address_id.id,
+                    'description': template.description,
+                    'shift_type_id': template.shift_type_id.id,
+                    'week_number': template.week_number,
+                    'week_list': template.week_list,
+                    'shift_ticket_ids': None,
+                }
+                shift_id = self.env['shift.shift'].create(vals)
+                for ticket in template.shift_ticket_ids:
+                    vals = {
+                        'name': ticket.name,
+                        'shift_id': shift_id.id,
+                        'product_id': ticket.product_id.id,
+                        'price': ticket.price,
+                        'deadline': ticket.deadline,
+                        'seats_availability': ticket.seats_availability,
+                        'seats_max': ticket.seats_max,
+                    }
+                    ticket_id = self.env['shift.ticket'].create(vals)
+
+                    for attendee in ticket.registration_ids:
+                        state, strl_id = attendee._get_state(rec_date)
+                        if state:
+                            vals = {
+                                'partner_id': attendee.partner_id.id,
+                                'user_id': template.user_id.id,
+                                'state': state,
+                                'email': attendee.email,
+                                'phone': attendee.phone,
+                                'name': attendee.name,
+                                'shift_id': shift_id.id,
+                                'shift_ticket_id': ticket_id.id,
+                                'tmpl_reg_line_id': strl_id,
+                                'template_created': True,
+                            }
+                            self.env['shift.registration'].create(vals)
+
+    @api.model
+    def run_shift_creation(self):
+        # This method is called by the cron task
+        templates = self.env['shift.template'].search([])
+        templates.create_shifts_from_template(
+            before=fields.Datetime.to_string(
+                datetime.today() + timedelta(days=SHIFT_CREATION_DAYS)))
