@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* louve_product_coefficient
+#   * louve_product_coefficient
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-22 14:15+0000\n"
-"PO-Revision-Date: 2016-07-22 14:15+0000\n"
+"POT-Creation-Date: 2016-09-09 18:15+0000\n"
+"PO-Revision-Date: 2016-09-09 18:15+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: louve_product_coefficient
-#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_alternative_base_price
-msgid "Alternative Base Price"
-msgstr "Prix de base alternatif"
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_alternative_base_price_sale
+msgid "Alternative Base Price for Sale Price"
+msgstr "Prix de base alternatif pour le calcul du Prix de Vente"
+
+#. module: louve_product_coefficient
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_alternative_base_price_standard
+msgid "Alternative Base Price for Standard Price"
+msgstr "Prix de base alternatif pour le calcul du Coût"
 
 #. module: louve_product_coefficient
 #: model:ir.ui.view,arch_db:louve_product_coefficient.view_wizard_use_theoritical_price_form
@@ -38,8 +43,8 @@ msgid "Base Price is the Sale Price of your Supplier.\n"
 "\n"
 "If The supplier info belong an end date, the base price will be updated nightly, by a cron task."
 msgstr "Le prix de base est le prix de vente chez votre fournisseur.\n"
--"Si un produit est vendu par plusieurs fournisseur, le premier sera sélectionné.\n"
--"Si un fournisseur vend un produit à différents prix, c'est le plus gros qui sera utilisé. Si la fiche fournisseur du produit a une date de fin, le prix de base sera mise à jour par une tâche cron."
+"\"Si un produit est vendu par plusieurs fournisseur, le premier sera sélectionné.\n"
+"\"Si un fournisseur vend un produit à différents prix, c'est le plus gros qui sera utilisé. Si la fiche fournisseur du produit a une date de fin, le prix de base sera mise à jour par une tâche cron."
 
 #. module: louve_product_coefficient
 #: model:ir.ui.view,arch_db:louve_product_coefficient.view_wizard_use_theoritical_price_form
@@ -117,6 +122,41 @@ msgid "ID"
 msgstr "ID"
 
 #. module: louve_product_coefficient
+#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_incl_in_standard_price_1
+#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_incl_in_standard_price_2
+#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_incl_in_standard_price_3
+#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_incl_in_standard_price_4
+#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_incl_in_standard_price_5
+#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_incl_in_standard_price_6
+#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_incl_in_standard_price_7
+#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_incl_in_standard_price_8
+#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_incl_in_standard_price_9
+msgid "If you check this\n"
+"        box, this coefficient will be used to calculate the standard price of\n"
+"        the product"
+msgstr "Si vous cochez cette\n"
+"        case, ce coefficient sera utilisé pour calculer le coût de\n"
+"        ce produit"
+
+#. module: louve_product_coefficient
+#: model:ir.ui.view,arch_db:louve_product_coefficient.view_product_template_form
+msgid "Incl. in Standard Price"
+msgstr "Incl. dans le Coût"
+
+#. module: louve_product_coefficient
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_incl_in_standard_price_1
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_incl_in_standard_price_2
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_incl_in_standard_price_3
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_incl_in_standard_price_4
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_incl_in_standard_price_5
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_incl_in_standard_price_6
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_incl_in_standard_price_7
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_incl_in_standard_price_8
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_incl_in_standard_price_9
+msgid "Include in Standard Price"
+msgstr "Inclure dans le Coût"
+
+#. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_coefficient___last_update
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_wizard_use_theoritical_price___last_update
 msgid "Last Modified on"
@@ -150,11 +190,6 @@ msgid "Operation Type"
 msgstr "Type d'Opération"
 
 #. module: louve_product_coefficient
-#: model:product.template,name:louve_product_coefficient.product_categ_5
-msgid "Physical Demo Product"
-msgstr "Produit de démonstration"
-
-#. module: louve_product_coefficient
 #: model:ir.model,name:louve_product_coefficient.model_product_template
 msgid "Product Template"
 msgstr "Modèle d'article"
@@ -177,9 +212,19 @@ msgid "Recompute Base price"
 msgstr "Recalculer le Prix de Base"
 
 #. module: louve_product_coefficient
+#: model:ir.ui.view,arch_db:louve_product_coefficient.view_product_template_form
+msgid "Sale Price"
+msgstr "Prix de vente"
+
+#. module: louve_product_coefficient
 #: model:ir.ui.view,arch_db:louve_product_coefficient.view_product_coefficient_form
 msgid "Settings"
 msgstr "Configuration"
+
+#. module: louve_product_coefficient
+#: model:ir.ui.view,arch_db:louve_product_coefficient.view_product_template_form
+msgid "Standard Price"
+msgstr "Coût"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_theoritical_price
@@ -187,12 +232,14 @@ msgid "Theoritical Price VAT Incl."
 msgstr "Prix Théorique TTC"
 
 #. module: louve_product_coefficient
-#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_alternative_base_price
+#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_alternative_base_price_sale
+#: model:ir.model.fields,help:louve_product_coefficient.field_product_template_alternative_base_price_standard
 msgid "This alternative base price will be used instead of the Base Price, if defined."
 msgstr "Le prix de base alternatif sera utilisé à la place du prix de base, si il est défini."
 
 #. module: louve_product_coefficient
 #: code:addons/louve_product_coefficient/models/product_template.py:229
+#: code:addons/louve_product_coefficient/models/product_template.py:357
 #, python-format
 msgid "Unimplemented Feature\n"
 "The Tax %s is not correctly set for computing prices with coefficients for the product %s"
@@ -218,46 +265,55 @@ msgstr "Valeur"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff4_inter
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff4_inter_sp
 msgid "With Coefficient 4"
 msgstr "Avec Coefficient 4"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff5_inter
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff5_inter_sp
 msgid "With Coefficient 5"
 msgstr "Avec Coefficient 5"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff6_inter
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff6_inter_sp
 msgid "With Coefficient 6"
 msgstr "Avec Coefficient 6"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff7_inter
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff7_inter_sp
 msgid "With Coefficient 7"
 msgstr "Avec Coefficient 7"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff8_inter
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff8_inter_sp
 msgid "With Coefficient 8"
 msgstr "Avec Coefficient 8"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff3_inter
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff3_inter_sp
 msgid "With Loss Coefficient"
 msgstr "Avec Coefficient de perte"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff9_inter
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff9_inter_sp
 msgid "With Margin Coefficient"
 msgstr "Avec Coefficient de marge"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff2_inter
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff2_inter_sp
 msgid "With Shipping Coefficient"
 msgstr "Avec Coefficient de transport"
 
 #. module: louve_product_coefficient
 #: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff1_inter
+#: model:ir.model.fields,field_description:louve_product_coefficient.field_product_template_coeff1_inter_sp
 msgid "With Supplier Discount Coefficient"
 msgstr "Avec Coefficient fournisseur"
 
@@ -270,4 +326,3 @@ msgstr "product.coefficient"
 #: model:ir.model,name:louve_product_coefficient.model_wizard_use_theoritical_price
 msgid "wizard.use.theoritical.price"
 msgstr "wizard.use.theoritical.price"
-
