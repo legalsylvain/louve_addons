@@ -75,7 +75,9 @@ class ResPartner(models.Model):
         store=True, help="This date mention the date when"
         " the 'delay' state stops and when the partner will be suspended.")
 
-#    date_delay_end = fields.Date('End date delay')
+    extension_ids = fields.One2many(
+        comodel_name='shift.extension', inverse_name='partner_id',
+        string='Extensions')
 
     # Compute Section
     @api.depends('theoritical_standard_point', 'manual_standard_correction')
@@ -133,7 +135,8 @@ class ResPartner(models.Model):
     @api.depends('extension_ids')
     @api.multi
     def compute_date_delay_stop(self):
-#        for partner in self:
+        for partner in self:
+            pass
 #            # If all is OK, the date is deleted
 #            point = partner.shift_type == 'standard'\
 #                and partner.final_standard_point\

@@ -21,7 +21,11 @@ This module add state to partners depending of its attendees
     ],
     'data': [
         'security/shift_security.xml',
+        'data/ir_sequence.xml',
         'views/view_res_partner.xml',
+        'views/view_shift_extension_type.xml',
+        'views/action.xml',
+        'views/menu.xml',
     ],
     'demo': [
         'demo/res_groups.xml',
