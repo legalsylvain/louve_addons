@@ -4,9 +4,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, fields, api
+from dateutil.relativedelta import relativedelta
+
 
 class ShiftExtension(models.Model):
     _name = 'shift.extension'
+    _order = 'date_start, partner_id'
 
     name = fields.Char(string='Name', readonly=True)
 
@@ -24,3 +27,12 @@ class ShiftExtension(models.Model):
     def create(self, vals):
         vals['name'] = self.env['ir.sequence'].next_by_code('shift.extension')
         return super(ShiftExtension, self).create(vals)
+
+    @api.multi
+    @api.onchange('type_id', 'date_start')
+    def onchange_type_id(self):
+        for extension in self:
+            if extension.type_id and extension.type_id.duration\
+                    and extension.date_start:
+                extension.date_stop = extension.date_start +\
+                    relativedelta(extension.type_id.duration)

@@ -79,7 +79,17 @@ class ResPartner(models.Model):
         comodel_name='shift.extension', inverse_name='partner_id',
         string='Extensions')
 
+    extension_qty = fields.Integer(
+        string='Extensions Quantity', compute='compute_extension_qty',
+        store=True)
+
     # Compute Section
+    @api.depends('extension_ids.partner_id')
+    @api.multi
+    def compute_extension_qty(self):
+        for partner in self:
+            partner.extension_qty = len(partner.extension_ids)
+
     @api.depends('theoritical_standard_point', 'manual_standard_correction')
     @api.multi
     def compute_final_standard_point(self):
@@ -132,25 +142,24 @@ class ResPartner(models.Model):
                         point += 1
             partner.theoritical_ftop_point = point
 
-    @api.depends('extension_ids')
+    @api.depends(
+        'extension_ids.date_start', 'extension_ids.date_stop',
+        'extension_ids.partner_id')
     @api.multi
     def compute_date_delay_stop(self):
+        """This function should be called in a daily CRON"""
         for partner in self:
-            pass
-#            # If all is OK, the date is deleted
-#            point = partner.shift_type == 'standard'\
-#                and partner.final_standard_point\
-#                or partner.final_ftop_point
-#            if point > 0:
-#                partner.date_alert_stop = False
-#            elif not partner.date_alert_stop:
-#                partner.date_alert_stop =\
-#                    datetime.today() + relativedelta(days=self._ALERT_DURATION)
-
+            max_date = False
+            for extension in partner.extension_ids:
+                if extension.date_start <= fields.Datetime.now() and\
+                        extension.date_stop > fields.Datetime.now():
+                    max_date = max(max_date, extension.date_stop)
+            partner.date_delay_stop = max_date
 
     @api.depends('final_standard_point', 'final_ftop_point')
     @api.multi
     def compute_date_alert_stop(self):
+        """This function should be called in a daily CRON"""
         for partner in self:
             # If all is OK, the date is deleted
             point = partner.shift_type == 'standard'\
@@ -164,9 +173,10 @@ class ResPartner(models.Model):
 
     @api.depends(
         'is_blocked', 'is_unpayed', 'final_standard_point', 'final_ftop_point',
-        'shift_type', 'date_alert_stop')
+        'shift_type', 'date_alert_stop', 'date_delay_stop')
     @api.multi
     def compute_cooperative_state(self):
+        """This function should be called in a daily CRON"""
         for partner in self:
             state = 'up_to_date'
             if partner.is_blocked:
@@ -182,7 +192,7 @@ class ResPartner(models.Model):
                         if partner.date_delay_stop > fields.Datetime.now():
                             # There is Delay
                             state = 'delay'
-                        if partner.date_alert_stop > fields.Datetime.now():
+                        elif partner.date_alert_stop > fields.Datetime.now():
                             # Grace State
                             state = 'alert'
                         else:
@@ -191,3 +201,12 @@ class ResPartner(models.Model):
                     else:
                         state = 'suspended'
             partner.cooperative_state = state
+
+    @api.model
+    def update_cooperative_state(self):
+        print "******************************************************"
+        print "******************************************************"
+        partners = self.search([])
+        partners.compute_cooperative_state()
+        partners.compute_date_alert_stop()
+        partners.compute_date_delay_stop()

@@ -18,6 +18,16 @@
                     <field name="cooperative_state" widget="statusbar"/>
                 </header>
             </sheet>
+                <div name="button_box" position="inside">
+                    <button name="%(coop_shift_state.action_shift_extension_from_partner)d"
+                            type="action"
+                            class="oe_stat_button oe_event_attendee_button"
+                            icon="fa-calendar"
+                            help="View partner Extensions"
+                            groups="coop_shift.group_shift_manager">
+                        <field name="extension_qty" widget="statinfo" string="Ext."/>
+                    </button>
+                </div>
         </field>
     </record>
 
@@ -26,13 +36,13 @@
         <field name="inherit_id" ref="coop_shift.view_res_partner_shift_form"/>
         <field name="groups_id" eval="[(4, ref('coop_shift.group_shift_manager'))]"/>
         <field name="arch" type="xml">
-
             <group name="button" position="before">
                 <group name="state">
                     <field name="shift_type"/>
                     <field name="is_unpayed"/>
                     <field name="is_blocked"/>
                     <field name="date_alert_stop"/>
+                    <field name="date_delay_stop"/>
                     <group string="Standard Part" cols="4">
                         <field name="theoritical_standard_point"/>
                         <field name="manual_standard_correction"/>
@@ -43,6 +53,18 @@
                         <field name="manual_ftop_correction"/>
                         <field name="final_ftop_point"/>
                     </group>
+                </group>
+            </group>
+            <group name="group_shift_registration" position="after">
+                <group string="Extensions" name="group_shift_extension" groups="base.group_no_one">
+                    <field name="extension_ids" nolabel="1">
+                        <tree>
+                            <field name="name"/>
+                            <field name="type_id"/>
+                            <field name="date_start"/>
+                            <field name="date_stop"/>
+                        </tree>
+                    </field>
                 </group>
             </group>
         </field>

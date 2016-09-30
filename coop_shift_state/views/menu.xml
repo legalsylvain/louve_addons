@@ -15,7 +15,7 @@
     </record>
 
     <record model="ir.ui.menu" id="menu_shift_extension_type">
-        <field name="name">Extension Types</field>
+        <field name="name">Extensions Types</field>
         <field name="action" ref="action_shift_extension_type"/>
         <field name="parent_id" ref="coop_shift.menu_shift_configuration"/>
         <field name="sequence">15</field>

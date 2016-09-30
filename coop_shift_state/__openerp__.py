@@ -13,7 +13,8 @@
 This module add state to partners depending of its attendees
     """,
     'author': 'Cyril Gaspard,'
-              'Julien Weste',
+              'Julien Weste,'
+              'La Louve',
     'website': 'http://www.lalouve.net',
     'license': 'AGPL-3',
     'depends': [
@@ -22,9 +23,11 @@ This module add state to partners depending of its attendees
     'data': [
         'security/shift_security.xml',
         'data/ir_sequence.xml',
+        'data/ir_cron.xml',
+        'views/action.xml',
+        'views/view_shift_extension.xml',
         'views/view_res_partner.xml',
         'views/view_shift_extension_type.xml',
-        'views/action.xml',
         'views/menu.xml',
     ],
     'demo': [
