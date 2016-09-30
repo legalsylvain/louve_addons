@@ -5,13 +5,16 @@
 # @author: Julien WESTE
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields, api
-# from datetime import datetime
-# from dateutil.relativedelta import relativedelta
+from openerp import models, fields, api, _
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+from openerp.exceptions import UserError
 
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
+
+    _ALERT_DURATION = 28
 
     SHIFT_TYPE_SELECTION = [
         ('standard', 'Standard'),
@@ -23,9 +26,9 @@ class ResPartner(models.Model):
         ('alert', 'Alert'),
         ('suspended', 'Suspended'),
         ('delay', 'Delay'),
-        ('unsubscribed', 'Unsubscribed'),
         ('unpayed', 'Unpayed'),
         ('blocked', 'Blocked'),
+        ('unsubscribed', 'Unsubscribed'),
     ]
 
     is_unpayed = fields.Boolean('Unpayed')
@@ -61,6 +64,18 @@ class ResPartner(models.Model):
     final_ftop_point = fields.Integer(
         string='Final FTOP points',compute='compute_final_ftop_point',
         store=True)
+
+    date_alert_stop = fields.Date(
+        string='End Alert Date', compute='compute_date_alert_stop',
+        store=True, help="This date mention the date when"
+        " the 'alert' state stops and when the partner will be suspended.")
+
+    date_delay_stop = fields.Date(
+        string='End Delay Date', compute='compute_date_delay_stop',
+        store=True, help="This date mention the date when"
+        " the 'delay' state stops and when the partner will be suspended.")
+
+#    date_delay_end = fields.Date('End date delay')
 
     # Compute Section
     @api.depends('theoritical_standard_point', 'manual_standard_correction')
@@ -115,9 +130,38 @@ class ResPartner(models.Model):
                         point += 1
             partner.theoritical_ftop_point = point
 
+    @api.depends('extension_ids')
+    @api.multi
+    def compute_date_delay_stop(self):
+#        for partner in self:
+#            # If all is OK, the date is deleted
+#            point = partner.shift_type == 'standard'\
+#                and partner.final_standard_point\
+#                or partner.final_ftop_point
+#            if point > 0:
+#                partner.date_alert_stop = False
+#            elif not partner.date_alert_stop:
+#                partner.date_alert_stop =\
+#                    datetime.today() + relativedelta(days=self._ALERT_DURATION)
+
+
+    @api.depends('final_standard_point', 'final_ftop_point')
+    @api.multi
+    def compute_date_alert_stop(self):
+        for partner in self:
+            # If all is OK, the date is deleted
+            point = partner.shift_type == 'standard'\
+                and partner.final_standard_point\
+                or partner.final_ftop_point
+            if point > 0:
+                partner.date_alert_stop = False
+            elif not partner.date_alert_stop:
+                partner.date_alert_stop =\
+                    datetime.today() + relativedelta(days=self._ALERT_DURATION)
+
     @api.depends(
         'is_blocked', 'is_unpayed', 'final_standard_point', 'final_ftop_point',
-        'shift_type')
+        'shift_type', 'date_alert_stop')
     @api.multi
     def compute_cooperative_state(self):
         for partner in self:
@@ -131,5 +175,16 @@ class ResPartner(models.Model):
                     and partner.final_standard_point\
                     or partner.final_ftop_point
                 if point < 0:
-                    pass
+                    if partner.date_alert_stop:
+                        if partner.date_delay_stop > fields.Datetime.now():
+                            # There is Delay
+                            state = 'delay'
+                        if partner.date_alert_stop > fields.Datetime.now():
+                            # Grace State
+                            state = 'alert'
+                        else:
+                            print "WEIRD STATE TO FIX. partner %d" % partner.id
+                            state = 'suspended'
+                    else:
+                        state = 'suspended'
             partner.cooperative_state = state

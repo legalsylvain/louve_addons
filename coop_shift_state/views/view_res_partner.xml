@@ -32,6 +32,7 @@
                     <field name="shift_type"/>
                     <field name="is_unpayed"/>
                     <field name="is_blocked"/>
+                    <field name="date_alert_stop"/>
                     <group string="Standard Part" cols="4">
                         <field name="theoritical_standard_point"/>
                         <field name="manual_standard_correction"/>
