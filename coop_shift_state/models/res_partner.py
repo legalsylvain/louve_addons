@@ -14,8 +14,6 @@ from openerp.exceptions import UserError
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    _ALERT_DURATION = 28
-
     SHIFT_TYPE_SELECTION = [
         ('standard', 'Standard'),
         ('ftop', 'FTOP'),
@@ -40,7 +38,7 @@ class ResPartner(models.Model):
         default='standard')
 
     cooperative_state = fields.Selection(
-        selection=COOPERATIVE_STATE_SELECTION, string='State',
+        selection=COOPERATIVE_STATE_SELECTION, string='State', store=True,
         compute='compute_cooperative_state')
 
     theoritical_standard_point = fields.Integer(
@@ -69,6 +67,10 @@ class ResPartner(models.Model):
         string='End Alert Date', compute='compute_date_alert_stop',
         store=True, help="This date mention the date when"
         " the 'alert' state stops and when the partner will be suspended.")
+
+#    date_alert_stop_hidden = fields.Date(
+#        string='End Alert Date(Hidden)', help="Technical Field, used to"
+#        " know the previous alert date when alert date stop is recomputed.")
 
     date_delay_stop = fields.Date(
         string='End Delay Date', compute='compute_date_delay_stop',
@@ -160,6 +162,8 @@ class ResPartner(models.Model):
     @api.multi
     def compute_date_alert_stop(self):
         """This function should be called in a daily CRON"""
+        alert_duration = int(self.env['ir.config_parameter'].sudo().get_param(
+            'coop.shift.state.delay.duration'))
         for partner in self:
             # If all is OK, the date is deleted
             point = partner.shift_type == 'standard'\
@@ -169,7 +173,9 @@ class ResPartner(models.Model):
                 partner.date_alert_stop = False
             elif not partner.date_alert_stop:
                 partner.date_alert_stop =\
-                    datetime.today() + relativedelta(days=self._ALERT_DURATION)
+                    datetime.today() + relativedelta(days=alert_duration)
+                partner.date_alert_stop = partner.date_alert_stop
+
 
     @api.depends(
         'is_blocked', 'is_unpayed', 'final_standard_point', 'final_ftop_point',

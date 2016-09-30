@@ -24,6 +24,7 @@ This module add state to partners depending of its attendees
         'security/shift_security.xml',
         'data/ir_sequence.xml',
         'data/ir_cron.xml',
+        'data/ir_config_parameter.xml',
         'views/action.xml',
         'views/view_shift_extension.xml',
         'views/view_res_partner.xml',
