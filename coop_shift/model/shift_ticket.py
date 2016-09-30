@@ -31,6 +31,15 @@ class ShiftTicket(models.Model):
     _name = 'shift.ticket'
     _description = 'Shift Ticket'
 
+    SHIFT_TYPE_SELECTION = [
+        ('standard', 'Standard'),
+        ('ftop', 'FTOP'),
+    ]
+
+    shift_type = fields.Selection(
+        selection=SHIFT_TYPE_SELECTION, string='Shift type',
+        compute='compute_shift_type', store=True)
+
     name = fields.Char(translate=False)
     shift_id = fields.Many2one(
         'shift.shift', "Shift", required=True, ondelete='cascade')
@@ -68,6 +77,16 @@ class ShiftTicket(models.Model):
     seats_available = fields.Integer(compute='_compute_seats')
     seats_unconfirmed = fields.Integer(compute='_compute_seats')
     seats_used = fields.Integer(compute='_compute_seats',)
+
+    @api.depends('product_id')
+    @api.multi
+    def compute_shift_type(self):
+        for ticket in self:
+            if ticket.product_id.id ==\
+                    self.env.ref("coop_shift.product_product_shift_ftop").id:
+                ticket.shift_type = 'ftop'
+            else:
+                ticket.shift_type = 'standard'
 
     @api.multi
     @api.depends('seats_max', 'registration_ids.state')

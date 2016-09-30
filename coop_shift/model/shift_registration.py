@@ -48,6 +48,15 @@ class ShiftRegistration(models.Model):
     _description = 'Attendee'
     _order = 'shift_ticket_id,name'
 
+    SHIFT_TYPE_SELECTION = [
+        ('standard', 'Standard'),
+        ('ftop', 'FTOP'),
+    ]
+
+    shift_type = fields.Selection(
+        selection=SHIFT_TYPE_SELECTION, string='Shift type',
+        related='shift_ticket_id.shift_type', store=True)
+
     event_id = fields.Many2one(required=False)
     shift_id = fields.Many2one(
         'shift.shift', string='Shift', required=True, ondelete='cascade')
