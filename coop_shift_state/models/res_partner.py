@@ -84,11 +84,10 @@ class ResPartner(models.Model):
     @api.multi
     def compute_theoritical_standard_point(self):
         for partner in self:
+            point = 0
             for registration in partner.registration_ids.filtered(
                         lambda reg: reg.shift_type == 'standard'):
                 if not registration.template_created:
-                    # The presence was not forcasted
-                    # TODO VALIDATE THE PROCESS
                     if registration.state in ['done', 'replaced']:
                         point += +1
                 # In all cases
@@ -122,13 +121,15 @@ class ResPartner(models.Model):
     @api.multi
     def compute_cooperative_state(self):
         for partner in self:
+            state = 'up_to_date'
             if partner.is_blocked:
-                partner.cooperative_state = 'blocked'
+                state = 'blocked'
             elif partner.is_unpayed:
-                partner.cooperative_state = 'unpayed'
+                state = 'unpayed'
             else:
                 point = partner.shift_type == 'standard'\
                     and partner.final_standard_point\
                     or partner.final_ftop_point
-                if point >= 0:
-                    partner.cooperative_state = 'up_to_date'
+                if point < 0:
+                    pass
+            partner.cooperative_state = state
