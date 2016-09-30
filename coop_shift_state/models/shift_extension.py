@@ -34,5 +34,6 @@ class ShiftExtension(models.Model):
         for extension in self:
             if extension.type_id and extension.type_id.duration\
                     and extension.date_start:
-                extension.date_stop = extension.date_start +\
-                    relativedelta(extension.type_id.duration)
+                date_start = fields.Date.from_string(extension.date_start)
+                extension.date_stop = date_start +\
+                    relativedelta(days=extension.type_id.duration)

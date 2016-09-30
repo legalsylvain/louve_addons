@@ -204,8 +204,6 @@ class ResPartner(models.Model):
 
     @api.model
     def update_cooperative_state(self):
-        print "******************************************************"
-        print "******************************************************"
         partners = self.search([])
         partners.compute_cooperative_state()
         partners.compute_date_alert_stop()
