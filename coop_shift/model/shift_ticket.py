@@ -44,7 +44,7 @@ class ShiftTicket(models.Model):
     begin_date_string = fields.Char(
         string='Begin Date', compute='_compute_begin_date_fields', store=True,)
     user_id = fields.Many2one(
-        'res.users', related="shift_id.user_id", store=True)
+        'res.partner', related="shift_id.user_id", store=True)
 
     @api.multi
     @api.depends('date_begin')
