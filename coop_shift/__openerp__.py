@@ -77,6 +77,7 @@ Copyright, Author and Licence :
         'security/ir_rule_data.yml',
         'data/module_data.xml',
         'views/shift_report.xml',
+        'views/shift_report2.xml',
         'views/report_timesheet.xml',
         'views/report_wallchart.xml',
         'data/cron.xml',
