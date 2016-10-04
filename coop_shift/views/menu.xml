@@ -23,20 +23,20 @@
             sequence="10"
             groups="coop_shift.group_shift_user"
             action="action_shift_members"/>
-        <menuitem 
+        <menuitem
             name="Shifts"
-            parent="base.menu_association"
+            parent="shift_main_menu"
             id="shift_menu"
             sequence="11"
             groups="coop_shift.group_shift_user"/>
         <menuitem
             name="Templates"
-            parent="base.menu_association"
+            parent="shift_main_menu"
             id="template_menu"
             sequence="22"
             groups="coop_shift.group_shift_manager"/>
         <menuitem
-            parent="base.menu_association"
+            parent="shift_main_menu"
             id="menu_reporting_shifts"
             sequence="99"
             groups="coop_shift.group_shift_manager"
@@ -44,7 +44,7 @@
         <menuitem
             id="menu_shift_configuration"
             name="Configuration"
-            parent="base.menu_association"
+            parent="shift_main_menu"
             sequence="100"
             groups="base.group_configuration"/>
     </data>
