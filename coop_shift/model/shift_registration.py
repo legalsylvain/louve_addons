@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Computed Purchase Order Module for Odoo
@@ -77,32 +77,33 @@ class ShiftRegistration(models.Model):
         'This partner is already registered on this Shift !'),
     ]
 
-    @api.one
+    @api.multi
     @api.constrains('shift_ticket_id', 'state')
     def _check_ticket_seats_limit(self):
-        if self.template_created:
-            return True
-        if self.shift_ticket_id.seats_max and\
-                self.shift_ticket_id.seats_available < 0:
-            raise UserError(_('No more available seats for this ticket'))
+        for reg in self:
+            if reg.template_created:
+                return True
+            if reg.shift_ticket_id.seats_max and\
+                    reg.shift_ticket_id.seats_available < 0:
+                raise UserError(_('No more available seats for this ticket'))
 
-    @api.one
+    @api.multi
     def button_reg_absent(self):
-        """ Mark as Absent """
-        if self.event_id.date_begin <= fields.Datetime.now():
-            self.state = 'absent'
-        else:
-            raise UserError(_("You must wait for the starting day of the shift\
-                to do this action."))
+        for reg in self:
+            if reg.event_id.date_begin <= fields.Datetime.now():
+                reg.state = 'absent'
+            else:
+                raise UserError(_("You must wait for the starting day of the\
+                    shift to do this action."))
 
-    @api.one
+    @api.multi
     def button_reg_excused(self):
-        """ Mark as Excused """
-        if self.event_id.date_begin <= fields.Datetime.now():
-            self.state = 'excused'
-        else:
-            raise UserError(_("You must wait for the starting day of the shift\
-                to do this action."))
+        for reg in self:
+            if reg.event_id.date_begin <= fields.Datetime.now():
+                reg.state = 'excused'
+            else:
+                raise UserError(_("You must wait for the starting day of the\
+                    shift to do this action."))
 
     @api.multi
     @api.onchange("shift_id")

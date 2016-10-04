@@ -23,26 +23,11 @@
 
 {
     'name': 'Coop Shift',
-    'version': '9.0.5',
+    'version': '9.0.5.0.0',
     'category': 'Tools',
-    'description': """
-This module copys the event.event object to create a shift.shift object. This
-will be used to define the working periods of the members of the LaLouve
-cooperative, and other ones of the same type.
-It also creates a shift.template object to help generating recurent shifts.
-
-We define a config_parameter_weekA parameter to store the date of a Monday of
-weekA (with format YYYY-MM-DD)
-
-Copyright, Author and Licence :
--------------------------------
-    * Copyright : 2016-Today, Akretion;
-    * Author :
-        * Julien WESTE;
-        * Sylvain LE GAL (https://twitter.com/legalsylvain);
-    * Licence : AGPL-3 (http://www.gnu.org/licenses/)
-    """,
-    'author': 'Akretion',
+    'author':
+        'Julien WESTE, Sylvain LE GAL (https://twitter.com/legalsylvain),'
+        'Odoo Community Association (OCA)',
     'website': 'http://www.akretion.com/fr',
     'license': 'AGPL-3',
     'depends': [

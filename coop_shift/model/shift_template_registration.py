@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Computed Purchase Order Module for Odoo
@@ -62,10 +62,11 @@ class ShiftTemplateRegistration(models.Model):
         'This partner is already registered on this Shift Template !'),
     ]
 
-    @api.one
+    @api.multi
     @api.model
     def _compute_current(self):
-        self.is_current = any(line.is_current for line in self.line_ids)
+        for reg in self:
+            reg.is_current = any(line.is_current for line in reg.line_ids)
 
     @api.model
     def _get_default_ticket(self):
@@ -96,7 +97,7 @@ class ShiftTemplateRegistration(models.Model):
                 return line.state, line.id
         return False, False
 
-    @api.one
+    @api.multi
     @api.constrains('line_ids')
     def _check_dates(self):
         for reg in self:
