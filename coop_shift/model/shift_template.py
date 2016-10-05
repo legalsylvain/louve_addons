@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Computed Purchase Order Module for Odoo
@@ -59,7 +59,7 @@ class ShiftTemplate(models.Model):
     shifts_count = fields.Integer(
         "Number of shifts", compute="_compute_shifts_counts")
     user_id = fields.Many2one(
-        'res.users', string='Shift Leader', required=True)
+        'res.partner', string='Shift Leader', required=True)
     company_id = fields.Many2one(
         'res.company', string='Company', change_default=True,
         default=lambda self: self.env['res.company']._company_default_get(
@@ -127,7 +127,7 @@ class ShiftTemplate(models.Model):
     end_time = fields.Float(string='End Time')
     updated_fields = fields.Char('Updated Fields')
     last_shift_date = fields.Date(
-        "Last Scheduled Shift", compute="_get_last_shift_date")
+        "Last Scheduled Shift", compute="_compute_last_shift_date")
 
     # RECURRENCE FIELD
     rrule_type = fields.Selection([
@@ -164,7 +164,7 @@ class ShiftTemplate(models.Model):
         ('5', 'Fifth'), ('-1', 'Last')], 'By day')
     final_date = fields.Date('Repeat Until')  # The last shift of a recurrence
     rrule = fields.Char(
-        compute="_get_rulestring", store=True, string='Recurrent Rule',)
+        compute="_compute_rulestring", store=True, string='Recurrent Rule',)
 
     @api.model
     def _default_tickets(self):
@@ -220,12 +220,13 @@ class ShiftTemplate(models.Model):
             template.seats_expected = template.seats_unconfirmed +\
                 template.seats_reserved + template.seats_used
 
-    @api.one
+    @api.multi
     @api.constrains('seats_max', 'seats_available')
     def _check_seats_limit(self):
-        if self.seats_availability == 'limited' and self.seats_max and\
-                self.seats_available < 0:
-            raise UserError(_('No more available seats.'))
+        for templ in self:
+            if templ.seats_availability == 'limited' and templ.seats_max and\
+                    templ.seats_available < 0:
+                raise UserError(_('No more available seats.'))
 
     # Private section
     @api.depends(
@@ -252,29 +253,30 @@ class ShiftTemplate(models.Model):
                 'interval', 'count', 'end_type', 'mo', 'tu', 'we', 'th', 'fr',
                 'sa', 'su', 'day', 'week_list']
 
-    @api.one
+    @api.multi
     @api.depends(
         'byday', 'recurrency', 'final_date', 'rrule_type', 'month_by',
         'interval', 'count', 'end_type', 'mo', 'tu', 'we', 'th', 'fr',
         'sa', 'su', 'day', 'week_list')
-    def _get_rulestring(self):
+    def _compute_rulestring(self):
         """
         Gets Recurrence rule string according to value type RECUR of iCalendar
         from the values given.
         @return: dictionary of rrule value.
         """
 
-        # read these fields as SUPERUSER because if the record is private a
-        # normal search could raise an error
-        recurrent_fields = self._get_recurrent_fields()
-        fields = self.sudo().read(recurrent_fields)[0]
-        if fields['end_type'] == 'no_end':
-            fields['end_type'] = 'count'
-            fields['count'] = 999
-        if fields['recurrency']:
-            self.rrule = self.compute_rule_string(fields)
-        else:
-            self.rrule = ''
+        for templ in self:
+            # read these fields as SUPERUSER because if the record is private a
+            # normal search could raise an error
+            recurrent_fields = templ._get_recurrent_fields()
+            fields = templ.sudo().read(recurrent_fields)[0]
+            if fields['end_type'] == 'no_end':
+                fields['end_type'] = 'count'
+                fields['count'] = 999
+            if fields['recurrency']:
+                templ.rrule = templ.compute_rule_string(fields)
+            else:
+                templ.rrule = ''
 
     @api.model
     def _default_shift_mail_ids(self):
@@ -478,7 +480,7 @@ class ShiftTemplate(models.Model):
 
     @api.depends('shift_ids')
     @api.multi
-    def _get_last_shift_date(self):
+    def _compute_last_shift_date(self):
         for template in self:
             if template.shift_ids:
                 template.last_shift_date = max(

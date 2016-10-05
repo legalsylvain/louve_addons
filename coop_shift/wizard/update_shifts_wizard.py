@@ -121,7 +121,7 @@ class UpdateShiftsWizardLine(models.TransientModel):
     shift_id = fields.Many2one(
         'shift.shift', 'Shift Reference', required=True)
     name = fields.Char('Name')
-    user_id = fields.Many2one('res.users', string='Responsible')
+    user_id = fields.Many2one('res.partner', string='Responsible')
     shift_type_id = fields.Many2one('shift.type', string='Category')
     date_begin = fields.Datetime(string='Start Date')
     date_end = fields.Datetime(string='Start Date')

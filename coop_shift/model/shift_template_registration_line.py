@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Computed Purchase Order Module for Odoo
@@ -63,19 +63,20 @@ class ShiftTemplateRegistrationLine(models.Model):
     is_future = fields.Boolean(
         string="Future", compute="_compute_current", multi="current")
 
-    @api.one
+    @api.multi
     @api.model
     def _compute_current(self):
-        now = fields.Datetime.now()
-        self.is_current = False
-        self.is_past = False
-        self.is_future = False
-        if (self.date_begin and self.date_begin > now):
-            self.is_future = True
-        elif (self.date_end and self.date_end < now):
-            self.is_past = True
-        else:
-            self.is_current = True
+        for line in self:
+            now = fields.Datetime.now()
+            line.is_current = False
+            line.is_past = False
+            line.is_future = False
+            if (line.date_begin and line.date_begin > now):
+                line.is_future = True
+            elif (line.date_end and line.date_end < now):
+                line.is_past = True
+            else:
+                line.is_current = True
 
     @api.model
     def create(self, vals):
@@ -139,60 +140,62 @@ class ShiftTemplateRegistrationLine(models.Model):
         vals['shift_registration_ids'] = created_registrations
         return super(ShiftTemplateRegistrationLine, self).create(vals)
 
-    @api.one
+    @api.multi
     def write(self, vals):
-        sr_obj = self.env['shift.registration']
         res = super(ShiftTemplateRegistrationLine, self).write(vals)
-        st_reg = self.registration_id
-        partner = st_reg.partner_id
+        for line in self:
+            sr_obj = self.env['shift.registration']
+            st_reg = self.registration_id
+            partner = st_reg.partner_id
 
-        state = vals.get('state', self.state)
-        begin = vals.get('date_begin', self.date_begin)
-        end = vals.get('date_end', self.date_end)
+            state = vals.get('state', self.state)
+            begin = vals.get('date_begin', self.date_begin)
+            end = vals.get('date_end', self.date_end)
 
-        # for linked registrations
-        for sr in self.shift_registration_ids:
-            shift = sr.shift_id
-            # if shift is done, pass
-            if shift.state == "done":
-                continue
-            # if dates ok, just update state
-            if (shift.date_begin > begin or not begin) and\
-                    (shift.date_end < end or not end):
-                sr.state = state
-            # if dates not ok, unlink the shift_registration
-            else:
-                sr.unlink()
-
-        # for shifts within dates: if partner has no registration, create it
-        shifts = st_reg.shift_template_id.shift_ids.filtered(
-            lambda s, b=begin, e=end: (s.date_begin > b or not b) and
-            (s.date_end < e or not e) and (s.state != 'done'))
-        for shift in shifts:
-            found = partner_found = False
-            for registration in shift.registration_ids:
-                if registration.partner_id == partner:
-                    partner_found = registration
-                if registration.tmpl_reg_line_id == self:
-                    found = True
-                    break
-            if not found:
-                if partner_found:
-                    partner_found.tmpl_reg_line_id = self
-                    partner_found.state = state
+            # for linked registrations
+            for sr in self.shift_registration_ids:
+                shift = sr.shift_id
+                # if shift is done, pass
+                if shift.state == "done":
+                    continue
+                # if dates ok, just update state
+                if (shift.date_begin > begin or not begin) and\
+                        (shift.date_end < end or not end):
+                    sr.state = state
+                # if dates not ok, unlink the shift_registration
                 else:
-                    ticket_id = shift.shift_ticket_ids.filtered(
-                        lambda t: t.product_id ==
-                        st_reg.shift_ticket_id.product_id)[0]
-                    values = {
-                        'partner_id': partner.id,
-                        'state': state,
-                        'shift_id': shift.id,
-                        'shift_ticket_id': ticket_id.id,
-                        'tmpl_reg_line_id': self.id,
-                        'template_created': True,
-                    }
-                    sr_obj.create(values)
+                    sr.unlink()
+
+            # for shifts within dates: if partner has no registration, create
+            # it
+            shifts = st_reg.shift_template_id.shift_ids.filtered(
+                lambda s, b=begin, e=end: (s.date_begin > b or not b) and
+                (s.date_end < e or not e) and (s.state != 'done'))
+            for shift in shifts:
+                found = partner_found = False
+                for registration in shift.registration_ids:
+                    if registration.partner_id == partner:
+                        partner_found = registration
+                    if registration.tmpl_reg_line_id == self:
+                        found = True
+                        break
+                if not found:
+                    if partner_found:
+                        partner_found.tmpl_reg_line_id = self
+                        partner_found.state = state
+                    else:
+                        ticket_id = shift.shift_ticket_ids.filtered(
+                            lambda t: t.product_id ==
+                            st_reg.shift_ticket_id.product_id)[0]
+                        values = {
+                            'partner_id': partner.id,
+                            'state': state,
+                            'shift_id': shift.id,
+                            'shift_ticket_id': ticket_id.id,
+                            'tmpl_reg_line_id': self.id,
+                            'template_created': True,
+                        }
+                        sr_obj.create(values)
         return res
 
     @api.multi

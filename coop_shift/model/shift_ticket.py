@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Computed Purchase Order Module for Odoo
@@ -44,7 +44,7 @@ class ShiftTicket(models.Model):
     begin_date_string = fields.Char(
         string='Begin Date', compute='_compute_begin_date_fields', store=True,)
     user_id = fields.Many2one(
-        'res.users', related="shift_id.user_id", store=True)
+        'res.partner', related="shift_id.user_id", store=True)
 
     @api.multi
     @api.depends('date_begin')
@@ -103,11 +103,12 @@ class ShiftTicket(models.Model):
                 ticket.seats_available = ticket.seats_max - (
                     ticket.seats_reserved + ticket.seats_used)
 
-    @api.one
+    @api.multi
     @api.constrains('registration_ids', 'seats_max')
     def _check_seats_limit(self):
-        if self.seats_max and self.seats_available < 0:
-            raise UserError(_('No more available seats for the ticket'))
+        for ticket in self:
+            if ticket.seats_max and ticket.seats_available < 0:
+                raise UserError(_('No more available seats for the ticket'))
 
     @api.onchange('product_id')
     def onchange_product_id(self):

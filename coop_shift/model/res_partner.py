@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Computed Purchase Order Module for Odoo
@@ -28,7 +28,7 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     @api.multi
-    def _registration_counts(self):
+    def _compute_registration_counts(self):
         d = fields.Datetime.now()
         for partner in self:
             partner.upcoming_registration_count = len(
@@ -42,7 +42,7 @@ class ResPartner(models.Model):
     registration_ids = fields.One2many(
         'shift.registration', "partner_id", 'Registrations')
     upcoming_registration_count = fields.Integer(
-        "Number of registrations", compute="_registration_counts")
+        "Number of registrations", compute="_compute_registration_counts")
     tmpl_reg_ids = fields.One2many(
         'shift.template.registration', "partner_id",
         'Template Registrations')
@@ -50,6 +50,8 @@ class ResPartner(models.Model):
         'shift.template.registration.line', "partner_id",
         'Template Registration Lines')
     tmpl_registration_count = fields.Integer(
-        "Number of Template registrations", compute="_registration_counts")
+        "Number of Template registrations",
+        compute="_compute_registration_counts")
     active_tmpl_reg_line_count = fields.Integer(
-        "Number of active registration lines", compute="_registration_counts")
+        "Number of active registration lines",
+        compute="_compute_registration_counts")

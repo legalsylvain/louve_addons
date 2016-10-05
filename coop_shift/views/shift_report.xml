@@ -11,10 +11,6 @@
             file="coop_shift.report_timesheet"
             attachment_use="False"
         />
-        <record id="coop_shift.timesheet" model="ir.actions.report.xml">
-            <field name="paperformat_id" ref="report.paperformat_euro"/>
-            <field name="attachment_use" eval="0"/>
-        </record>
 
         <report
             id="wallchart_template"
@@ -25,10 +21,6 @@
             file="coop_shift.report_wallchart_template"
             attachment_use="False"
         />
-        <record id="coop_shift.wallchart_template" model="ir.actions.report.xml">
-            <field name="paperformat_id" ref="report.paperformat_euro"/>
-            <field name="attachment_use" eval="0"/>
-        </record>
 
         <report
             id="wallchart_ftop"
@@ -39,9 +31,5 @@
             file="coop_shift.report_wallchart_ftop"
             attachment_use="False"
         />
-        <record id="coop_shift.wallchart_ftop" model="ir.actions.report.xml">
-            <field name="paperformat_id" ref="report.paperformat_euro"/>
-            <field name="attachment_use" eval="0"/>
-        </record>
     </data>
 </openerp>

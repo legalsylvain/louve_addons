@@ -7,19 +7,11 @@
 
     <!-- Demo Data for Event Type -->
     <record id="event_type_0" model="shift.type">
-        <field name="name">Week A</field>
+        <field name="name">Normal Shift</field>
     </record>
 
     <record id="event_type_1" model="shift.type">
-        <field name="name">Week B</field>
-    </record>
-
-    <record id="event_type_1" model="shift.type">
-        <field name="name">Week C</field>
-    </record>
-
-    <record id="event_type_1" model="shift.type">
-        <field name="name">Week D</field>
+        <field name="name">Special Shift</field>
     </record>
     </data>
 </openerp>

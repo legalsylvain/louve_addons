@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Computed Purchase Order Module for Odoo
@@ -97,7 +97,7 @@ class ShiftShift(models.Model):
         string='Start Time', compute='_compute_begin_time', store=True)
     end_time = fields.Float(
         string='Start Time', compute='_compute_end_time', store=True)
-    user_id = fields.Many2one(default=False)
+    user_id = fields.Many2one(comodel_name='res.partner', default=False)
 
     _sql_constraints = [(
         'template_date_uniq',
@@ -162,16 +162,18 @@ class ShiftShift(models.Model):
         except ValueError:
             return self.env['shift.ticket']
 
-    @api.one
+    @api.multi
     @api.constrains('seats_max', 'seats_available')
     def _check_seats_limit(self):
-        if self.seats_availability == 'limited' and self.seats_max and\
-                self.seats_available < 0:
-            raise UserError(_('No more available seats.'))
+        for shift in self:
+            if shift.seats_availability == 'limited' and shift.seats_max and\
+                    shift.seats_available < 0:
+                raise UserError(_('No more available seats.'))
 
-    @api.one
+    @api.multi
     def _compute_auto_confirm(self):
-        self.auto_confirm = False
+        for shift in self:
+            shift.auto_confirm = False
 
     @api.model
     def _default_event_mail_ids(self):
