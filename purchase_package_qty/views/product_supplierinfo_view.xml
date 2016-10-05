@@ -53,6 +53,7 @@
                         <field name="indicative_package"/>
                 </field>
                 <field name="price" position="replace">
+                    <field name="price" invisible="1"/>
                     <field name="base_price"/>
                     <field name="price_policy"/>
                 </field>
