@@ -20,11 +20,11 @@
             <field name="groups_id" eval="[(4, ref('coop_shift.group_shift_manager'))]"/>
             <field name="arch" type="xml">
                 <page name="sales_purchases" position="after">
-                    <page name="shifts" string="Shifts" groups="base.group_no_one">
-                        <group name="button">
+                    <page name="shifts" string="Shifts">
+                        <group name="button" groups="base.group_no_one">
                             <button name="%(coop_shift.action_add_template_registration)d" type="action" class="oe_highlight" icon="fa-cogs" string="Add Template Registration"/>
                         </group>
-                        <group string="Template Registrations">
+                        <group string="Template Registrations" groups="base.group_no_one">
                             <field name="tmpl_reg_line_ids" nolabel="1">
                                 <tree colors="blue:is_current" create="false" editable="top">
                                     <field name="shift_template_id" readonly="1"/>
@@ -36,7 +36,7 @@
                                 </tree>
                             </field>
                         </group>
-                        <group string="Shift Registrations">
+                        <group string="Shift Registrations" groups="base.group_no_one">
                             <field name="registration_ids" readonly="1" nolabel="1">
                                 <tree>
                                     <field name="shift_id"/>
