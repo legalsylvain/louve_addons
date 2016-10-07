@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pricetag_model_default" model="pricetag.model">
+        <field name="field_ids" eval="[(4, ref('product.field_product_product_name')),(4, ref('product.field_product_product_list_price')),(4, ref('field_product_product_price_volume')),(4, ref('field_product_product_price_weight_net')),(4, ref('product.field_product_product_volume')),(4, ref('field_product_product_weight_net')),(4, ref('field_product_product_rack_instruction')),(4, ref('field_product_product_rack_location')),(4, ref('field_product_product_rack_number_of_packages')),(4, ref('field_product_product_origin')),(4, ref('field_product_product_farming_method')),(4, ref('field_product_product_other_information'))]"/>
+    </record>
+</odoo>
