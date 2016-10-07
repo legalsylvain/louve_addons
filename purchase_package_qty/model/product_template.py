@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Package Quantity Module for Odoo
@@ -21,13 +21,17 @@
 #
 ##############################################################################
 
+from openerp import api, fields, models
 
-from . import product_supplierinfo
-from . import purchase_order_line
-from . import purchase_order
-from . import stock_move
-from . import stock_picking
-from . import stock_pack_operation
-from . import account_invoice
-from . import account_invoice_line
-from . import product_template
+
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    @api.depends('seller_ids',)
+    @api.multi
+    def _compute_default_seller_id(self):
+        for pt in self:
+            pt.default_seller_id = pt.seller_ids and pt.seller_ids[0] or False
+
+    default_seller_id = fields.Many2one(
+        string='Default seller id', compute='_compute_default_seller_id',)
