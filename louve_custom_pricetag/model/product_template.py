@@ -23,7 +23,7 @@ class ProductTemplate(models.Model):
 
     @api.depends(
         'rack_instruction', 'rack_location', 'rack_number_of_packages',
-        'package_qty')
+        'default_seller_id')
     @api.multi
     def _compute_pricetag_rackinfos(self):
         for pt in self:
