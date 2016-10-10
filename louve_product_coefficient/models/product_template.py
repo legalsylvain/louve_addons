@@ -13,64 +13,55 @@ class ProductTemplate(models.Model):
 
     # Column Section
     coeff1_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 1',
-        domain="[('coefficient_type', '=', 'supplier')]")
+        comodel_name='product.coefficient', string='Coefficient 1')
     incl_in_standard_price_1 = fields.Boolean(
         "Include in Standard Price", default=False, help="""If you check this
         box, this coefficient will be used to calculate the standard price of
         the product""")
     coeff2_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 2',
-        domain="[('coefficient_type', '=', 'shipping')]")
+        comodel_name='product.coefficient', string='Coefficient 2')
     incl_in_standard_price_2 = fields.Boolean(
         "Include in Standard Price", default=False, help="""If you check this
         box, this coefficient will be used to calculate the standard price of
         the product""")
     coeff3_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 3',
-        domain="[('coefficient_type', '=', 'loss')]")
+        comodel_name='product.coefficient', string='Coefficient 3')
     incl_in_standard_price_3 = fields.Boolean(
         "Include in Standard Price", default=False, help="""If you check this
         box, this coefficient will be used to calculate the standard price of
         the product""")
     coeff4_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 4',
-        domain="[('coefficient_type', '=', 'custom')]")
+        comodel_name='product.coefficient', string='Coefficient 4')
     incl_in_standard_price_4 = fields.Boolean(
         "Include in Standard Price", default=False, help="""If you check this
         box, this coefficient will be used to calculate the standard price of
         the product""")
     coeff5_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 5',
-        domain="[('coefficient_type', '=', 'custom')]")
+        comodel_name='product.coefficient', string='Coefficient 5')
     incl_in_standard_price_5 = fields.Boolean(
         "Include in Standard Price", default=False, help="""If you check this
         box, this coefficient will be used to calculate the standard price of
         the product""")
     coeff6_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 6',
-        domain="[('coefficient_type', '=', 'custom')]")
+        comodel_name='product.coefficient', string='Coefficient 6')
     incl_in_standard_price_6 = fields.Boolean(
         "Include in Standard Price", default=False, help="""If you check this
         box, this coefficient will be used to calculate the standard price of
         the product""")
     coeff7_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 7',
-        domain="[('coefficient_type', '=', 'custom')]")
+        comodel_name='product.coefficient', string='Coefficient 7')
     incl_in_standard_price_7 = fields.Boolean(
         "Include in Standard Price", default=False, help="""If you check this
         box, this coefficient will be used to calculate the standard price of
         the product""")
     coeff8_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 8',
-        domain="[('coefficient_type', '=', 'custom')]")
+        comodel_name='product.coefficient', string='Coefficient 8')
     incl_in_standard_price_8 = fields.Boolean(
         "Include in Standard Price", default=False, help="""If you check this
         box, this coefficient will be used to calculate the standard price of
         the product""")
     coeff9_id = fields.Many2one(
-        comodel_name='product.coefficient', string='Coefficient 9',
-        domain="[('coefficient_type', '=', 'margin')]")
+        comodel_name='product.coefficient', string='Coefficient 9')
     incl_in_standard_price_9 = fields.Boolean(
         "Include in Standard Price", default=False, help="""If you check this
         box, this coefficient will be used to calculate the standard price of
