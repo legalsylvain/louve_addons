@@ -41,8 +41,8 @@ Copyright, Author and Licence :
         'l10n_fr_department',
     ],
     'data': [
-        'views/view_product_template.xml',
         'data/report_paperformat.xml',
         'report/report_pricetag.xml',
+        'views/view_product_template.xml',
     ],
 }
