@@ -1,10 +1,9 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Purchase - Package Quantity Module for Odoo
 #    Copyright (C) 2016-Today Akretion (https://www.akretion.com)
 #    @author Julien WESTE
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,14 +20,29 @@
 #
 ##############################################################################
 
+{
+    'name': 'Louve Custom - Pricetags',
+    'version': '9.0.0.0.0',
+    'category': 'Sales',
+    'description': """
+Customize sale_food module
 
-from . import product_template
-from . import product_supplierinfo
-from . import purchase_order_line
-from . import purchase_order
-from . import stock_move
-from . import stock_picking
-from . import stock_pack_operation
-from . import account_invoice
-from . import account_invoice_line
-from . import stock_inventory
+Copyright, Author and Licence :
+-------------------------------
+    * Copyright : 2016, Akretion;
+    * Licence : AGPL-3 (http://www.gnu.org/licenses/)
+    """,
+    'author': 'Julien WESTE - Akretion',
+    'website': 'http://www.akretion.com',
+    'license': 'AGPL-3',
+    'depends': [
+        'sale_food',
+        'purchase_package_qty',
+        'l10n_fr_department',
+    ],
+    'data': [
+        'data/report_paperformat.xml',
+        'report/report_pricetag.xml',
+        'views/view_product_template.xml',
+    ],
+}
