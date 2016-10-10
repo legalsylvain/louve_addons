@@ -37,7 +37,7 @@ class ProductTemplate(models.Model):
                 tmp = pt.rack_number_of_packages + \
                     (' - ' + tmp if tmp else '')
             if pt.default_seller_id.package_qty:
-                tmp = pt.default_seller_id.package_qty + \
+                tmp = str(pt.default_seller_id.package_qty) + \
                     (' - ' + tmp if tmp else '')
             pt.pricetag_rackinfos = tmp
 
