@@ -34,4 +34,5 @@ class ProductTemplate(models.Model):
             pt.default_seller_id = pt.seller_ids and pt.seller_ids[0] or False
 
     default_seller_id = fields.Many2one(
-        string='Default seller id', compute='_compute_default_seller_id',)
+        string='Default seller id', comodel_name='product.supplierinfo',
+        compute='_compute_default_seller_id',)
