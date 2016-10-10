@@ -41,6 +41,9 @@ class ProductTemplate(models.Model):
                     (' - ' + tmp if tmp else '')
             pt.pricetag_rackinfos = tmp
 
+    def _default_category_print_id(self):
+        return self.env.ref('louve_custom_pricetag.category_print_louve')
+
     # Column Section
     rack_instruction = fields.Char(
         "Rack Instruction", help="""For example, the number of packages that
@@ -56,3 +59,5 @@ class ProductTemplate(models.Model):
         compute=_compute_pricetag_rackinfos, string='La Louve rack fields')
     pricetag_louveinfos = fields.Char(
         compute=_compute_pricetag_louveinfos, string='La Louve custom fields')
+    category_print_id = fields.Many2one(
+        default=lambda self: self._default_category_print_id())
