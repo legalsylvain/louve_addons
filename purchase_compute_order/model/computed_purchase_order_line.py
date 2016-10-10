@@ -69,6 +69,12 @@ class ComputedPurchaseOrderLine(models.Model):
     product_price = fields.Float(
         'Supplier Product Price',
         digits_compute=dp.get_precision('Product Price'))
+    discount = fields.Float(
+        string='Discount (%)', digits_compute=dp.get_precision('Discount'))
+    discount_inv = fields.Float(
+        string='Discount (%)', digits_compute=dp.get_precision('Discount'),
+        compute='_get_product_information', inverse='_set_discount',
+        multi='product_code_name_price',)
     product_price_inv = fields.Float(
         compute='_get_product_information', inverse='_set_product_price',
         string='Supplier Product Price', multi='product_code_name_price',)
@@ -170,15 +176,17 @@ class ComputedPurchaseOrderLine(models.Model):
 
     @api.depends(
         'purchase_qty', 'product_price', 'product_price_inv', 'price_policy',
-        'package_qty_inv')
+        'package_qty_inv', 'discount_inv')
     @api.multi
     def _compute_subtotal_price(self):
         for line in self:
+            net_unit_price =\
+                line.product_price_inv * (1 - line.discount_inv / 100.0)
             if line.price_policy == 'package':
                 line.subtotal = line.package_qty_inv and line.purchase_qty *\
-                    line.product_price_inv / line.package_qty_inv or 0
+                    net_unit_price / line.package_qty_inv or 0
             else:
-                line.subtotal = line.purchase_qty * line.product_price_inv
+                line.subtotal = line.purchase_qty * net_unit_price
 
     @api.onchange('displayed_average_consumption', 'consumption_range')
     @api.multi
@@ -222,12 +230,14 @@ class ComputedPurchaseOrderLine(models.Model):
                 cpol.product_code_inv = None
                 cpol.product_name_inv = None
                 cpol.product_price_inv = 0.0
+                cpol.discount = 0.0
                 cpol.price_policy = 'uom'
                 cpol.package_qty_inv = 0.0
             elif cpol.state in ('updated', 'new'):
                 cpol.product_code_inv = cpol.product_code
                 cpol.product_name_inv = cpol.product_name
                 cpol.product_price_inv = cpol.product_price
+                cpol.discount_inv = cpol.discount
                 cpol.package_qty_inv = cpol.package_qty
             else:
                 psi = psi_obj.search([
@@ -241,6 +251,7 @@ class ComputedPurchaseOrderLine(models.Model):
                         cpol.product_code_inv = psi.product_code
                         cpol.product_name_inv = psi.product_name
                         cpol.product_price_inv = psi.base_price
+                        cpol.discount_inv = psi.discount
                         cpol.package_qty_inv = psi.package_qty
                         cpol.price_policy = psi.price_policy
 
@@ -259,6 +270,12 @@ class ComputedPurchaseOrderLine(models.Model):
     @api.depends('product_price_inv')
     def _set_product_price(self):
         self.product_price = self.product_price_inv
+        if self.state == 'up_to_date':
+            self.state = 'updated'
+
+    @api.depends('discount_inv')
+    def _set_discount(self):
+        self.discount = self.discount_inv
         if self.state == 'up_to_date':
             self.state = 'updated'
 
@@ -284,7 +301,7 @@ class ComputedPurchaseOrderLine(models.Model):
     # View Section
     @api.onchange(
         'product_code_inv', 'product_name_inv', 'product_price_inv',
-        'package_qty_inv', 'price_policy')
+        'package_qty_inv', 'price_policy', 'discount_inv')
     def onchange_product_info(self):
         self.state = 'updated'
 
@@ -319,6 +336,7 @@ class ComputedPurchaseOrderLine(models.Model):
                 'weight': pp.weight,
                 'uom_po_id': pp.uom_id.id,
                 'product_price_inv': 0,
+                'discount_inv': 0,
                 'price_policy': 'uom',
                 'package_qty_inv': 0,
                 'average_consumption': pp.displayed_average_consumption,
@@ -336,6 +354,7 @@ class ComputedPurchaseOrderLine(models.Model):
                     'product_code_inv': psi.product_code,
                     'product_name_inv': psi.product_name,
                     'product_price_inv': psi.price,
+                    'discount_inv': psi.discount,
                     'price_policy': psi.price_policy,
                     'package_qty_inv': psi.package_qty,
                     'uom_po_id': psi.product_uom.id,
@@ -348,6 +367,7 @@ class ComputedPurchaseOrderLine(models.Model):
             self.weight = vals['weight']
             self.uom_po_id = vals['uom_po_id']
             self.product_price_inv = vals['product_price_inv']
+            self.discount_inv = vals['discount_inv']
             self.price_policy = vals['price_policy']
             self.package_qty_inv = vals['package_qty_inv']
             self.average_consumption = vals['average_consumption']
@@ -382,7 +402,10 @@ class ComputedPurchaseOrderLine(models.Model):
                 'min_qty': cpol.package_qty,
                 'product_id': product_tmpl_id,
                 'pricelist_ids': [(0, 0, {
-                    'min_quantity': 0, 'price': cpol.product_price_inv})],
+                    'min_quantity': 0,
+                    'price': cpol.product_price_inv,
+                    'discount': cpol.discount_inv,
+                })],
                 'price_policy': cpol.price_policy,
             }
             psi_id = psi_obj.create(vals)
