@@ -42,7 +42,6 @@ Copyright, Author and Licence :
     ],
     'data': [
         'views/view_product_template.xml',
-        'data/pricetag_model.xml',
         'data/report_paperformat.xml',
         'report/report_pricetag.xml',
     ],
