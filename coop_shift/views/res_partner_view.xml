@@ -36,7 +36,7 @@
                                 </tree>
                             </field>
                         </group>
-                        <group string="Shift Registrations" groups="base.group_no_one">
+                        <group string="Shift Registrations" name="group_shift_registration" groups="base.group_no_one">
                             <field name="registration_ids" readonly="1" nolabel="1">
                                 <tree>
                                     <field name="shift_id"/>
