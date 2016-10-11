@@ -65,7 +65,8 @@ class ShiftTemplate(models.Model):
         default=lambda self: self.env['res.company']._company_default_get(
             'shift.shift'))
     shift_type_id = fields.Many2one(
-        'shift.type', string='Category', required=False)
+        'shift.type', string='Category', required=True,
+        default=lambda self: self._default_shift_type())
     week_number = fields.Selection(
         WEEK_NUMBERS, string='Week', compute="_compute_week_number",
         store=True)
@@ -287,6 +288,10 @@ class ShiftTemplate(models.Model):
         #     'interval_type': 'after_sub',
         #     'template_id': self.env.ref('coop_shift.shift_subscription')
         # })]
+
+    @api.model
+    def _default_shift_type(self):
+        return self.env.ref('coop_shift.shift_type_abcd')
 
     @api.onchange('duration', 'start_time')
     @api.multi

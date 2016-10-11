@@ -18,9 +18,12 @@
         </record>
     </data>
 
-        <record id="shift_type" model="shift.type">
-            <field name="name">Generic Shifts</field>
     <data noupdate="1">
+        <record id="shift_type_abcd" model="shift.type">
+            <field name="name">ABCD Shift</field>
+        </record>
+        <record id="shift_type_ftop" model="shift.type">
+            <field name="name">FTOP Shift</field>
         </record>
 
         <record id="product_product_shift_standard" model="product.product">
