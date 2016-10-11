@@ -111,7 +111,7 @@ class ShiftTemplateRegistrationLine(models.Model):
 
         v = {
             'partner_id': partner.id,
-            'state': vals['state']
+            'state': vals.get('state', 'open')
         }
 
         created_registrations = []
