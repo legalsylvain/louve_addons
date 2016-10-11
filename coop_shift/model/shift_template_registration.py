@@ -64,13 +64,21 @@ class ShiftTemplateRegistration(models.Model):
     ]
 
     @api.one
-    @api.constrains('shift_ticket_id')
-    def _check_ticket(self):
-        if self.shift_ticket_id and\
-            self.shift_ticket_id.product_id != self.env.ref(
+    @api.constrains(
+        'shift_template_id.shift_type_id', 'shift_ticket_product_id')
+    def _check_registration_type(self):
+        if self.shift_template_id.shift_type_id == self.env.ref(
+                'coop_shift.shift_type_abcd') and\
+                self.shift_ticket_product_id != self.env.ref(
                 'coop_shift.product_product_shift_standard'):
             raise ValidationError(_(
-                'Inscriptions on Templates must be Standard type!'))
+                'Inscriptions on ABCD Templates must be Standard type!'))
+        if self.shift_template_id.shift_type_id == self.env.ref(
+                'coop_shift.shift_type_ftop') and\
+                self.shift_ticket_product_id != self.env.ref(
+                'coop_shift.product_product_shift_ftop'):
+            raise ValidationError(_(
+                'Inscriptions on FTOP Templates must be FTOP type!'))
 
     @api.multi
     @api.model
