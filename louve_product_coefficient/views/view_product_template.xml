@@ -108,7 +108,7 @@
                                 <field name="coeff8_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
                                 <field name="coeff9_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
                             </group>
-                            <group string="Incl. in Standard Price" col="1">
+                            <group string="Incl. in S. Price" col="1">
                                 <field name="incl_in_standard_price_1" nolabel="1" style="height:30px"/>
                                 <field name="incl_in_standard_price_2" nolabel="1" style="height:30px"/>
                                 <field name="incl_in_standard_price_3" nolabel="1" style="height:30px"/>
