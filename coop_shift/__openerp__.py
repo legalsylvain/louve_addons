@@ -32,6 +32,7 @@
     'license': 'AGPL-3',
     'depends': [
         'base',
+        'capital_subscription',
         'event',
         'event_sale',
         'mail',
