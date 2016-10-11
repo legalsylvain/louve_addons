@@ -63,6 +63,15 @@ class ShiftTemplateRegistration(models.Model):
         'This partner is already registered on this Shift Template !'),
     ]
 
+    @api.one
+    @api.constrains('shift_ticket_id')
+    def _check_ticket(self):
+        if self.shift_ticket_id and\
+            self.shift_ticket_id.product_id != self.env.ref(
+                'coop_shift.product_product_shift_standard'):
+            raise ValidationError(_(
+                'Inscriptions on Templates must be Standard type!'))
+
     @api.multi
     @api.model
     def _compute_current(self):

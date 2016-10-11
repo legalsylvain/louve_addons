@@ -969,6 +969,12 @@ msgid "Immediately"
 msgstr "Immédiat"
 
 #. module: coop_shift
+#: code:addons/coop_shift/model/shift_template_registration.py:72
+#, python-format
+msgid "Inscriptions on Templates must be Standard type!"
+msgstr "Les inscriptions sur les créneaux doivent être de type 'Classique'!"
+
+#. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_mail_interval_nbr
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_mail_interval_nbr
 msgid "Interval"
