@@ -78,5 +78,6 @@
         name="Shift Tickets"
         id="menu_shift_ticket"
         action="action_shift_ticket"
-        parent="shift_menu"/>
+        parent="shift_menu"
+        groups="coop_shift.group_shift_config"/>
 </odoo>
