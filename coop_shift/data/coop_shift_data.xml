@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="config_report_url" model="ir.config_parameter">
             <field name="key">report.url</field>
             <field name="value">http://0.0.0.0:8069/</field>
@@ -18,9 +18,9 @@
         </record>
     </data>
 
-    <data noupdate="0">
         <record id="shift_type" model="shift.type">
             <field name="name">Generic Shifts</field>
+    <data noupdate="1">
         </record>
 
         <record id="product_product_shift_standard" model="product.product">
