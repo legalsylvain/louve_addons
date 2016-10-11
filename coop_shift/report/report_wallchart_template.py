@@ -72,8 +72,10 @@ class ReportWallchartTemplate(models.AbstractModel):
         return partners
 
     @api.model
-    def _get_tickets(self, template, product_name='Standard Subscription'):
-        product_name = 'Standard Subscription'
+    def _get_tickets(
+            self, template,
+            product_name='coop_shift.product_product_shift_standard'):
+        product_name = 'coop_shift.product_product_shift_standard'
         return super(ReportWallchartTemplate, self)._get_tickets(
             template, product_name)
 

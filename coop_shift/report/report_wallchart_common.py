@@ -46,9 +46,11 @@ class ReportWallchartCommon(models.AbstractModel):
             '%.2f' % time).split('.')[1]) / 100 * 60) or "00")
 
     @api.model
-    def _get_tickets(self, template, product_name='Standard Subscription'):
+    def _get_tickets(
+            self, template,
+            product_name='coop_shift.product_product_shift_standard'):
         return template.shift_ticket_ids.filtered(
-            lambda t: t.product_id.name == product_name)
+            lambda t, s=self, p=product_name: t.product_id == s.env.ref(p))
 
     @api.model
     def prerender_html(self, data):

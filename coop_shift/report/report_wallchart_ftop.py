@@ -61,8 +61,9 @@ class ReportWallchartFTOP(models.AbstractModel):
             return False
 
     @api.model
-    def _get_tickets(self, shift, product_name='Standard Subscription'):
-        product_name = 'FTOP Subscription'
+    def _get_tickets(
+            self, shift, product_name='coop_shift.product_product_shift_ftop'):
+        product_name = 'coop_shift.product_product_shift_ftop'
         return super(ReportWallchartFTOP, self)._get_tickets(
             shift, product_name)
 
