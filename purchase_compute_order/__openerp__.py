@@ -87,6 +87,7 @@ Copyright, Author and Licence :
         'product_average_consumption',
         'purchase',
         'purchase_package_qty',
+        'product_supplierinfo_discount',
     ],
     'data': [
         'data/ir_sequence.xml',

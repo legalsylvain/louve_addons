@@ -34,6 +34,7 @@
                     <field name="package_qty"/>
                     <field name="product_uom"/>
                     <field name="price"/>
+                    <field name="discount"/>
                 </tree>
             </field>
         </record>

@@ -245,6 +245,7 @@ class ComputedPurchaseOrder(models.Model):
                     'product_uom': line.product_id.uom_po_id.id,
                     'product_id': line.product_id.id,
                     'price_unit': line.product_price_inv,
+                    'discount': line.discount_inv,
                     'taxes_id': [(
                         6, 0,
                         [x.id for x in line.product_id.supplier_taxes_id])],

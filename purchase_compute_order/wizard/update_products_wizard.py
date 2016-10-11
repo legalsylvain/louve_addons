@@ -61,8 +61,9 @@ class UpdateProductsWizard(models.TransientModel):
                     'product_code': line.product_code,
                     'product_name': line.product_name,
                     'product_uom': line.uom_po_id.id,
-                    'package_qty': line.package_quantity,
+                    'package_qty': line.package_qty,
                     'price': line.product_price,
+                    'discount': line.discount,
                     'computed_purchase_order_line_id': line.id,
                 }))
         res.update({'line_ids': line_ids})
@@ -83,6 +84,7 @@ class UpdateProductsWizard(models.TransientModel):
                     'package_qty': line.package_qty,
                     'product_id': line.product_id.product_tmpl_id.id,
                     'price': line.price,
+                    'discount': line.discount,
                 }
                 psi_obj.browse(line.supplierinfo_id.id).write(values)
                 cpol_ids += [line.computed_purchase_order_line_id.id]
@@ -127,6 +129,8 @@ class UpdateProductsLineWizard(models.TransientModel):
         help="""This price will be considered as a price for the"""
         """ supplier Unit of Measure if any or the default Unit of"""
         """ Measure of the product otherwise""")
+    discount = fields.Float(
+        string='Discount (%)', digits_compute=dp.get_precision('Discount'))
     computed_purchase_order_line_id = fields.Many2one(
-        'computed.purchase.order.line', 'Ligne de Calcul', required=True,
+        'computed.purchase.order.line', 'Compute Line', required=True,
         ondelete='cascade', select=True)
