@@ -21,6 +21,12 @@ class ResPartner(models.Model):
     # Column Section
     is_louve_member = fields.Boolean('Is Louve Member')
 
+    adult_number_home = fields.Integer('Number of Adult in the Home')
+
+    sex = fields.Char('Sex')
+
+    old_coop_number = fields.Char('Civi CRM Old Number')
+
     is_underclass_population = fields.Boolean(
         'is Underclass Population', compute=_compute_is_underclass_population)
 

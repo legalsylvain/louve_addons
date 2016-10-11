@@ -11,15 +11,27 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <field name="user_id" position="before">
-                <field name="is_louve_member" attrs="{'readonly': True}"/>
-                <button name="set_louve_member" type="object"
-                    groups="louve_membership.louve_membership_manager"
-                    string="Set Louve Membership" colspan="2" class="oe_highlight" attrs="{'invisible': [('is_louve_member', '=', True)]}"/>
-                <button name="remove_louve_member" type="object"
-                    groups="louve_membership.louve_membership_manager"
-                    string="Remove Louve Membership" colspan="2" class="oe_highlight" attrs="{'invisible': [('is_louve_member', '=', False)]}"/>
-            </field>
+            <notebook position="inside">
+                <page string="Louve Custom">
+                    <group>
+                        <group string="MemberShip">
+                            <field name="is_louve_member" attrs="{'readonly': True}"/>
+
+                            <button name="set_louve_member" type="object"
+                                groups="louve_membership.louve_membership_manager"
+                                string="Set Louve Membership" colspan="2" class="oe_highlight" attrs="{'invisible': [('is_louve_member', '=', True)]}"/>
+                            <button name="remove_louve_member" type="object"
+                                groups="louve_membership.louve_membership_manager"
+                                string="Remove Louve Membership" colspan="2" class="oe_highlight" attrs="{'invisible': [('is_louve_member', '=', False)]}"/>
+                        </group>
+                        <group string="Extra Data">
+                            <field name="adult_number_home"/>
+                            <field name="sex"/>
+                            <field name="old_coop_number"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
         </field>
     </record>
 
