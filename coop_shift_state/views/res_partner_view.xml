@@ -8,7 +8,7 @@
             <field name="model">res.partner</field>
             <field name="name">res.partner.form.shift_state</field>
             <field name="inherit_id" ref="coop_shift.view_res_partner_shift_form"/>
-            <field name="groups_id" eval="[(4, ref('coop_shift.group_shift_manager'))]"/>
+            <field name="groups_id" eval="[(4, ref('coop_shift_state.group_shift_see_counter'))]"/>
             <field name="arch" type="xml">
                 <group name="button" position="before">
                     <group name="state">
