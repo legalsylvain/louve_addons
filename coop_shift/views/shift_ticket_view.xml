@@ -71,7 +71,7 @@
     <record model="ir.actions.act_window" id="action_shift_ticket">
         <field name="name">Shifts Tickets</field>
         <field name="res_model">shift.ticket</field>
-        <field name="view_ticket">form</field>
+        <field name="view_type">form</field>
     </record>
 
     <menuitem
