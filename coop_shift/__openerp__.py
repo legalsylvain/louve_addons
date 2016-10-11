@@ -68,6 +68,6 @@
         'data/cron.xml',
     ],
     'demo': [
-        'data/shift_demo.xml',
+        'demo/shift_demo.xml',
     ],
 }
