@@ -14,17 +14,20 @@
     'depends': [
         'capital_subscription',
         'coop_shift',
+        'barcodes_generate',
     ],
     'data': [
         # Classical Data
         'security/ir_module_category.xml',
         'security/res_groups.xml',
         'security/ir.model.access.csv',
+        'views/action.xml',
         'views/view_res_partner.xml',
+        'views/view_barcode_rule.xml',
         'views/view_account_invoice.xml',
         'views/view_capital_fundraising_wizard.xml',
         'views/view_capital_fundraising_category.xml',
-        'views/action.xml',
+        'views/view_res_partner_generate_barcode_wizard.xml',
         'views/menu.xml',
 
         # Custom Data
@@ -32,6 +35,7 @@
     ],
     'demo': [
         'demo/res_groups.xml',
+        'demo/barcode_rule.xml',
     ],
     'installable': True,
 }

@@ -44,4 +44,13 @@
         <field name="target">new</field>
     </record>
 
+    <record model="ir.actions.act_window" id="action_res_partner_generate_barcode_wizard">
+        <field name="name">Wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner.generate.barcode.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
 </odoo>
