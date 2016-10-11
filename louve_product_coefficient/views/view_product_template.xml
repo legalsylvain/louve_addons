@@ -69,6 +69,8 @@
             <div name="button_box" position="inside">
                 <button name="recompute_base_price" type="object" icon="fa-calculator" class="oe_stat_button" string="Recompute Base price"
                     groups="base.group_sale_manager"/>
+                <button name="use_theoritical_cost" type="object" icon="fa-rotate-left" class="oe_stat_button" string="Use Theoritical Cost"
+                    attrs="{'invisible': [('has_theoritical_cost_different', '=', False)]}" groups="base.group_sale_manager"/>
                 <button name="use_theoritical_price" type="object" icon="fa-rotate-left" class="oe_stat_button" string="Use Theoritical Price"
                     attrs="{'invisible': [('has_theoritical_price_different', '=', False)]}" groups="base.group_sale_manager"/>
             </div>
@@ -133,6 +135,7 @@
                             <group>
                                 <field name="theoritical_price" style="background-color: #D0EED0"/>
                                 <field name="has_theoritical_price_different"/>
+                                <field name="has_theoritical_cost_different"/>
                             </group>
                             <group />
                         </group>

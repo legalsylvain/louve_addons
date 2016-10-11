@@ -151,16 +151,24 @@ class ProductTemplate(models.Model):
         string='Has Theoritical Price Different', store=True,
         compute='_compute_has_theoritical_price_different')
 
+    has_theoritical_cost_different = fields.Boolean(
+        string='Has Theoritical Cost Different', store=True,
+        compute='_compute_has_theoritical_cost_different')
+
     # Custom Section
     @api.multi
     def recompute_base_price(self):
         self._compute_base_price()
 
-    # Custom Section
     @api.multi
     def use_theoritical_price(self):
         for template in self:
             template.list_price = template.theoritical_price
+
+    @api.multi
+    def use_theoritical_cost(self):
+        for template in self:
+            template.standard_price = template.coeff9_inter_sp
 
     @api.model
     def cron_recompute_base_price(self):
@@ -360,8 +368,21 @@ class ProductTemplate(models.Model):
         for template in self:
             if template.theoritical_price and (
                     template.base_price or
-                    template.alternative_base_price_standard):
+                    template.alternative_base_price_sale):
                 template.has_theoritical_price_different =\
                     template.list_price != template.theoritical_price
             else:
                 template.has_theoritical_price_different = False
+
+    @api.multi
+    @api.depends(
+        'coeff9_inter_sp', 'standard_price')
+    def _compute_has_theoritical_cost_different(self):
+        for template in self:
+            if template.coeff9_inter_sp and (
+                    template.base_price or
+                    template.alternative_base_price_standard):
+                template.has_theoritical_cost_different =\
+                    template.standard_price != template.coeff9_inter_sp
+            else:
+                template.has_theoritical_cost_different = False
