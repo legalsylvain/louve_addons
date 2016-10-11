@@ -109,7 +109,7 @@
                                 <field name="company_id" groups="base.group_multi_company"/>
                                 <field name="user_id" options="{'no_create': True}"/>
                                 <field name="week_number"/>
-                                <field name="shift_type_id" options="{'no_create': True}"/>
+                                <field name="shift_type_id" options="{'no_create': True}" groups="coop_shift.group_shift_config"/>
                             </group>
                             <group name="datetime">
                                 <field name="start_date"/>
