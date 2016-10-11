@@ -12,12 +12,12 @@ class ResPartner(models.Model):
     fundraising_partner_type_ids = fields.Many2many(
         comodel_name='capital.fundraising.partner.type',
         string='Fundraising Partner Type')
-    has_capital_subsciption = fields.Boolean(
+    has_capital_subscription = fields.Boolean(
         'Has a capital subscription',
-        compute="compute_has_capital_subsciption")
+        compute="compute_has_capital_subscription")
 
     @api.multi
-    def compute_has_capital_subsciption(self):
+    def compute_has_capital_subscription(self):
         for partner in self:
             invoice_obj = self.env['account.invoice']
             line_ids = invoice_obj.search([
@@ -25,4 +25,4 @@ class ResPartner(models.Model):
                 ('state', 'in', ('open', 'paid'))]).mapped(
                 'invoice_line_ids').filtered(
                 lambda l: l.product_id.is_capital_fundraising)
-            partner.has_capital_subsciption = len(line_ids)
+            partner.has_capital_subscription = len(line_ids)
