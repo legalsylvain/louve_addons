@@ -234,19 +234,24 @@ class ShiftTemplate(models.Model):
         'shift_type_id', 'week_number', 'mo', 'tu', 'we', 'th', 'fr', 'sa',
         'su', 'start_time')
     def _compute_template_name(self):
-        name = self.shift_type_id.name + "-" if self.shift_type_id else ""
-        name += self.week_number and (
-            WEEK_NUMBERS[self.week_number - 1][1]) or ""
-        name += _("Mo") if self.mo else ""
-        name += _("Tu") if self.tu else ""
-        name += _("We") if self.we else ""
-        name += _("Th") if self.th else ""
-        name += _("Fr") if self.fr else ""
-        name += _("Sa") if self.sa else ""
-        name += _("Su") if self.su else ""
-        name += "%02d:%02d" % (
-            int(self.start_time),
-            int(round((self.start_time - int(self.start_time)) * 60)))
+        if self.shift_type_id == self.env.ref('coop_shift.shift_type_abcd'):
+            name = self.week_number and (
+                WEEK_NUMBERS[self.week_number - 1][1]) or ""
+            name += _("Mo") if self.mo else ""
+            name += _("Tu") if self.tu else ""
+            name += _("We") if self.we else ""
+            name += _("Th") if self.th else ""
+            name += _("Fr") if self.fr else ""
+            name += _("Sa") if self.sa else ""
+            name += _("Su") if self.su else ""
+            name += "%02d:%02d" % (
+                int(self.start_time),
+                int(round((self.start_time - int(self.start_time)) * 60)))
+        else:
+            name = self.shift_type_id.name
+            name += "%02d:%02d" % (
+                int(self.start_time),
+                int(round((self.start_time - int(self.start_time)) * 60)))
         self.name = name
 
     def _get_recurrent_fields(self):
