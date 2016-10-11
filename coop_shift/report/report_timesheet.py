@@ -27,7 +27,8 @@ class ReportTimesheet(models.AbstractModel):
             registrations = []
             ftops = []
             for reg in shift.registration_ids:
-                if reg.shift_ticket_id.product_id.name == "FTOP Subscription":
+                if reg.shift_ticket_id.product_id == self.env.ref(
+                        'coop_shift.product_product_shift_ftop'):
                     ftops.append(reg)
                 else:
                     if reg.state != 'replacing':

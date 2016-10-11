@@ -6,13 +6,13 @@
         <tr t-foreach="Shifts" t-as="shift">
             <t t-call="report.external_layout">
                 <div class="page" style="page-break-after:always">
-                    <div class="row mt8 mb0">
+                    <div class="row mt0 mb0">
                         <div class="col-xs-4" style="text-align:right"><h2>Timesheet of: </h2></div>
-                        <div class="col-xs-4"><h3><span t-esc="shift['shift'].date_begin"/></h3></div>
+                        <div class="col-xs-4"><h3><span t-esc="shift['shift'].date_without_time"/></h3></div>
                         <div class="col-xs-1 col-xs-push-1" style="text-align:right"><h4>as of</h4></div>
                         <div class="col-xs-2 col-xs-push-1"><h4><span t-esc="date.today()"/></h4></div>
                     </div>
-                    <div class="row mt0 mb8">
+                    <div class="row mt0 mb0">
                         <div class="col-xs-4" style="text-align:right"><h2>Commitee/Squad: </h2></div>
                         <div class="col-xs-5"><h2><span t-esc="shift['shift'].name"/></h2></div>
                     </div>
@@ -97,13 +97,13 @@
 
             <t t-call="report.external_layout">
                 <div class="page" style="page-break-after:always">
-                    <div class="row mt8 mb0">
+                    <div class="row mt0 mb0">
                         <div class="col-xs-4" style="text-align:right"><h2>Timesheet of: </h2></div>
-                        <div class="col-xs-3"><h2><span t-esc="shift['shift'].date_begin"/></h2></div>
+                        <div class="col-xs-4"><h3><span t-esc="shift['shift'].date_without_time"/></h3></div>
                         <div class="col-xs-1 col-xs-push-1" style="text-align:right"><h4>as of</h4></div>
                         <div class="col-xs-2 col-xs-push-1"><h4><span t-esc="date.today()"/></h4></div>
                     </div>
-                    <div class="row mt0 mb8">
+                    <div class="row mt0 mb0">
                         <div class="col-xs-4" style="text-align:right"><h2>Commitee/Squad: </h2></div>
                         <div class="col-xs-5"><h2><span t-esc="shift['shift'].name"/></h2></div>
                     </div>
