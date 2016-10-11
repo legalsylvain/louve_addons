@@ -84,8 +84,19 @@ class ShiftTemplateRegistration(models.Model):
             return False
         active_id = self.env.context.get('active_id', False)
         if active_id:
-            return self.env['shift.template'].browse(
-                active_id).shift_ticket_ids[0] or False
+            template = self.env['shift.template'].browse(
+                active_id)
+            if template.shift_type_id ==\
+                    self.env.ref('coop_shift.shift_type_abcd'):
+                return template.shift_ticket_ids.filtered(
+                    lambda t, s=self: t.product_id == s.env.ref(
+                        'coop_shift.product_product_shift_standard'))[0] or\
+                    False
+            else:
+                return template.shift_ticket_ids.filtered(
+                    lambda t, s=self: t.product_id == s.env.ref(
+                        'coop_shift.product_product_shift_ftop'))[0] or\
+                    False
         else:
             return False
 
