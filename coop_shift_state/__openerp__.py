@@ -35,6 +35,7 @@ This module add state to partners depending of its attendees
         'coop_shift',
     ],
     'data': [
+        'security/shift_security.xml',
         'views/res_partner_view.xml',
     ],
     'demo': [
