@@ -36,7 +36,7 @@
             <field name="name">Standard Subscription</field>
             <field name="categ_id" ref="product.product_category_all"/>
             <field name="type">service</field>
-            <field name="shift_type_id" ref="coop_shift.shift_type"/>
+            <field name="shift_type_id" ref="coop_shift.shift_type_abcd"/>
         </record>
 
         <record id="product_product_shift_ftop" model="product.product">
@@ -49,7 +49,7 @@
             <field name="name">FTOP Subscription</field>
             <field name="categ_id" ref="product.product_category_all"/>
             <field name="type">service</field>
-            <field name="shift_type_id" ref="coop_shift.shift_type"/>
+            <field name="shift_type_id" ref="coop_shift.shift_type_ftop"/>
         </record>
 
     </data>
