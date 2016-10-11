@@ -31,8 +31,10 @@
                         </group>
                         <group string="Extra Data">
                             <field name="adult_number_home"/>
-                            <field name="sex"/>
                             <field name="old_coop_number"/>
+                            <field name="contact_origin_id"/>
+                            <field name="sex"/>
+                            <field name="is_deceased"/>
                         </group>
                     </group>
                 </page>

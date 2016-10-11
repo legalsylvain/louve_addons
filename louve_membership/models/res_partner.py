@@ -32,27 +32,33 @@ class ResPartner(models.Model):
     is_underclass_population = fields.Boolean(
         'is Underclass Population', compute=_compute_is_underclass_population)
 
+    contact_origin_id = fields.Many2one(
+        comodel_name='res.contact.origin', string='Contact Origin')
+
+    is_deceased = fields.Boolean(string='Is Deceased')
+
     @api.depends('parent_id.is_louve_member', 'is_associated_people')
     @api.multi
     def make_associated_people(self):
+        # TODO FIXME
         for partner in self:
             if partner.is_associated_people and partner.parent_id:
                 partner.is_louve_member = partner.parent_id.is_louve_member
                 partner.customer = partner.parent_id.customer
-                # TODO WAIT MERGE OF
-#                partner.cooperative_state = partner.parent_id.cooperative_state
+                partner.cooperative_state = partner.parent_id.cooperative_state
 
-#   @api.depends(
-#        'is_blocked', 'is_unpayed', 'final_standard_point', 'final_ftop_point',
-#        'shift_type', 'date_alert_stop', 'date_delay_stop')
-#    @api.multi
-#    def compute_cooperative_state(self):
-#        for partner in self:
-#            if partner.is_associated_people and partner.parent_id:
-#                partner.cooperative_state = partner.parent_id.cooperative_state
-#            else:
-#                partner.cooperative_state =\
-#                    super(ResPartner, partner).compute_cooperative_state()
+    @api.depends(
+        'is_blocked', 'is_unpayed', 'final_standard_point', 'final_ftop_point',
+        'shift_type', 'date_alert_stop', 'date_delay_stop')
+    @api.multi
+    def compute_cooperative_state(self):
+        # TODO TEST
+        for partner in self:
+            if partner.is_associated_people and partner.parent_id:
+                partner.cooperative_state = partner.parent_id.cooperative_state
+            else:
+                partner.cooperative_state =\
+                    super(ResPartner, partner).compute_cooperative_state()
 
 
     # Overload Section

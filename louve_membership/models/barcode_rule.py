@@ -7,7 +7,7 @@
 from openerp import models, fields
 
 
-class barcode_rule(models.Model):
+class BarcodeRule(models.Model):
     _inherit = 'barcode.rule'
 
     is_louve_member = fields.Boolean(
