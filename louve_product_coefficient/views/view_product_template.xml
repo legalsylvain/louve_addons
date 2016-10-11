@@ -69,6 +69,8 @@
             <div name="button_box" position="inside">
                 <button name="recompute_base_price" type="object" icon="fa-calculator" class="oe_stat_button" string="Recompute Base price"
                     groups="base.group_sale_manager"/>
+                <button name="use_theoritical_cost" type="object" icon="fa-rotate-left" class="oe_stat_button" string="Use Theoritical Cost"
+                    attrs="{'invisible': [('has_theoritical_cost_different', '=', False)]}" groups="base.group_sale_manager"/>
                 <button name="use_theoritical_price" type="object" icon="fa-rotate-left" class="oe_stat_button" string="Use Theoritical Price"
                     attrs="{'invisible': [('has_theoritical_price_different', '=', False)]}" groups="base.group_sale_manager"/>
             </div>
@@ -106,7 +108,7 @@
                                 <field name="coeff8_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
                                 <field name="coeff9_inter" style="background-color:#DDFFFF;height:30px" nolabel="1"/>
                             </group>
-                            <group string="Incl. in Standard Price" col="1">
+                            <group string="Incl. in S. Price" col="1">
                                 <field name="incl_in_standard_price_1" nolabel="1" style="height:30px"/>
                                 <field name="incl_in_standard_price_2" nolabel="1" style="height:30px"/>
                                 <field name="incl_in_standard_price_3" nolabel="1" style="height:30px"/>
@@ -133,6 +135,7 @@
                             <group>
                                 <field name="theoritical_price" style="background-color: #D0EED0"/>
                                 <field name="has_theoritical_price_different"/>
+                                <field name="has_theoritical_cost_different"/>
                             </group>
                             <group />
                         </group>
