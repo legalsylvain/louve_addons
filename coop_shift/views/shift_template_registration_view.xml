@@ -48,7 +48,7 @@
                             </group>
                         </group>
                         <group name="lines" string="Registration dates">
-                            <field name="line_ids" nolabel="1">
+                            <field name="line_ids" nolabel="1" readonly="1">
                                 <tree editable="bottom">
                                     <field name="date_begin"/>
                                     <field name="date_end"/>
@@ -64,6 +64,18 @@
                         <field name="message_ids" widget="mail_thread"/>
                     </div>
                 </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_shift_template_registration_form_futurechanges">
+            <field name="name">shift.template.registration.form.futurechanges</field>
+            <field name="model">shift.template.registration</field>
+            <field name="priority">10</field>
+            <field name="inherit_id" ref="coop_shift.view_shift_template_registration_form"/>
+            <field name="groups_id" eval="[(4, ref('coop_shift.group_shift_future_changes'))]"/>
+            <field name="arch" type="xml">
+                <field name="line_ids" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </field>
             </field>
         </record>
 
