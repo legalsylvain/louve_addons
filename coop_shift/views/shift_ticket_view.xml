@@ -71,12 +71,13 @@
     <record model="ir.actions.act_window" id="action_shift_ticket">
         <field name="name">Shifts Tickets</field>
         <field name="res_model">shift.ticket</field>
-        <field name="view_ticket">form</field>
+        <field name="view_type">form</field>
     </record>
 
     <menuitem
         name="Shift Tickets"
         id="menu_shift_ticket"
         action="action_shift_ticket"
-        parent="shift_menu"/>
+        parent="shift_menu"
+        groups="coop_shift.group_shift_config"/>
 </odoo>

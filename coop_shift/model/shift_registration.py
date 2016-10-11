@@ -46,6 +46,7 @@ class ShiftRegistration(models.Model):
     _inherit = 'event.registration'
     _name = 'shift.registration'
     _description = 'Attendee'
+    _order = 'shift_ticket_id,name'
 
     event_id = fields.Many2one(required=False)
     shift_id = fields.Many2one(

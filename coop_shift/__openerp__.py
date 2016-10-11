@@ -32,16 +32,17 @@
     'license': 'AGPL-3',
     'depends': [
         'base',
+        'capital_subscription',
         'event',
         'event_sale',
         'mail',
     ],
     'data': [
+        'data/coop_shift_data.xml',
         'wizard/create_shifts_wizard_view.xml',
         'wizard/update_shifts_wizard_view.xml',
         'wizard/add_template_registration_view.xml',
         'wizard/replace_registration_view.xml',
-        'data/coop_shift_data.xml',
         'data/email_template_data.xml',
         'security/shift_security.xml',
         'views/menu.xml',
@@ -68,6 +69,6 @@
         'data/cron.xml',
     ],
     'demo': [
-        'data/shift_demo.xml',
+        'demo/shift_demo.xml',
     ],
 }

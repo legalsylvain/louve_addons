@@ -29,6 +29,7 @@ class ShiftTemplateRegistration(models.Model):
     _inherit = 'event.registration'
     _name = 'shift.template.registration'
     _description = 'Attendee'
+    _order = 'shift_ticket_id,name'
 
     event_id = fields.Many2one(required=False)
     shift_template_id = fields.Many2one(
@@ -62,6 +63,31 @@ class ShiftTemplateRegistration(models.Model):
         'This partner is already registered on this Shift Template !'),
     ]
 
+    @api.one
+    @api.constrains(
+        'shift_template_id.shift_type_id', 'shift_ticket_product_id')
+    def _check_registration_type(self):
+        if self.shift_template_id.shift_type_id == self.env.ref(
+                'coop_shift.shift_type_abcd') and\
+                self.shift_ticket_product_id != self.env.ref(
+                'coop_shift.product_product_shift_standard'):
+            raise ValidationError(_(
+                'Inscriptions on ABCD Templates must be Standard type!'))
+        if self.shift_template_id.shift_type_id == self.env.ref(
+                'coop_shift.shift_type_ftop') and\
+                self.shift_ticket_product_id != self.env.ref(
+                'coop_shift.product_product_shift_ftop'):
+            raise ValidationError(_(
+                'Inscriptions on FTOP Templates must be FTOP type!'))
+
+    @api.multi
+    @api.constrains('partner_id')
+    def _check_partner_subscription(self):
+        for reg in self:
+            if not reg.partner_id.has_capital_subsciption:
+                raise ValidationError(_('This partner does not have a capital\
+                    subscription!'))
+
     @api.multi
     @api.model
     def _compute_current(self):
@@ -74,8 +100,19 @@ class ShiftTemplateRegistration(models.Model):
             return False
         active_id = self.env.context.get('active_id', False)
         if active_id:
-            return self.env['shift.template'].browse(
-                active_id).shift_ticket_ids[0] or False
+            template = self.env['shift.template'].browse(
+                active_id)
+            if template.shift_type_id ==\
+                    self.env.ref('coop_shift.shift_type_abcd'):
+                return template.shift_ticket_ids.filtered(
+                    lambda t, s=self: t.product_id == s.env.ref(
+                        'coop_shift.product_product_shift_standard'))[0] or\
+                    False
+            else:
+                return template.shift_ticket_ids.filtered(
+                    lambda t, s=self: t.product_id == s.env.ref(
+                        'coop_shift.product_product_shift_ftop'))[0] or\
+                    False
         else:
             return False
 
