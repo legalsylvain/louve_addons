@@ -42,7 +42,10 @@ class ProductTemplate(models.Model):
             pt.pricetag_rackinfos = tmp
 
     def _default_category_print_id(self):
-        return self.env.ref('louve_custom_pricetag.category_print_louve')
+        category_obj = self.env['product.category.print']
+        category_ids = category_obj.search(
+            [('is_default', '=', True)], limit=1)
+        return category_ids and category_ids[0] or category_ids
 
     # Column Section
     rack_instruction = fields.Char(

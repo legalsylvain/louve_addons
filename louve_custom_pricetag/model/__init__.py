@@ -21,4 +21,5 @@
 #
 ##############################################################################
 
+from . import product_category_print
 from . import product_template
