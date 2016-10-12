@@ -63,4 +63,5 @@ class ProductTemplate(models.Model):
     pricetag_louveinfos = fields.Char(
         compute=_compute_pricetag_louveinfos, string='La Louve custom fields')
     category_print_id = fields.Many2one(
+        comodel_name='product.category.print', string='Print Category',
         default=lambda self: self._default_category_print_id())
