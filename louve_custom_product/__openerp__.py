@@ -54,7 +54,7 @@ Functionnalities :
         'views/pricetag_model.xml',
         'views/product_category_print_view.xml',
         'wizard/product_pricetag_wizard_view.xml',
-        'report/sale_food_report.xml',
+        'report/louve_custom_product_report.xml',
         'report/report_pricetag.xml',
     ],
     'demo': [

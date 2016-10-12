@@ -22,7 +22,7 @@
 ##############################################################################
 
 - !record {model: ir.model.access, id: ir_model_access_pricetag_model}:
-    model_id: sale_food.model_pricetag_model
+    model_id: louve_custom_product.model_pricetag_model
     name: Pricetag Model
     perm_read: true
     perm_create: true

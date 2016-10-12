@@ -6,8 +6,8 @@
         model="report.pricetag"
         string="Pricetags"
         report_type="qweb-pdf"
-        name="sale_food.report_pricetag"
-        file="sale_food.report_pricetag"
+        name="louve_custom_product.report_pricetag"
+        file="louve_custom_product.report_pricetag"
         attachment_use="False"
     />
 </odoo>

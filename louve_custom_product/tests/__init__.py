@@ -22,8 +22,8 @@
 ##############################################################################
 
 
-from . import test_sale_food
+from . import test_louve_custom_product
 
 fast_suite = [
-    test_sale_food,
+    test_louve_custom_product,
 ]

@@ -92,7 +92,7 @@ class ProductPricetagWizard(models.TransientModel):
         self.line_ids.mapped('product_id').write({'to_print': False})
 
         return self.env['report'].get_action(
-            self, 'sale_food.report_pricetag', data=data)
+            self, 'louve_custom_product.report_pricetag', data=data)
 
     @api.multi
     def initialize_product(self):

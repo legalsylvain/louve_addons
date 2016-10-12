@@ -25,7 +25,7 @@
     'version': '9.0.0.0.0',
     'category': 'Sales',
     'description': """
-Customize sale_food module
+Customize louve_custom_product module
 
 Copyright, Author and Licence :
 -------------------------------
@@ -36,7 +36,7 @@ Copyright, Author and Licence :
     'website': 'http://www.akretion.com',
     'license': 'AGPL-3',
     'depends': [
-        'sale_food',
+        'louve_custom_product',
         'purchase_package_qty',
         'l10n_fr_department',
     ],
