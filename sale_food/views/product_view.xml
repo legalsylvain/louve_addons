@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ********************************************************************** -->
+<!--Sale - Food Module for Odoo                                             -->
+<!--Copyright (C) 2012-Today GRAP (http://www.grap.coop)                    -->
+<!--@author Julien Weste                                                    -->
+<!--@author Sylvain LE GAL (https://twitter.com/legalsylvain)               -->
+
+<!--This program is free software: you can redistribute it and/or modify    -->
+<!--it under the terms of the GNU Affero General Public License as          -->
+<!--published by the Free Software Foundation, either version 3 of the      -->
+<!--License, or (at your option) any later version.                         -->
+
+<!--This program is distributed in the hope that it will be useful,         -->
+<!--but WITHOUT ANY WARRANTY; without even the implied warranty of          -->
+<!--MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           -->
+<!--GNU Affero General Public License for more details.                     -->
+
+<!--You should have received a copy of the GNU Affero General Public License-->
+<!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
+<!-- ********************************************************************** -->
+<odoo>
+
+<!-- Model: product.product -->
+    <record id="view_product_product_search" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="arch" type="xml">
+            <filter name="filter_to_sell" position="after">
+                <separator/>
+                <filter string="Mercuriale Product" name="is_mercuriale" domain="[('is_mercuriale', '=', True)]"/>
+                <!-- <filter string="Print to do" name="print_todo" domain="[('pricetag_state', 'in', ('1', '2'))]"/> -->
+                <!-- <filter string="Print Up To Date" name="print_uptodate" domain="[('pricetag_state', '=', '0')]"/>
+                <filter string="Print Ignored" name="print_never" domain="[('pricetag_state', '=', '3')]"/> -->
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_product_product_food_tree" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree string="Products (Food)" editable="bottom">
+                <field name="name" readonly="1"/>
+                <field name="is_mercuriale"/>
+                <field name="fresh_category"/>
+                <field name="fresh_range"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_product_origin_tree" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree string="Products (Origin)" editable="bottom">
+                <field name="name" readonly="1"/>
+                <field name="country_id" options="{'quick_create':false}"/>
+                <field name="department_id" options="{'quick_create':false}"
+                    domain="[('country_id', '=', country_id)]"/>
+                <field name="maker_description"/>
+                <field name="origin_description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_food" model="ir.ui.view">
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Food Informations" groups="sale_food.group_food_user">
+                    <group colspan="4">
+                        <group>
+                            <separator string="Origin" colspan="2"/>
+                            <field name="country_id" options="{'quick_create':false}"/>
+                            <field name="department_id" options="{'quick_create':false}"/>
+                            <field name="origin_description"/>
+                            <field name="maker_description"/>
+                        </group>
+                        <group>
+                            <separator string="Food" colspan="2"/>
+                            <field name="fresh_category"/>
+                            <field name="fresh_range"/>
+                            <field name="is_mercuriale"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+            <xpath expr="//field[@name='weight']/.." position="after">
+                <field name="weight_net"/>
+                <field name="price_weight_net"/>
+            </xpath>
+            <xpath expr="//field[@name='volume']/.." position="after">
+                <field name="price_volume"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_product_product_food" model="ir.actions.act_window">
+        <field name="name">Products (Food)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_product_product_food_tree"/>
+    </record>
+
+    <record id="action_product_product_origin" model="ir.actions.act_window">
+        <field name="name">Products (Origin)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_product_product_origin_tree"/>
+    </record>
+
+    <record id="action_product_product_pricetag" model="ir.actions.act_window">
+        <field name="name">Products (Price Tags)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'search_default_print_todo':1}</field>
+        <field name="search_view_id" ref="view_product_product_search"/>
+        <!-- <field name="view_id" ref="view_product_product_pricetag_tree"/> -->
+    </record>
+
+    <menuitem id="menu_product_product_food_3" 
+        parent="base.menu_product" sequence="2" 
+        action="action_product_product_food"/>
+
+    <menuitem id="menu_product_product_origin_3" 
+        parent="base.menu_product" sequence="3" 
+        action="action_product_product_origin"/>
+
+    <menuitem id="menu_product_product_pricetag_3"
+        parent="base.menu_product" sequence="4"
+        action="action_product_product_pricetag"/>
+</odoo>

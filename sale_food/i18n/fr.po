@@ -1,0 +1,461 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * sale_food
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-10 16:52+0000\n"
+"PO-Revision-Date: 2016-10-10 16:52+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_food
+#: code:addons/sale_food/model/product_template.py:96
+#, python-format
+msgid " - Category: "
+msgstr " - Categorie: "
+
+#. module: sale_food
+#: code:addons/sale_food/model/product_template.py:94
+#, python-format
+msgid " - Range: "
+msgstr " - Gamme: "
+
+#. module: sale_food
+#: selection:product.template,fresh_range:0
+msgid "1 - Fresh"
+msgstr "1 - Produit agricole frais"
+
+#. module: sale_food
+#: selection:product.template,fresh_range:0
+msgid "2 - Canned"
+msgstr "2 - En conserve / pasteurisé"
+
+#. module: sale_food
+#: selection:product.template,fresh_range:0
+msgid "3 - Frozen"
+msgstr "3 - Surgelé"
+
+#. module: sale_food
+#: selection:product.template,fresh_range:0
+msgid "4 - Uncooked and Ready to Use"
+msgstr "4 - Cru et prêt à l'emploi"
+
+#. module: sale_food
+#: selection:product.template,fresh_range:0
+msgid "5 - Cooked and Ready to Use"
+msgstr "5 - Cuit et prêt à l'emploi"
+
+#. module: sale_food
+#: selection:product.template,fresh_range:0
+msgid "6 - Dehydrated and Shelf"
+msgstr "6 - Déshydraté et longue conservation"
+
+#. module: sale_food
+#: model:ir.model.fields,help:sale_food.field_product_template_is_mercuriale
+msgid "A product in mercuriale has price that changes very regularly."
+msgstr "Un produit en mercuriale voit son prix changer très fréquemment."
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.view_product_pricetag_wizard_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: sale_food
+#: selection:product.template,fresh_category:0
+msgid "Category I"
+msgstr "Categorie I"
+
+#. module: sale_food
+#: selection:product.template,fresh_category:0
+msgid "Category II"
+msgstr "Categorie II"
+
+#. module: sale_food
+#: selection:product.template,fresh_category:0
+msgid "Category III"
+msgstr "Categorie III"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_fresh_category
+msgid "Category for Fresh Product"
+msgstr "Catégorie de produits frais"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.report_pricetag
+msgid "Code:"
+msgstr "Code:"
+
+#. module: sale_food
+#: model:ir.model.fields,help:sale_food.field_product_template_country_id
+msgid "Country of production of the product"
+msgstr "Pays de production du produit"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model_create_uid
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_create_uid
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model_create_date
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_create_date
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: sale_food
+#: model:ir.model.fields,help:sale_food.field_product_template_department_id
+msgid "Department of production of the product"
+msgstr "Département de production du produit"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model_display_name
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_display_name
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line_display_name
+#: model:ir.model.fields,field_description:sale_food.field_report_sale_food_report_pricetag_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: sale_food
+#: code:addons/sale_food/model/product_template.py:143
+#, python-format
+msgid "Error ! Department %s doesn't belong to %s."
+msgstr "Erreur ! Le département %s n'appartient pas au pays %s."
+
+#. module: sale_food
+#: selection:product.template,fresh_category:0
+msgid "Extra"
+msgstr "Extra"
+
+#. module: sale_food
+#: model:ir.model.fields,help:sale_food.field_product_template_fresh_category
+msgid "Extra - Hight Quality : product without default ;\n"
+"Quality I - Good Quality : Product with little defaults ;\n"
+"Quality II - Normal Quality : Product with default ;\n"
+"Quality III - Bad Quality : Use this option only in specific situation."
+msgstr "Extra - Excellente Qualité : Article sans défaut ;\n"
+"Qualité I - Bonne Qualité : Article avec quelques défauts ;\n"
+"Qualité II - Qualité Normal : Article avec défauts ;\n"
+"Qualité III - Mauvaise Qualité : N'utilisez cette option que dans des cas spécifiques."
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_extra_food_info
+msgid "Extra information for invoices"
+msgstr "Information complémentaire sur facture"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.product_template_form_view_food
+msgid "Food"
+msgstr "Alimentaire"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.product_template_form_view_food
+msgid "Food Informations"
+msgstr "Informations Alimentaires"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model_id
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_id
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line_id
+#: model:ir.model.fields,field_description:sale_food.field_report_sale_food_report_pricetag_id
+msgid "ID"
+msgstr "ID"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model_report_model
+msgid "ID of the report template"
+msgstr "ID du template"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.view_product_pricetag_wizard_form
+msgid "Initialize Products"
+msgstr "Initialiser les Articles"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model___last_update
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard___last_update
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line___last_update
+#: model:ir.model.fields,field_description:sale_food.field_report_sale_food_report_pricetag___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model_write_uid
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line_write_uid
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_write_uid
+msgid "Last Updated by"
+msgstr "Mis à jour par"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model_write_date
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line_write_date
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_write_date
+msgid "Last Updated on"
+msgstr "Mis à jour le"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_maker_description
+msgid "Maker"
+msgstr "Producteur"
+
+#. module: sale_food
+#: model:res.groups,name:sale_food.group_food_manager
+msgid "Manager"
+msgstr "Responsable"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_is_mercuriale
+#: model:ir.ui.view,arch_db:sale_food.view_product_product_search
+msgid "Mercuriale Product"
+msgstr "Produit en Mercuriale"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.view_pricetag_model_form
+msgid "Model Name"
+msgstr "Modèle"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model_name
+#: model:ir.ui.view,arch_db:sale_food.view_pricetag_model_form
+msgid "Name"
+msgstr "Nom"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_weight_net
+msgid "Net Weight"
+msgstr "Poids Net"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model_columns
+msgid "Number of columns"
+msgstr "Nombre de colonnes"
+
+#. module: sale_food
+#: model:ir.model.fields,help:sale_food.field_product_pricetag_wizard_offset
+msgid "Number of empty pricetags"
+msgstr "Nombre d'étiquettes vides"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model_lines
+msgid "Number of lines"
+msgstr "Nombre de lignes"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_offset
+msgid "Offset"
+msgstr "Offset"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.product_template_form_view_food
+msgid "Origin"
+msgstr "Origine"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_origin_description
+msgid "Origin Complement"
+msgstr "Complément d'origine"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_country_id
+msgid "Origin Country"
+msgstr "Pays d'origine"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_department_id
+msgid "Origin Department"
+msgstr "Département d'origine"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.report_pricetag
+msgid "Origine:"
+msgstr "Origine:"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_pricetag_model_pricetag_paperformat_id
+#: model:ir.ui.view,arch_db:sale_food.view_pricetag_model_search
+msgid "Paper Format"
+msgstr "Format de papier"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_price_weight_net
+msgid "Price by kg"
+msgstr "Prix/kg"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_price_volume
+msgid "Price by liter"
+msgstr "Prix/L"
+
+#. module: sale_food
+#: model:ir.actions.act_window,name:sale_food.action_pricetag_model
+#: model:ir.model.fields,field_description:sale_food.field_product_category_print_pricetag_model_id
+#: model:ir.ui.menu,name:sale_food.menu_pricetag_model
+msgid "Pricetag Model"
+msgstr "Modèle d'étiquette"
+
+#. module: sale_food
+#: model:ir.actions.report.xml,name:sale_food.pricetag
+msgid "Pricetags"
+msgstr "Étiquettes"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.view_product_pricetag_wizard_form
+msgid "Print"
+msgstr "Imprimer"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_category_print_id
+msgid "Print Category"
+msgstr "Catégorie d'Étiquette"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.view_product_pricetag_wizard_form
+msgid "Print Parameters"
+msgstr "Paramètres d'impression"
+
+#. module: sale_food
+#: model:ir.actions.act_window,name:sale_food.action_product_pricetag_wizard
+#: model:ir.ui.menu,name:sale_food.menu_product_pricetag_wizard
+msgid "Print Price Tag"
+msgstr "Imprimer les étiquettes"
+
+#. module: sale_food
+#: code:addons/sale_food/wizard/product_pricetag_wizard.py:101
+#: model:ir.ui.view,arch_db:sale_food.view_product_pricetag_wizard_form
+#, python-format
+msgid "Print Price Tags"
+msgstr "Imprimer les étiquettes"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_uom_categ_pricetag_printable
+msgid "Print on Price Tag"
+msgstr "Imprimer sur l'étiquette"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line_print_unit_price
+msgid "Print unit price"
+msgstr "Imprimer le prix unitaire"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line_product_id
+msgid "Product"
+msgstr "Article"
+
+#. module: sale_food
+#: model:ir.model,name:sale_food.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: sale_food
+#: model:ir.model,name:sale_food.model_product_uom_categ
+msgid "Product uom categ"
+msgstr "Catégorie d'UdM d'article"
+
+#. module: sale_food
+#: model:ir.model.fields,help:sale_food.field_product_template_origin_description
+msgid "Production location complementary information"
+msgstr "Information complémentaire sur la production"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line_ids
+#: model:ir.ui.view,arch_db:sale_food.view_product_pricetag_wizard_form
+msgid "Products"
+msgstr "Articles"
+
+#. module: sale_food
+#: model:ir.actions.act_window,name:sale_food.action_product_product_food
+#: model:ir.ui.menu,name:sale_food.menu_product_product_food_3
+#: model:ir.ui.view,arch_db:sale_food.view_product_product_food_tree
+msgid "Products (Food)"
+msgstr "Articles (Alimentaire)"
+
+#. module: sale_food
+#: model:ir.actions.act_window,name:sale_food.action_product_product_origin
+#: model:ir.ui.menu,name:sale_food.menu_product_product_origin_3
+#: model:ir.ui.view,arch_db:sale_food.view_product_product_origin_tree
+msgid "Products (Origin)"
+msgstr "Articles (Origine)"
+
+#. module: sale_food
+#: model:ir.actions.act_window,name:sale_food.action_product_product_pricetag
+#: model:ir.ui.menu,name:sale_food.menu_product_product_pricetag_3
+msgid "Products (Price Tags)"
+msgstr "Articles (Etiquettes)"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line_quantity
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_fresh_range
+msgid "Range for Fresh Product"
+msgstr "Gamme de produits frais alimentaires"
+
+#. module: sale_food
+#: model:ir.module.category,name:sale_food.module_category_food
+msgid "Sale Food"
+msgstr "Ventes Alimentaires"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_template_pricetag_origin
+msgid "Text about origin"
+msgstr "Texte concernant l'origine"
+
+#. module: sale_food
+#: model:res.groups,name:sale_food.group_food_user
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: sale_food
+#: model:ir.model.fields,field_description:sale_food.field_product_pricetag_wizard_line_wizard_id
+msgid "Wizard"
+msgstr "Assistant"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.report_pricetag
+msgid "kg ---"
+msgstr "kg ---"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.view_product_pricetag_wizard_form
+msgid "or"
+msgstr "ou"
+
+#. module: sale_food
+#: model:ir.model,name:sale_food.model_pricetag_model
+msgid "pricetag.model"
+msgstr "pricetag.model"
+
+#. module: sale_food
+#: model:ir.model,name:sale_food.model_product_category_print
+msgid "product.category.print"
+msgstr "product.category.print"
+
+#. module: sale_food
+#: model:ir.model,name:sale_food.model_product_pricetag_wizard
+msgid "product.pricetag.wizard"
+msgstr "product.pricetag.wizard"
+
+#. module: sale_food
+#: model:ir.model,name:sale_food.model_product_pricetag_wizard_line
+msgid "product.pricetag.wizard.line"
+msgstr "product.pricetag.wizard.line"
+
+#. module: sale_food
+#: model:ir.model,name:sale_food.model_report_sale_food_report_pricetag
+msgid "report.sale_food.report_pricetag"
+msgstr "report.sale_food.report_pricetag"
+
+#. module: sale_food
+#: model:ir.ui.view,arch_db:sale_food.report_pricetag
+msgid "€/kg<br/>"
+msgstr "€/kg<br/>"
