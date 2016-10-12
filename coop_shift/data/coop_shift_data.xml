@@ -18,8 +18,8 @@
         </record>
     </data>
 
-    <data noupdate="1">
-        <record id="shift_type_abcd" model="shift.type">
+    <data noupdate="0">
+        <record id="shift_type" model="shift.type">
             <field name="name">ABCD Shift</field>
         </record>
         <record id="shift_type_ftop" model="shift.type">
@@ -36,7 +36,7 @@
             <field name="name">Standard Subscription</field>
             <field name="categ_id" ref="product.product_category_all"/>
             <field name="type">service</field>
-            <field name="shift_type_id" ref="coop_shift.shift_type_abcd"/>
+            <field name="shift_type_id" ref="coop_shift.shift_type"/>
         </record>
 
         <record id="product_product_shift_ftop" model="product.product">

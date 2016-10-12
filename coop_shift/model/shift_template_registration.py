@@ -68,7 +68,7 @@ class ShiftTemplateRegistration(models.Model):
         'shift_template_id.shift_type_id', 'shift_ticket_product_id')
     def _check_registration_type(self):
         if self.shift_template_id.shift_type_id == self.env.ref(
-                'coop_shift.shift_type_abcd') and\
+                'coop_shift.shift_type') and\
                 self.shift_ticket_product_id != self.env.ref(
                 'coop_shift.product_product_shift_standard'):
             raise ValidationError(_(
@@ -103,7 +103,7 @@ class ShiftTemplateRegistration(models.Model):
             template = self.env['shift.template'].browse(
                 active_id)
             if template.shift_type_id ==\
-                    self.env.ref('coop_shift.shift_type_abcd'):
+                    self.env.ref('coop_shift.shift_type'):
                 return template.shift_ticket_ids.filtered(
                     lambda t, s=self: t.product_id == s.env.ref(
                         'coop_shift.product_product_shift_standard'))[0] or\

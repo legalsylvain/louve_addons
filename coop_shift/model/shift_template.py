@@ -234,7 +234,7 @@ class ShiftTemplate(models.Model):
         'shift_type_id', 'week_number', 'mo', 'tu', 'we', 'th', 'fr', 'sa',
         'su', 'start_time')
     def _compute_template_name(self):
-        if self.shift_type_id == self.env.ref('coop_shift.shift_type_abcd'):
+        if self.shift_type_id == self.env.ref('coop_shift.shift_type'):
             name = self.week_number and (
                 WEEK_NUMBERS[self.week_number - 1][1]) or ""
             name += _("Mo") if self.mo else ""
@@ -296,7 +296,7 @@ class ShiftTemplate(models.Model):
 
     @api.model
     def _default_shift_type(self):
-        return self.env.ref('coop_shift.shift_type_abcd')
+        return self.env.ref('coop_shift.shift_type')
 
     @api.onchange('duration', 'start_time')
     @api.multi
