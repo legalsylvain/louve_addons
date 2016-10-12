@@ -133,7 +133,7 @@ class ProductTemplate(models.Model):
 
     # Constraints section
     @api.multi
-    @api.constrains('seats_max', 'seats_available')
+    @api.constrains('department_id', 'country_id')
     def _check_origin_department_country(self):
         for pt in self:
             if pt.department_id.country_id and \
