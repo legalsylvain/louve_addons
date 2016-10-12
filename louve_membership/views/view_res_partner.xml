@@ -7,19 +7,38 @@
 
 <odoo>
 
+    <record model="ir.ui.view" id="view_res_partner_form">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="barcodes_generate.view_res_partner_form"/>
+        <field name="arch" type="xml">
+            <button name="generate_barcode" position="after">
+                <button id="create_new_barcode" name="%(action_res_partner_generate_barcode_wizard)d" type="action"
+                    string="New Barcode" class="oe_highlight" attrs="{'invisible': ['|', ('barcode', '=', False), ('barcode_rule_id', '=', False)]}"/>
+            </button>
+        </field>
+    </record>
+
     <record model="ir.ui.view" id="view_res_partner_form_base">
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <field name="user_id" position="before">
-                <field name="is_louve_member" attrs="{'readonly': True}"/>
-                <button name="set_louve_member" type="object"
-                    groups="louve_membership.louve_membership_manager"
-                    string="Set Louve Membership" colspan="2" class="oe_highlight" attrs="{'invisible': [('is_louve_member', '=', True)]}"/>
-                <button name="remove_louve_member" type="object"
-                    groups="louve_membership.louve_membership_manager"
-                    string="Remove Louve Membership" colspan="2" class="oe_highlight" attrs="{'invisible': [('is_louve_member', '=', False)]}"/>
-            </field>
+            <notebook position="inside">
+                <page string="Louve Custom">
+                    <group>
+                        <group string="MemberShip">
+                            <field name="is_louve_member" groups="louve_membership.louve_membership_manager"/>
+                            <field name="is_associated_people" groups="louve_membership.louve_membership_manager"/>
+                        </group>
+                        <group string="Extra Data">
+                            <field name="adult_number_home"/>
+                            <field name="old_coop_number"/>
+                            <field name="contact_origin_id"/>
+                            <field name="sex"/>
+                            <field name="is_deceased"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
         </field>
     </record>
 

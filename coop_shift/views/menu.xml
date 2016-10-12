@@ -17,13 +17,6 @@
             groups="coop_shift.group_shift_user"
             web_icon="coop_shift,static/description/icon.png"/>
         <menuitem
-            name="Members"
-            parent="shift_main_menu"
-            id="members_menu"
-            sequence="10"
-            groups="coop_shift.group_shift_user"
-            action="action_shift_members"/>
-        <menuitem
             name="Shifts"
             parent="shift_main_menu"
             id="shift_menu"
