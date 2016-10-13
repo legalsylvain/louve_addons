@@ -122,8 +122,9 @@ class ResPartner(models.Model):
                 # In all cases
                 if registration.state in ['absent']:
                     point += -2
-                elif registration.state in ['excused', 'waiting']:
+                elif registration.state in ['excused']:
                     point += -1
+                # if 'waiting' state, point is not impacted
             partner.theoritical_standard_point = point
 
     @api.depends('registration_ids.state', 'registration_ids.shift_type')
