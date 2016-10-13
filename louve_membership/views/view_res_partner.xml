@@ -18,7 +18,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_res_partner_form_coop">
+    <record model="ir.ui.view" id="view_res_partner_form_coop_shift">
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="coop_shift.view_res_partner_shift_form"/>
         <field name="arch" type="xml">
@@ -33,7 +33,6 @@
             </xpath>
         </field>
     </record>
-
 
     <record model="ir.ui.view" id="view_res_partner_form_base">
         <field name="model">res.partner</field>
