@@ -18,6 +18,23 @@
         </field>
     </record>
 
+    <record model="ir.ui.view" id="view_res_partner_form_coop">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="coop_shift.view_res_partner_shift_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@id='add_template_registration']" position="attributes">
+                <attribute name="attrs">{'invisible':[('has_capital_subscription', '=', 'False')]}</attribute>
+            </xpath>
+            <xpath expr="//button[@id='view_partner_registrations']" position="attributes">
+                <attribute name="attrs">{'invisible':[('has_capital_subscription', '=', 'False')]}</attribute>
+            </xpath>
+            <xpath expr="//button[@id='view_partner_template_registrations']" position="attributes">
+                <attribute name="attrs">{'invisible':[('has_capital_subscription', '=', 'False')]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
     <record model="ir.ui.view" id="view_res_partner_form_base">
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
