@@ -135,7 +135,7 @@ class ResPartner(models.Model):
             for registration in partner.registration_ids.filtered(
                         lambda reg: reg.shift_type == 'ftop'):
                 if registration.template_created:
-                    # The presence was forcasted
+                    # The presence was forecasted
                     if registration.state in ['absent', 'excused', 'waiting']:
                         point += -1
                 else:

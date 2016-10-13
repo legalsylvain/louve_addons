@@ -22,6 +22,8 @@ class CapitalFundraisingWizard(models.TransientModel):
         return categories and categories[0].id or False
 
     # Column Section
+    payment_journal_id = fields.Many2one(required=True)
+
     payment_term_id = fields.Many2one(
         comodel_name='account.payment.term', default=default_payment_term_id)
 
