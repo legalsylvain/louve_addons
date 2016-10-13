@@ -84,7 +84,7 @@ msgstr "Erreur de condtionnement !"
 #: model:ir.model.fields,field_description:purchase_package_qty.field_stock_move_package_qty
 #: model:ir.model.fields,field_description:purchase_package_qty.field_stock_pack_operation_package_qty
 msgid "Package Qty"
-msgstr "Conditionnement"
+msgstr "Colisage"
 
 #. module: purchase_package_qty
 #: model:ir.model,name:purchase_package_qty.model_stock_pack_operation
