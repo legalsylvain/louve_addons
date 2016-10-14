@@ -21,20 +21,15 @@
 #
 ##############################################################################
 {
-    'name': 'Sale - Food Information for Products',
+    'name': 'Louve Custom - Extra Information for Products',
     'version': '9.0.0.0.0',
-    'category': 'Sales',
+    'category': 'Custom',
     'description': """
-Allow users to record compulsory information on products and print them on
-pricetags
-====================================================================
+Functionnalities
 
-Functionnalities :
-    * Add various information about origin, makers, etc...
-    * Possibility to print price tags, with suggestion about wich products
-    to print. (when price change for exemple) according to legal obligation.
+* Add various information about origin, makers, etc...
     """,
-    'author': 'GRAP - Sylvain LE GAL (https://twitter.com/legalsylvain),'
+    'author': 'GRAP,'
               'Akretion - Julien WESTE',
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
@@ -42,6 +37,7 @@ Functionnalities :
         'product',
         'product_to_print',
         'report',
+        'l10n_fr_department',
     ],
     'data': [
         'data/report_paperformat.xml',
@@ -49,13 +45,17 @@ Functionnalities :
         'security/ir_model_access.yml',
         'security/ir_module_category.yml',
         'security/res_groups.yml',
-        'views/product_uom_categ_view.xml',
-        'views/product_view.xml',
-        'views/pricetag_model.xml',
-        'views/product_category_print_view.xml',
         'wizard/product_pricetag_wizard_view.xml',
         'report/louve_custom_product_report.xml',
         'report/report_pricetag.xml',
+        'views/action.xml',
+        'views/view_pricetag_model.xml',
+        'views/view_product_category_print.xml',
+        'views/view_product_label.xml',
+        'views/view_product_product.xml',
+        'views/view_product_template.xml',
+        'views/view_product_uom_categ.xml',
+        'views/menu.xml',
     ],
     'demo': [
         'demo/res_groups.yml',

@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#   * louve_custom_product
+#	* louve_custom_product
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 16:52+0000\n"
-"PO-Revision-Date: 2016-10-10 16:52+0000\n"
+"POT-Creation-Date: 2016-10-14 10:16+0000\n"
+"PO-Revision-Date: 2016-10-14 10:16+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,13 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: louve_custom_product
-#: code:addons/louve_custom_product/model/product_template.py:96
+#: code:addons/louve_custom_product/model/product_template.py:158
 #, python-format
 msgid " - Category: "
 msgstr " - Categorie: "
 
 #. module: louve_custom_product
-#: code:addons/louve_custom_product/model/product_template.py:94
+#: code:addons/louve_custom_product/model/product_template.py:156
 #, python-format
 msgid " - Range: "
 msgstr " - Gamme: "
@@ -63,6 +63,11 @@ msgid "A product in mercuriale has price that changes very regularly."
 msgstr "Un produit en mercuriale voit son prix changer très fréquemment."
 
 #. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_active
+msgid "Active"
+msgstr "Actif"
+
+#. module: louve_custom_product
 #: model:ir.ui.view,arch_db:louve_custom_product.view_product_pricetag_wizard_form
 msgid "Cancel"
 msgstr "Annuler"
@@ -70,17 +75,17 @@ msgstr "Annuler"
 #. module: louve_custom_product
 #: selection:product.template,fresh_category:0
 msgid "Category I"
-msgstr "Categorie I"
+msgstr "Catégorie I"
 
 #. module: louve_custom_product
 #: selection:product.template,fresh_category:0
 msgid "Category II"
-msgstr "Categorie II"
+msgstr "Catégorie II"
 
 #. module: louve_custom_product
 #: selection:product.template,fresh_category:0
 msgid "Category III"
-msgstr "Categorie III"
+msgstr "Catégorie III"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_template_fresh_category
@@ -88,9 +93,19 @@ msgid "Category for Fresh Product"
 msgstr "Catégorie de produits frais"
 
 #. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_code
+msgid "Code"
+msgstr "Code"
+
+#. module: louve_custom_product
 #: model:ir.ui.view,arch_db:louve_custom_product.report_pricetag
 msgid "Code:"
 msgstr "Code:"
+
+#. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_company_id
+msgid "Company"
+msgstr "Société"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,help:louve_custom_product.field_product_template_country_id
@@ -99,6 +114,7 @@ msgstr "Pays de production du produit"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_pricetag_model_create_uid
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_create_uid
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_create_uid
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_line_create_uid
 msgid "Created by"
@@ -106,6 +122,7 @@ msgstr "Créé par"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_pricetag_model_create_date
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_create_date
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_create_date
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_line_create_date
 msgid "Created on"
@@ -118,6 +135,7 @@ msgstr "Département de production du produit"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_pricetag_model_display_name
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_display_name
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_display_name
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_line_display_name
 #: model:ir.model.fields,field_description:louve_custom_product.field_report_louve_custom_product_report_pricetag_display_name
@@ -125,10 +143,15 @@ msgid "Display Name"
 msgstr "Nom affiché"
 
 #. module: louve_custom_product
-#: code:addons/louve_custom_product/model/product_template.py:143
+#: code:addons/louve_custom_product/model/product_template.py:170
 #, python-format
 msgid "Error ! Department %s doesn't belong to %s."
 msgstr "Erreur ! Le département %s n'appartient pas au pays %s."
+
+#. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_template_expiration_date_days
+msgid "Expiration Date (Days)"
+msgstr "DLC (En jour)"
 
 #. module: louve_custom_product
 #: selection:product.template,fresh_category:0
@@ -147,9 +170,24 @@ msgstr "Extra - Excellente Qualité : Article sans défaut ;\n"
 "Qualité III - Mauvaise Qualité : N'utilisez cette option que dans des cas spécifiques."
 
 #. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_template_extra_note_bizerba_pricetag_1
+msgid "Extra Note printed on Bizerba Pricetags #1"
+msgstr "Information pour les étiquettes Bizerba #1"
+
+#. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_template_extra_note_bizerba_pricetag_2
+msgid "Extra Note printed on Bizerba Pricetags #2"
+msgstr "Information pour les étiquettes Bizerba #2"
+
+#. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_template_extra_food_info
 msgid "Extra information for invoices"
 msgstr "Information complémentaire sur facture"
+
+#. module: louve_custom_product
+#: model:ir.model.fields,help:louve_custom_product.field_product_template_expiration_date_days
+msgid "Field used to compute the expiration date. (Number of days after packaging the product)"
+msgstr "Champ utilisé pour calculer la DLC. (Nombre de jour après la date d'emballage du produit)"
 
 #. module: louve_custom_product
 #: model:ir.ui.view,arch_db:louve_custom_product.product_template_form_view_food
@@ -163,6 +201,7 @@ msgstr "Informations Alimentaires"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_pricetag_model_id
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_id
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_id
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_line_id
 #: model:ir.model.fields,field_description:louve_custom_product.field_report_louve_custom_product_report_pricetag_id
@@ -175,12 +214,41 @@ msgid "ID of the report template"
 msgstr "ID du template"
 
 #. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_image
+msgid "Image"
+msgstr "Image"
+
+#. module: louve_custom_product
+#: model:ir.ui.view,arch_db:louve_custom_product.view_product_label_form
+msgid "Information"
+msgstr "Information"
+
+#. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_template_ingredients
+msgid "Ingredients"
+msgstr "Ingrédients"
+
+#. module: louve_custom_product
 #: model:ir.ui.view,arch_db:louve_custom_product.view_product_pricetag_wizard_form
 msgid "Initialize Products"
 msgstr "Initialiser les Articles"
 
 #. module: louve_custom_product
+#: model:ir.ui.view,arch_db:louve_custom_product.view_product_label_form
+#: model:ir.ui.view,arch_db:louve_custom_product.view_product_label_tree
+msgid "Label"
+msgstr "Label"
+
+#. module: louve_custom_product
+#: model:ir.actions.act_window,name:louve_custom_product.action_product_label
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_template_label_ids
+#: model:ir.ui.menu,name:louve_custom_product.menu_product_label
+msgid "Labels"
+msgstr "Labels"
+
+#. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_pricetag_model___last_update
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label___last_update
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard___last_update
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_line___last_update
 #: model:ir.model.fields,field_description:louve_custom_product.field_report_louve_custom_product_report_pricetag___last_update
@@ -189,6 +257,7 @@ msgstr "Dernière modification le"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_pricetag_model_write_uid
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_write_uid
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_line_write_uid
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_write_uid
 msgid "Last Updated by"
@@ -196,6 +265,7 @@ msgstr "Mis à jour par"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_pricetag_model_write_date
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_write_date
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_line_write_date
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_write_date
 msgid "Last Updated on"
@@ -212,6 +282,16 @@ msgid "Manager"
 msgstr "Responsable"
 
 #. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_image_medium
+msgid "Medium-sized image"
+msgstr "Image de taille moyenne"
+
+#. module: louve_custom_product
+#: model:ir.model.fields,help:louve_custom_product.field_product_label_image_medium
+msgid "Medium-sized image of the product. It is automatically resized as a 128x128px image, with aspect ratio preserved, only when the image exceeds one of those sizes. Use this field in form views or some kanban views."
+msgstr "Image de taille moyenne de l'article. Elle sera automatiquement redimensionnée à 128 x 128 px, en préservent le rapport hauteur/largeur, si l'image dépasse une de ces dimensions. Utilisez ce champ dans les vues formulaire ou certaines vues kanban."
+
+#. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_template_is_mercuriale
 #: model:ir.ui.view,arch_db:louve_custom_product.view_product_product_search
 msgid "Mercuriale Product"
@@ -224,6 +304,7 @@ msgstr "Modèle"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_pricetag_model_name
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_name
 #: model:ir.ui.view,arch_db:louve_custom_product.view_pricetag_model_form
 msgid "Name"
 msgstr "Nom"
@@ -232,6 +313,11 @@ msgstr "Nom"
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_template_weight_net
 msgid "Net Weight"
 msgstr "Poids Net"
+
+#. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_note
+msgid "Note"
+msgstr "Note"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_pricetag_model_columns
@@ -283,6 +369,11 @@ msgstr "Origine:"
 #: model:ir.ui.view,arch_db:louve_custom_product.view_pricetag_model_search
 msgid "Paper Format"
 msgstr "Format de papier"
+
+#. module: louve_custom_product
+#: model:ir.ui.view,arch_db:louve_custom_product.product_template_form_view_food
+msgid "Price Tag"
+msgstr "Etiquette"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_template_price_weight_net
@@ -372,7 +463,7 @@ msgstr "Articles"
 
 #. module: louve_custom_product
 #: model:ir.actions.act_window,name:louve_custom_product.action_product_product_food
-#: model:ir.ui.menu,name:louve_custom_product.menu_product_product_food_3
+#: model:ir.ui.menu,name:louve_custom_product.menu_product_product_food
 #: model:ir.ui.view,arch_db:louve_custom_product.view_product_product_food_tree
 msgid "Products (Food)"
 msgstr "Articles (Alimentaire)"
@@ -406,14 +497,34 @@ msgid "Sale Food"
 msgstr "Ventes Alimentaires"
 
 #. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_image_small
+msgid "Small-sized image"
+msgstr "Image de petite taille"
+
+#. module: louve_custom_product
+#: model:ir.model.fields,help:louve_custom_product.field_product_label_image_small
+msgid "Small-sized image of the product. It is automatically resized as a 64x64px image, with aspect ratio preserved. Use this field anywhere a small image is required."
+msgstr "Vignette de l'article. Elle sera automatiquement redimensionnée à 64 x 64 px, en préservent le rapport hauteur/largeur. Utilisez ce champ partout où une petite image est nécessaire."
+
+#. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_template_pricetag_origin
 msgid "Text about origin"
 msgstr "Texte concernant l'origine"
 
 #. module: louve_custom_product
+#: model:ir.model.fields,help:louve_custom_product.field_product_label_image
+msgid "This field holds the image used as image for the label, limited to 1024x1024px."
+msgstr "Ce champs contient l'impage utilisé pour le label. Limité à 1024x1024px."
+
+#. module: louve_custom_product
 #: model:res.groups,name:louve_custom_product.group_food_user
 msgid "User"
 msgstr "Utilisateur"
+
+#. module: louve_custom_product
+#: model:ir.model.fields,field_description:louve_custom_product.field_product_label_website
+msgid "Website"
+msgstr "Site Web"
 
 #. module: louve_custom_product
 #: model:ir.model.fields,field_description:louve_custom_product.field_product_pricetag_wizard_line_wizard_id
@@ -441,6 +552,11 @@ msgid "product.category.print"
 msgstr "product.category.print"
 
 #. module: louve_custom_product
+#: model:ir.model,name:louve_custom_product.model_product_label
+msgid "product.label"
+msgstr "product.label"
+
+#. module: louve_custom_product
 #: model:ir.model,name:louve_custom_product.model_product_pricetag_wizard
 msgid "product.pricetag.wizard"
 msgstr "product.pricetag.wizard"
@@ -459,3 +575,4 @@ msgstr "report.louve_custom_product.report_pricetag"
 #: model:ir.ui.view,arch_db:louve_custom_product.report_pricetag
 msgid "€/kg<br/>"
 msgstr "€/kg<br/>"
+

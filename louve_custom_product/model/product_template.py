@@ -46,6 +46,23 @@ class ProductTemplate(models.Model):
     ]
 
     # Columns section
+    label_ids = fields.Many2many(
+        string='Labels', comodel_name='product.label',
+        relation='product_label_product_rel',
+        column_1='product_id', column_2='label_id')
+
+    expiration_date_days = fields.Integer(
+        string='Expiration Date (Days)', help="Field used to compute the"
+        " expiration date. (Number of days after packaging the product)")
+
+    ingredients = fields.Text(string='Ingredients')
+
+    extra_note_bizerba_pricetag_1 = fields.Char(
+        string='Extra Note printed on Bizerba Pricetags #1')
+
+    extra_note_bizerba_pricetag_2 = fields.Char(
+        string='Extra Note printed on Bizerba Pricetags #2')
+
     is_mercuriale = fields.Boolean(
         'Mercuriale Product', help="A product in mercuriale has price"
         " that changes very regularly.")
@@ -53,31 +70,30 @@ class ProductTemplate(models.Model):
     weight_net = fields.Float('Net Weight', default=0)
 
     price_volume = fields.Char(
-        compute=_compute_price_volume, string='Price by liter')
+        compute='_compute_price_volume', string='Price by liter')
 
     price_weight_net = fields.Char(
-        compute=_compute_price_weight_net, string='Price by kg')
+        compute='_compute_price_weight_net', string='Price by kg')
 
     country_id = fields.Many2one(
-        'res.country', 'Origin Country',
+        string='Origin Country', comodel_name='res.country',
         help="Country of production of the product")
 
     department_id = fields.Many2one(
-        'res.country.department', 'Origin Department',
+        string='Origin Department', comodel_name='res.country.department',
         help="Department of production of the product")
 
     origin_description = fields.Char(
-        'Origin Complement', size=64,
+        string='Origin Complement',
         help="Production location complementary information",)
 
-    maker_description = fields.Char(
-        'Maker', size=64, required=False)
+    maker_description = fields.Char(string='Maker')
 
     pricetag_origin = fields.Char(
-        compute=_compute_pricetag_origin, string='Text about origin')
+        compute='_compute_pricetag_origin', string='Text about origin')
 
     fresh_category = fields.Selection(
-        _FRESH_CATEGORY_KEYS, 'Category for Fresh Product',
+        _FRESH_CATEGORY_KEYS, string='Category for Fresh Product',
         help="Extra - Hight Quality : product without default ;\n"
         "Quality I - Good Quality : Product with little defaults ;\n"
         "Quality II - Normal Quality : Product with default ;\n"
@@ -88,7 +104,7 @@ class ProductTemplate(models.Model):
         _FRESH_RANGE_KEYS, 'Range for Fresh Product')
 
     extra_food_info = fields.Char(
-        compute=_compute_extra_food_info,
+        compute='_compute_extra_food_info',
         string='Extra information for invoices')
 
     # Compute Section
