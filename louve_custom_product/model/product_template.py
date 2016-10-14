@@ -46,6 +46,52 @@ class ProductTemplate(models.Model):
     ]
 
     # Columns section
+    is_mercuriale = fields.Boolean(
+        'Mercuriale Product', help="A product in mercuriale has price"
+        " that changes very regularly.")
+
+    weight_net = fields.Float('Net Weight', default=0)
+
+    price_volume = fields.Char(
+        compute=_compute_price_volume, string='Price by liter')
+
+    price_weight_net = fields.Char(
+        compute=_compute_price_weight_net, string='Price by kg')
+
+    country_id = fields.Many2one(
+        'res.country', 'Origin Country',
+        help="Country of production of the product")
+
+    department_id = fields.Many2one(
+        'res.country.department', 'Origin Department',
+        help="Department of production of the product")
+
+    origin_description = fields.Char(
+        'Origin Complement', size=64,
+        help="Production location complementary information",)
+
+    maker_description = fields.Char(
+        'Maker', size=64, required=False)
+
+    pricetag_origin = fields.Char(
+        compute=_compute_pricetag_origin, string='Text about origin')
+
+    fresh_category = fields.Selection(
+        _FRESH_CATEGORY_KEYS, 'Category for Fresh Product',
+        help="Extra - Hight Quality : product without default ;\n"
+        "Quality I - Good Quality : Product with little defaults ;\n"
+        "Quality II - Normal Quality : Product with default ;\n"
+        "Quality III - Bad Quality : Use this option only in"
+        " specific situation.")
+
+    fresh_range = fields.Selection(
+        _FRESH_RANGE_KEYS, 'Range for Fresh Product')
+
+    extra_food_info = fields.Char(
+        compute=_compute_extra_food_info,
+        string='Extra information for invoices')
+
+    # Compute Section
     @api.depends('list_price', 'volume')
     @api.multi
     def _compute_price_volume(self):
@@ -95,41 +141,6 @@ class ProductTemplate(models.Model):
             if pt.fresh_category:
                 tmp += _(" - Category: ") + pt.fresh_category
             pt.extra_food_info = tmp
-
-    is_mercuriale = fields.Boolean(
-        'Mercuriale Product', help="A product in mercuriale has price"
-        " that changes very regularly.")
-    weight_net = fields.Float('Net Weight', default=0)
-    price_volume = fields.Char(
-        compute=_compute_price_volume, string='Price by liter')
-    price_weight_net = fields.Char(
-        compute=_compute_price_weight_net, string='Price by kg')
-
-    country_id = fields.Many2one(
-        'res.country', 'Origin Country',
-        help="Country of production of the product")
-    department_id = fields.Many2one(
-        'res.country.department', 'Origin Department',
-        help="Department of production of the product")
-    origin_description = fields.Char(
-        'Origin Complement', size=64,
-        help="Production location complementary information",)
-    maker_description = fields.Char(
-        'Maker', size=64, required=False)
-    pricetag_origin = fields.Char(
-        compute=_compute_pricetag_origin, string='Text about origin')
-    fresh_category = fields.Selection(
-        _FRESH_CATEGORY_KEYS, 'Category for Fresh Product',
-        help="Extra - Hight Quality : product without default ;\n"
-        "Quality I - Good Quality : Product with little defaults ;\n"
-        "Quality II - Normal Quality : Product with default ;\n"
-        "Quality III - Bad Quality : Use this option only in"
-        " specific situation.")
-    fresh_range = fields.Selection(
-        _FRESH_RANGE_KEYS, 'Range for Fresh Product')
-    extra_food_info = fields.Char(
-        compute=_compute_extra_food_info,
-        string='Extra information for invoices')
 
     # Constraints section
     @api.multi
