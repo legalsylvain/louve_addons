@@ -20,6 +20,6 @@
 #
 ##############################################################################
 
-import account
-import partner
-import smile_export_sage
+from . import account
+from . import partner
+from . import smile_export_sage

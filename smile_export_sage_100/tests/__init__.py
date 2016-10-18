@@ -19,4 +19,4 @@
 #
 ##############################################################################
 
-import test_sage_export
+from . import test_sage_export
