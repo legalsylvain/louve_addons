@@ -114,7 +114,7 @@ class ResPartner(models.Model):
         for partner in self:
             point = 0
             for registration in partner.registration_ids.filtered(
-                        lambda reg: reg.shift_type == 'standard'):
+                    lambda reg: reg.shift_type == 'standard'):
                 if not registration.template_created:
                     if registration.state in ['done', 'replaced']:
                         point += +1
@@ -132,7 +132,7 @@ class ResPartner(models.Model):
         for partner in self:
             point = 0
             for registration in partner.registration_ids.filtered(
-                        lambda reg: reg.shift_type == 'ftop'):
+                    lambda reg: reg.shift_type == 'ftop'):
                 if registration.template_created:
                     # The presence was forecasted
                     if registration.state in ['absent', 'excused', 'waiting']:
