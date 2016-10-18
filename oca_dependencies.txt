@@ -1,2 +1,3 @@
 web
 purchase-workflow
+l10n-france
