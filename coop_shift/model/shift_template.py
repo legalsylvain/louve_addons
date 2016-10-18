@@ -248,8 +248,9 @@ class ShiftTemplate(models.Model):
                 int(self.start_time),
                 int(round((self.start_time - int(self.start_time)) * 60)))
         else:
-            name = self.shift_type_id.name and self.shift_type_id.name\
-                 + ' - ' or ''
+            name = (
+                self.shift_type_id.name and self.shift_type_id.name
+                + ' - ' or '')
             name += self.week_number and (
                 WEEK_NUMBERS[self.week_number - 1][1]) or ""
             name += _("Mo") if self.mo else ""
