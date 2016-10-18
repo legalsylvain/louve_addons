@@ -60,7 +60,6 @@ class ResPartner(models.Model):
                 partner.cooperative_state =\
                     super(ResPartner, partner).compute_cooperative_state()
 
-
     # Overload Section
     @api.model
     def create(self, vals):
