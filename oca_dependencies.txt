@@ -1,4 +1,4 @@
 web
 purchase-workflow
 l10n-france
-odoo-addons-it https://github.com/legalsylvain/product-attribute.git parts/product-attribute_01_product_to_print
+product-attribute_01_product_to_print https://github.com/legalsylvain/product-attribute.git 9.0_product_to_print
