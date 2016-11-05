@@ -35,6 +35,11 @@ msgid "A Capital fundraising must have a capital category defined"
 msgstr "Une levée de fonds doit avoir une catégorie définie"
 
 #. module: capital_subscription
+#: model:ir.model.fields,field_description:capital_subscription.field_product_template_is_part_A
+msgid "Is type A"
+msgstr "part de type A"
+
+#. module: capital_subscription
 #: selection:account.journal,confirm_fundraising_payment:0
 msgid "Allways"
 msgstr "Toujours"
