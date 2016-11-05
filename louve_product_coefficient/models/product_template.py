@@ -4,12 +4,8 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import logging
-
-from openerp import models, fields, api
+from openerp import models, fields, api, exceptions, _
 import openerp.addons.decimal_precision as dp
-
-_logger = logging.getLogger(__name__)
 
 
 class ProductTemplate(models.Model):
@@ -357,11 +353,11 @@ class ProductTemplate(models.Model):
             multi = 1
             for tax in template.taxes_id:
                 if tax.amount_type != 'percent' or not tax.price_include:
-                    _logger.warning(
+                    raise exceptions.UserError(_(
                         "Unimplemented Feature\n"
                         "The Tax %s is not correctly set for computing"
-                        " prices with coefficients for the product %s" % (
-                            tax.name, template.name))
+                        " prices with coefficients for the product %s") % (
+                        tax.name, template.name))
                 multi *= 1 + (tax.amount / 100)
             template.theoritical_price = template.coeff9_inter * multi
 
