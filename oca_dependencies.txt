@@ -1,5 +1,6 @@
 web
 l10n-france
+purchase-workflow
 
 pos_01_barcodes_generate https://github.com/legalsylvain/pos.git 9.0_PORT_barcodes_generate
 
